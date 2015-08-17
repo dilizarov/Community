@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  external_id: 
+  title: MyText
+  body: MyText
+  community: MyText
+  username: MyText
+
+two:
+  external_id: 
+  title: MyText
+  body: MyText
+  community: MyText
+  username: MyText
