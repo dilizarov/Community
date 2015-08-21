@@ -8,6 +8,9 @@ gem 'pg', '0.17.1'
 # Authentication Solution
 gem 'devise', '3.3.0'
 
+# Serialize JSON output for nice APIs.
+gem 'active_model_serializers', '0.9.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
