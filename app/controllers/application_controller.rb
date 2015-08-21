@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  
+  def devise_current_user
+    @devise_current_user ||= warden.authenticate(:scope => :user)
+  end
+  
+  include SessionHelper
 end
