@@ -5,6 +5,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.4'
 gem 'pg', '0.17.1'
 
+# Authentication Solution
+gem 'devise', '3.3.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
