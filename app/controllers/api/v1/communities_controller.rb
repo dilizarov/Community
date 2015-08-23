@@ -10,5 +10,17 @@ class Api::V1::CommunitiesController < ApiController
       info: "Communities",
       total: @communities.length }
   end
+  
+  def create
+    JoinedCommunity.create(name: params[:community], user_id: current_user.id)
+    
+    head :no_content
+  end
+  
+  def destroy
+    community = JoinedCommunity.where(name: params[:community], user_id: current_user.id).first and community.destroy
+    
+    head :no_content
+  end
 
 end
