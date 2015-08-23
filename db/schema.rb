@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821014146) do
+ActiveRecord::Schema.define(version: 20150823063915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 20150821014146) do
 
   add_index "authentication_tokens", ["token"], name: "index_authentication_tokens_on_token", using: :btree
   add_index "authentication_tokens", ["user_id"], name: "index_authentication_tokens_on_user_id", using: :btree
+
+  create_table "joined_communities", force: true do |t|
+    t.text     "name",       null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "joined_communities", ["name"], name: "index_joined_communities_on_name", using: :btree
+  add_index "joined_communities", ["user_id"], name: "index_joined_communities_on_user_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.uuid     "external_id", null: false
