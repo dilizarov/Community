@@ -1,6 +1,15 @@
 class Api::V1::PostsController < ApplicationController
   
-  
+  def index
+    @posts = Post.where(community: params[:community]).includes(:user).
+    created_before(time_buffer).
+    page(page).
+    per(15).
+    to_a
+    
+    render status: 200,
+    json: @posts
+  end
 
   private
   

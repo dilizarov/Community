@@ -11,6 +11,9 @@ gem 'devise', '3.3.0'
 # Serialize JSON output for nice APIs.
 gem 'active_model_serializers', '0.9.0'
 
+# Pagination Solution
+gem 'kaminari', '0.16.1'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
