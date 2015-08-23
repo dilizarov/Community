@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       
       post 'sessions'             => 'sessions#create',  as: 'login'
       post 'sessions/logout'      => 'sessions#destroy', as: 'logout'
+      
+      resources :posts
     end
   end
 

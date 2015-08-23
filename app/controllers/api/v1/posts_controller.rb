@@ -2,6 +2,7 @@ class Api::V1::PostsController < ApplicationController
   
   def index
     @posts = Post.where(community: params[:community]).includes(:user).
+    order(created_at: :desc).
     created_before(time_buffer).
     page(page).
     per(15).
