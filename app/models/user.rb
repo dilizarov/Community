@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable
          
-  validates :username, presence: true
+  validates :username, presence: true, uniqueness: true
   
   has_many :authentication_tokens
   has_many :communities, class_name: "JoinedCommunity"
