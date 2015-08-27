@@ -19,7 +19,7 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def destroy
-    community = JoinedCommunity.where(name: params[:community], user_id: current_user.id).first and community.destroy
+    JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id).destroy
     
     head :no_content
   end
