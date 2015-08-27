@@ -6,6 +6,7 @@ class Api::V1::CommunitiesController < ApiController
     render status: 200,
     json: @communities,
     root: "communities",
+    each_serializer: CommunitySerializer,
     meta: { success: true,
       info: "Communities",
       total: @communities.length }

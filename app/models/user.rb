@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
   
   has_many :authentication_tokens
-  has_many :communities, class_name: "JoinedCommunity"
+  has_many :communities, -> { order 'LOWER(joined_communities.name)' },
+  class_name: "JoinedCommunity"
 
   def login!
     self.auth_token = AuthenticationToken.create(user_id: self.id).token
