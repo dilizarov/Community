@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include Externalable
   
+  mount_uploader :avatar, AvatarUploader
+  
   # Used in current_user Serializer.
   attr_accessor :auth_token
   

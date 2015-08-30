@@ -14,6 +14,13 @@ gem 'active_model_serializers', '0.9.0'
 # Pagination Solution
 gem 'kaminari', '0.16.1'
 
+# Handles image uploading and storage
+gem 'carrierwave', '0.10.0'
+gem 'fog', '1.33.0'
+gem 'fog-aws', '0.7.6'
+
+gem "mini_magick", '4.2.10'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

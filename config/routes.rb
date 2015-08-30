@@ -9,6 +9,12 @@ Rails.application.routes.draw do
       
       resources :posts
       resources :communities, param: :community
+      
+      resources :users, param: :user_id do
+        member do
+          post :profile_pic, action: :upload_profile_pic
+        end
+      end
     end
   end
 
