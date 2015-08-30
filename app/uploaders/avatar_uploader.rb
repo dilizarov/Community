@@ -31,8 +31,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   
   #------
   def unique_id
-    return unless model.image_id.nil?
-    model.image_id = SecureRandom.uuid
+    SecureRandom.uuid
   end
 
   
