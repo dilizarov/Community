@@ -32,15 +32,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #------
   def unique_id
     return unless model.image_id.nil?
-    
-    loop do
-      uuid = SecureRandom.uuid
-      break model.image_id = uuid unless model.class.unscoped.where("#{mounted_as.to_s}_id = ?", uuid).first
-    end
-    
-    model.image_id
+    model.image_id = SecureRandom.uuid
   end
 
+  
   # Process files as they are uploaded:
   # process :scale => [200, 300]
   #
