@@ -6,5 +6,5 @@ CarrierWave.configure do |config|
   }
   
   config.fog_directory = "communitydev"
-  config.fog_public = false
+  config.fog_public = true
 end
