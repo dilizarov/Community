@@ -7,9 +7,13 @@ class AvatarUploader < CarrierWave::Uploader::Base
   storage :fog
 
   def filename
-    return if file.nil?
+    random_token = SecureRandom.uuid
+    ivar = "@#{mounted_as}_secure_token"
+    token = model.instance_variable_get(ivar)
+    token ||= model.instance_variable_set(ivar, random_token)
     
-    @name = "#{original_filename.present? ? without_extension(original_filename) : "image"}-#{SecureRandom.uuid}.#{file.extension}"
+    name = original_filename.present? ? without_extension(original_filename) : "image"
+    "#{name}-#{token}.#{file.extension}"
   end
 
   def store_dir
