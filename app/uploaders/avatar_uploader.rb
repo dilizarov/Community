@@ -6,34 +6,24 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   storage :fog
 
-  #good
   def filename
     return if file.nil?
     
-    name = original_filename.present? ? without_extension(original_filename) : "image"
-    "#{name}-#{unique_id}.#{file.extension}"
+    @name = "#{original_filename.present? ? without_extension(original_filename) : "image"}-#{SecureRandom.uuid}.#{file.extension}"
   end
 
   def store_dir
     "#{model.class.to_s.underscore.pluralize}/#{mounted_as.to_s.downcase.pluralize}/#{model.id}"
   end
 
-  #good
   def extension_white_list
     %w(jpg jpeg png)
   end
   
   private 
-  #good
   def without_extension(filename)
     return filename[0...filename.rindex('.')]
   end
-  
-  #------
-  def unique_id
-    SecureRandom.uuid
-  end
-
   
   # Process files as they are uploaded:
   # process :scale => [200, 300]
