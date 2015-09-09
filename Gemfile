@@ -38,7 +38,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 # debugger alternative
-gem 'byebug'
+# gem 'byebug'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

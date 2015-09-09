@@ -12,9 +12,9 @@ class PostSerializer < ActiveModel::Serializer
       
       data[:user][:avatar_url] = relationship.avatar.url.nil? ? object.user.avatar.url : relationship.avatar.url
       data[:user][:username] = relationship.username.nil? ? object.user.username : relationship.username
+    else
+      data[:user] = { username: object.username }
     end
-    
-    data[:user] = { username: object.username }
     
     data
   end
