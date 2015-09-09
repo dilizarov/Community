@@ -18,7 +18,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    "#{model.class.to_s.underscore.pluralize}/#{mounted_as.to_s.downcase.pluralize}/#{model.id}"
+    "#{model.class.to_s.underscore.pluralize}/#{mounted_as.to_s.downcase.pluralize}"
   end
 
   def extension_white_list

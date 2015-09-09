@@ -14,11 +14,13 @@ gem 'active_model_serializers', '0.9.0'
 # Pagination Solution
 gem 'kaminari', '0.16.1'
 
+# Used for liking functionality
+gem 'acts_as_votable', '~> 0.10.0'
+
 # Handles image uploading and storage
 gem 'carrierwave', '0.10.0'
 gem 'fog', '1.33.0'
 gem 'fog-aws', '0.7.6'
-
 gem "mini_magick", '4.2.10'
 
 # Use Uglifier as compressor for JavaScript assets

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828163642) do
+ActiveRecord::Schema.define(version: 20150909064237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,25 +31,43 @@ ActiveRecord::Schema.define(version: 20150828163642) do
     t.integer  "user_id",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar"
+    t.string   "username"
   end
 
   add_index "joined_communities", ["name"], name: "index_joined_communities_on_name", using: :btree
   add_index "joined_communities", ["user_id"], name: "index_joined_communities_on_user_id", using: :btree
 
   create_table "posts", force: true do |t|
-    t.uuid     "external_id", null: false
+    t.uuid     "external_id",                 null: false
     t.text     "title"
-    t.text     "body",        null: false
-    t.text     "community",   null: false
+    t.text     "body",                        null: false
+    t.text     "community",                   null: false
     t.text     "username"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "replies_count",   default: 0
+    t.integer  "cached_votes_up", default: 0
   end
 
   add_index "posts", ["community"], name: "index_posts_on_community", using: :btree
   add_index "posts", ["external_id"], name: "index_posts_on_external_id", unique: true, using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
+  create_table "replies", force: true do |t|
+    t.uuid     "external_id",                 null: false
+    t.text     "body",                        null: false
+    t.integer  "user_id"
+    t.integer  "post_id",                     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "cached_votes_up", default: 0
+  end
+
+  add_index "replies", ["external_id"], name: "index_replies_on_external_id", using: :btree
+  add_index "replies", ["post_id"], name: "index_replies_on_post_id", using: :btree
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -66,5 +84,20 @@ ActiveRecord::Schema.define(version: 20150828163642) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
+
+  create_table "votes", force: true do |t|
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.integer  "voter_id"
+    t.string   "voter_type"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
+  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
 
 end

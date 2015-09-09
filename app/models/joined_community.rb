@@ -3,6 +3,8 @@
 # and this only keeps track of communities that the user has joined.
 class JoinedCommunity < ActiveRecord::Base
   
+  mount_uploader :avatar, AvatarUploader
+  
   belongs_to :user
   
   validate :unique_combination_of_name_and_user

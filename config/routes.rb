@@ -6,9 +6,10 @@ Rails.application.routes.draw do
       
       post 'sessions'             => 'sessions#create',  as: 'login'
       post 'sessions/logout'      => 'sessions#destroy', as: 'logout'
-      
-      resources :posts
-      resources :communities, param: :community
+            
+      resources :communities, shallow: true do
+        resources :posts
+      end
       
       resources :users, param: :user_id do
         member do
