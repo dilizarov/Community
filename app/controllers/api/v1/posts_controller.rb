@@ -4,7 +4,7 @@ class Api::V1::PostsController < ApplicationController
     # We include :communities because we'll select the community with name params[:community]
     # And from that association we'll derive the username and avatar image to use.
     # (Either default or community-specific one)
-    @posts = Post.where(community: params[:community_id]).includes(user: [:communities])
+    @posts = Post.where(community: params[:community_id]).includes(user: [:communities]).
     order(created_at: :desc).
     created_before(time_buffer).
     page(page).
