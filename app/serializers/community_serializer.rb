@@ -4,7 +4,7 @@ class CommunitySerializer < ActiveModel::Serializer
   def attributes
     data = super    
     
-    data[:user] = { avatar_url: object.avatar.url, username: object.avatar.username }
+    data[:user] = { avatar_url: object.avatar.url, username: object.username }
     
     data
   end
