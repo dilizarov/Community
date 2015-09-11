@@ -1,4 +1,5 @@
-class PostSerializer < ActiveModel::Serializer
+class PostSerializer < ActiveModel::Serializerrequire "post_serializer"
+
   attributes :external_id, :body, :title, :created_at, :likes, :replies_count
   
   def attributes

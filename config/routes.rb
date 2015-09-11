@@ -7,9 +7,10 @@ Rails.application.routes.draw do
       post 'sessions'             => 'sessions#create',  as: 'login'
       post 'sessions/logout'      => 'sessions#destroy', as: 'logout'
             
-      resources :communities, shallow: true do
-        resources :posts
-      end
+      #Communities can have spaces in their names, which makes a truly restful API
+      #a tad difficult. That is why we don't embed posts in communities for example.
+      resources :communities, param: :community
+      resources :posts
       
       resources :users, param: :user_id do
         member do

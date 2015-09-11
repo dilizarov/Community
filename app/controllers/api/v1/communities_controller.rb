@@ -13,7 +13,7 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def create
-    JoinedCommunity.create(name: params[:id], user_id: current_user.id)
+    JoinedCommunity.create(name: params[:community], user_id: current_user.id)
     
     head :no_content
   end
@@ -23,7 +23,7 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def destroy
-    JoinedCommunity.find_by!(name: params[:id], user_id: current_user.id).destroy
+    JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id).destroy
     
     head :no_content
   end
