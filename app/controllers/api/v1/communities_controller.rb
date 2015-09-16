@@ -22,6 +22,12 @@ class Api::V1::CommunitiesController < ApiController
     end    
   end
   
+  def show
+    JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
+    
+    head :ok
+  end
+  
   def update
     
   end

@@ -9,7 +9,16 @@ Rails.application.routes.draw do
             
       #Communities can have spaces in their names, which makes a truly restful API
       #a tad difficult. That is why we don't embed posts in communities for example.
-      resources :communities, param: :community
+      #long-term solution is probably going to be to treat spaces and underscores the same
+      #and interchangeably.
+      resources :communities, param: :community, except: [:destroy, :edit, :update, :show] do
+        collection do
+          delete 'destroy'
+          get 'show'
+          put 'update'
+        end
+      end
+      
       resources :posts do
         member do
           get 'like'
