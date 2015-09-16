@@ -1,4 +1,4 @@
-class Api::V1::PostsController < ApplicationController
+class Api::V1::PostsController < ApiController
   
   def index
     # We include :communities because we'll select the community with name params[:community]
@@ -16,6 +16,18 @@ class Api::V1::PostsController < ApplicationController
     render status: 200,
     json: @posts,
     each_serializer: PostSerializer
+  end
+
+  def create
+    @post = Post.new(post_params)
+    
+    if @post.save
+      render status: 200,
+      json: @post
+    else
+      render status: :unprocessable_entity,
+      json: { errors: @post.errors.full_messages }
+    end
   end
 
   def like
@@ -38,5 +50,10 @@ class Api::V1::PostsController < ApplicationController
   
   def page
     params.has_key?(:page) ? params[:page] : 1    
+  end
+  
+  def post_params
+    user_id = current_user ? current_user.id : nil
+    params.require(:post).permit(:title, :body, :community, :username).merge(user_id: user_id)
   end
 end
