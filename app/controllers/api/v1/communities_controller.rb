@@ -23,9 +23,12 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def show
-    JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
+    @relationship = JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
     
-    head :ok
+    render status: :ok,
+    json: @relationship,
+    root: "community",
+    serializer: CommunitySerializer
   end
   
   def update
