@@ -19,6 +19,8 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def like
+    @post = Post.find_by!(external_id: params[:id])
+    
     if params[:dislike]
       @post.unliked_by(current_user)
     else
