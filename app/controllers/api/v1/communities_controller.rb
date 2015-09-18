@@ -38,6 +38,10 @@ class Api::V1::CommunitiesController < ApiController
       @relationship.remove_avatar!
       @relationship.username = nil
     else
+      
+      p "before"
+      p @relationship.avatar.url
+      
       if params[:username] != nil
         if params[:username] != current_user.username
           @relationship.username = params[:username]
@@ -46,12 +50,17 @@ class Api::V1::CommunitiesController < ApiController
         end
       end
       
+      p "before"
+      p params[:community_avatar]
       if params[:community_avatar]
+        p "inside"
         @relationship.avatar = params[:community_avatar]
       end
     end
     
     if @relationship.save
+      p "saved"
+      p @relationship.avatar.url
       render status: :ok,
       json: @relationship,
       root: "community",
