@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       #a tad difficult. That is why we don't embed posts in communities for example.
       #long-term solution is probably going to be to treat spaces and underscores the same
       #and interchangeably.
-      resources :communities, param: :community, except: [:destroy, :edit, :update, :show] do
+      resources :communities, except: [:destroy, :edit, :update, :show] do
         collection do
           delete 'destroy'
           get 'show'

@@ -32,7 +32,30 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def update
+    @relationship = JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
     
+    if params[:default]
+      @relationship.avatar = nil
+      @relationship.username = nil
+    else
+      if params[:username] != nil && params[:username] != current_user.username
+        @relationship.username = params[:username]
+      end
+      
+      if params[:community_avatar]
+        @relationship.avatar = params[:community_avatar]
+      end
+    end
+    
+    if @relationship.save
+      render status: :ok,
+      json: @relationship,
+      root: "community",
+      serializer: CommunitySerializer
+    else
+      render status: :unprocessable_entity,
+      json: { errors: @relationship.errors.full_messages }
+    end
   end
   
   def destroy
