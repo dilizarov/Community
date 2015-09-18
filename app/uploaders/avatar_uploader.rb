@@ -7,7 +7,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   storage :fog
 
   def filename
-    return if file.nil?
+    return if file.nil? || !original_filename.present?
     random_token = SecureRandom.uuid
     ivar = "@#{mounted_as}_secure_token"
     token = model.instance_variable_get(ivar)
