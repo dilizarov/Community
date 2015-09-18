@@ -7,7 +7,7 @@ class JoinedCommunity < ActiveRecord::Base
   
   belongs_to :user
   
-  validate :unique_combination_of_name_and_user
+  validate :unique_combination_of_name_and_user, on: :create
   
   private
   
