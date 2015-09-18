@@ -35,7 +35,7 @@ class Api::V1::CommunitiesController < ApiController
     @relationship = JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
     
     if params[:default]
-      @relationship.avatar = nil
+      @relationship.remove_avatar!
       @relationship.username = nil
     else
       if params[:username] != nil
