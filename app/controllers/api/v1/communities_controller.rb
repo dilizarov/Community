@@ -38,8 +38,12 @@ class Api::V1::CommunitiesController < ApiController
       @relationship.avatar = nil
       @relationship.username = nil
     else
-      if params[:username] != nil && params[:username] != current_user.username
-        @relationship.username = params[:username]
+      if params[:username] != nil
+        if params[:username] != current_user.username
+          @relationship.username = params[:username]
+        else
+          @relationship.username = nil
+        end
       end
       
       if params[:community_avatar]
