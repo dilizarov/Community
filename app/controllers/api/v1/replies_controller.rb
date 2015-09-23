@@ -27,6 +27,18 @@ class Api::V1::RepliesController < ApiController
     
   end
   
+  def like
+    @reply = Reply.find_by!(external_id: params[:id])
+    
+    if params[:dislike]
+      @reply.unliked_by(current_user)
+    else
+      @reply.liked_by(current_user)
+    end
+    
+    head :no_content
+  end
+  
   def destroy
     @reply = Reply.find_by!(external_id: params[:id])
     
