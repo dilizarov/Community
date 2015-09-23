@@ -23,6 +23,12 @@ Rails.application.routes.draw do
         member do
           get 'like'
         end
+        
+        resources :replies, only: [:index, :create, :destroy], shallow: true do
+          member do
+            get 'like'
+          end
+        end
       end
       
       resources :users, param: :user_id do

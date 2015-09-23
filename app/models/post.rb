@@ -13,6 +13,11 @@ class Post < ActiveRecord::Base
   
   belongs_to :user
   
+  has_many :replies,
+           -> { order(created_at: :asc) },
+           dependent: :destroy,
+           inverse_of: :post
+  
   def user_id_or_username_must_be_present
     if username.nil? && user_id.nil?
       errors.add(:username, "is required to make a post")

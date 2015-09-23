@@ -9,5 +9,5 @@ class Reply < ActiveRecord::Base
   validates :body, presence: true
   
   belongs_to :user
-  belongs_to :post, counter_cache: true
+  belongs_to :post, counter_cache: true, inverse_of: :replies
 end

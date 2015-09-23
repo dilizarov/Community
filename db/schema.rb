@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909064237) do
+ActiveRecord::Schema.define(version: 20150920231309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150909064237) do
     t.integer  "cached_votes_up", default: 0
   end
 
-  add_index "replies", ["external_id"], name: "index_replies_on_external_id", using: :btree
+  add_index "replies", ["external_id"], name: "index_replies_on_external_id", unique: true, using: :btree
   add_index "replies", ["post_id"], name: "index_replies_on_post_id", using: :btree
   add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 

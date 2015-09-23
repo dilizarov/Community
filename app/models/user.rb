@@ -24,9 +24,9 @@ class User < ActiveRecord::Base
     posts.each { |post| post.liked = liked_post_ids.include?(post.id) }
   end
   
-  def mark_liked_comments!(comments)
-    liked_comment_ids = self.find_up_votes_for_class(Comment).where(votable_id: comments).map(&:votable_id)
-    comments.each { |comment| comment.liked = liked_comment_ids.include?(comment.id) }
+  def mark_liked_replies!(replies)
+    liked_reply_ids = self.find_up_votes_for_class(Reply).where(votable_id: replies).map(&:votable_id)
+    replies.each { |reply| reply.liked = liked_reply_ids.include?(reply.id) }
   end
 
   def login!
