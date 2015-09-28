@@ -23,7 +23,7 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def show
-    @relationship = JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
+    @relationship = JoinedCommunity.find_by!(normalized_name: normalized_name, user_id: current_user.id)
     
     render status: :ok,
     json: @relationship,
@@ -32,7 +32,7 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def update
-    @relationship = JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id)
+    @relationship = JoinedCommunity.find_by!(normalized_name: normalized_name, user_id: current_user.id)
     
     if params[:default]
       @relationship.remove_avatar!
@@ -64,9 +64,15 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def destroy
-    JoinedCommunity.find_by!(name: params[:community], user_id: current_user.id).destroy
+    JoinedCommunity.find_by!(normalized_name: normalized_name, user_id: current_user.id).destroy
     
     head :no_content
+  end
+  
+  private
+  
+  def normalized_name
+    params[:community].strip.downcase.gsub(" ", "_")
   end
 
 end

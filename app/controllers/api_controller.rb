@@ -8,7 +8,8 @@ class ApiController < ApplicationController
   # end
   
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    head :not_found
+    render status: :not_found,
+    json: { error: "We could not find what you were looking for. It may have been deleted by another user." }
   end
   
   respond_to :json
@@ -19,7 +20,7 @@ class ApiController < ApplicationController
   def authenticate_api_key!
     unless params[:api_key] == ENV["ANDROID_API_KEY"] || params[:api_key] == ENV["IOS_API_KEY"]
       render status: :unauthorized,
-             json: { errors: [ "That is not a valid API key" ] }
+             json: { error: "Invalid API key" }
     end
   end
 end

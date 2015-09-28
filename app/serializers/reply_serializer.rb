@@ -8,7 +8,7 @@ class ReplySerializer < ActiveModel::Serializer
     unless object.user.nil?
       data[:user] = { external_id: object.user.external_id }
     
-      relationship = object.user.communities.select { |community| community.name == object.post.community }.first
+      relationship = object.user.communities.select { |community| community.normalized_name == object.post.community }.first
       
       data[:user][:avatar_url] = relationship.avatar.url.nil? ? object.user.avatar.url : relationship.avatar.url
       data[:user][:username] = relationship.username.nil? ? object.user.username : relationship.username

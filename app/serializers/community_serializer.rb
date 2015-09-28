@@ -1,5 +1,5 @@
 class CommunitySerializer < ActiveModel::Serializer
-  attributes :name
+  attributes :name, :normalized_name
   
   def attributes
     data = super    

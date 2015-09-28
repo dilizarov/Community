@@ -7,12 +7,24 @@ class JoinedCommunity < ActiveRecord::Base
   
   belongs_to :user
   
+  before_validation :normalize_data
+  validates :name, presence: true
   validate :unique_combination_of_name_and_user, on: :create
   
   private
   
   def unique_combination_of_name_and_user
-    errors.add(:user, "is already in this Community") unless JoinedCommunity.where(name: name, user_id: user_id).first.nil?
+    errors.add(:user, "is already in this Community") unless JoinedCommunity.where(normalized_name: normalized_name, user_id: user_id).first.nil?
+  end
+  
+  # Import to ensure self.name.nil? check because we do this before validation to prep a validation.
+  def normalize_data
+    unless self.name.nil?
+      self.name = self.name.strip
+
+      # "Cmon LETS NoRMalize This!" -> "cmon_lets_normalize_this!"
+      self.normalized_name = self.name.downcase.gsub(" ", "_")
+    end
   end
   
 end

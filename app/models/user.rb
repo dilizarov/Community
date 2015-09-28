@@ -13,10 +13,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :validatable
          
+  before_create :normalize_data
+         
   validates :username, presence: true, uniqueness: true
   
   has_many :authentication_tokens
-  has_many :communities, -> { order 'LOWER(joined_communities.name)' },
+  has_many :communities, -> { order 'joined_communities.normalized_name' },
   class_name: "JoinedCommunity"
 
   def mark_liked_posts!(posts)
@@ -35,5 +37,12 @@ class User < ActiveRecord::Base
   
   def logout!(auth_token)
     AuthenticationToken.where(token: auth_token).first.destroy
+  end
+  
+  private
+  
+  def normalize_data
+    self.email = self.email.strip
+    self.username = self.username.strip
   end
 end
