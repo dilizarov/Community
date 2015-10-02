@@ -12,4 +12,29 @@ class Api::V1::UsersController < ApiController
     end
   end
   
+  def request_another_meta_username
+    if current_user.meta
+      
+      begin
+        current_user.generate_unique_username!
+      
+        # Borrowed cringe from method in User.rb
+        user.email = "user.#{user.username.split.join}@fake.hacky.solution.com"
+        user.save
+      rescue ActiveRecord::RecordNotUnique
+        retry
+      end
+      
+      render status: 200,
+      json: @user,
+      serializer: CurrentUserSerializer,
+      root: "user",
+      meta: { success: true,
+        info: "Logged in" }
+    else
+      render status: :unprocessable_entity,
+      json: { errors: ["Restricted"] }
+    end
+  end
+  
 end

@@ -6,6 +6,10 @@ class AddNormalizedNameToJoinedCommunities < ActiveRecord::Migration
       community.save!
     end
     
+    Post.find_each do |post|
+      post.save!
+    end
+    
     change_column :joined_communities, :normalized_name, :text, null: false
         
     add_index :joined_communities, :normalized_name

@@ -10,18 +10,23 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     
-    if resource.save
-      resource.login!
+    begin
+      if resource.save
+        resource.login!
       
-      render status: 200,
-      json: resource,
-      serializer: CurrentUserSerializer,
-      root: "user",
-      meta: { success: true,
-        info: "Registered" }
-    else
+        render status: 200,
+        json: resource,
+        serializer: CurrentUserSerializer,
+        root: "user",
+        meta: { success: true,
+          info: "Registered" }
+        else
+          render status: :unprocessable_entity,
+          json: { errors: resource.errors.full_messages }
+        end
+    rescue ActiveRecord::RecordNotUnique
       render status: :unprocessable_entity,
-      json: { errors: resource.errors.full_messages }
+      json: { errors: [ "Username is already taken"] }
     end
   end
   

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928042421) do
+ActiveRecord::Schema.define(version: 20151001235523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20150928042421) do
 
   add_index "authentication_tokens", ["token"], name: "index_authentication_tokens_on_token", using: :btree
   add_index "authentication_tokens", ["user_id"], name: "index_authentication_tokens_on_user_id", using: :btree
+
+  create_table "generation_words", force: true do |t|
+    t.text     "word",                   null: false
+    t.text     "kind",                   null: false
+    t.integer  "times_used", default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "generation_words", ["kind"], name: "index_generation_words_on_kind", using: :btree
+  add_index "generation_words", ["word"], name: "index_generation_words_on_word", using: :btree
 
   create_table "joined_communities", force: true do |t|
     t.text     "name",            null: false
@@ -72,15 +83,16 @@ ActiveRecord::Schema.define(version: 20150928042421) do
   add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.string   "username",                            null: false
-    t.uuid     "external_id",                         null: false
+    t.string   "username",                               null: false
+    t.uuid     "external_id",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar"
+    t.boolean  "meta",                   default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

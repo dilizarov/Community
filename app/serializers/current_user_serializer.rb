@@ -1,9 +1,10 @@
 class CurrentUserSerializer < ActiveModel::Serializer
-  attributes :username, :email, :external_id, :created_at, :avatar_url
+  attributes :username, :external_id, :created_at, :avatar_url
   
   def attributes
     data = super
     data[:auth_token] = object.auth_token unless object.auth_token.nil?
+    data[:email] = object.email unless object.meta
     data
   end
   

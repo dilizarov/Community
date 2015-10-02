@@ -15,11 +15,23 @@ class User < ActiveRecord::Base
          
   before_create :normalize_data
          
-  validates :username, presence: true, uniqueness: true
+  validate :ensure_non_meta_username_for_account
+  #We use DB constraint for uniqueness and catch ActiveRecord::RecordNotUnique when necessary
+  validates :username, presence: true
   
   has_many :authentication_tokens
   has_many :communities, -> { order 'joined_communities.normalized_name' },
   class_name: "JoinedCommunity"
+
+  # The following two methods are used by devise and overridden to handle meta accounts
+  def email_required?
+    !meta
+  end
+
+  # I essentially copied the Devise source and appended it after the &&
+  def password_required?
+    !meta && (!persisted? || !password.nil? || !password_confirmation.nil?)    
+  end
 
   def mark_liked_posts!(posts)
     liked_post_ids = self.find_up_votes_for_class(Post).where(votable_id: posts).map(&:votable_id)
@@ -39,7 +51,101 @@ class User < ActiveRecord::Base
     AuthenticationToken.where(token: auth_token).first.destroy
   end
   
+  def self.create_meta_account!
+    user = User.new(meta: true)
+    
+    begin
+      user.generate_unique_username!
+      
+      # So... Well... *cringe*... this gets past the unique email DB constraint
+      # and... is it hacky? Yes!... but... it has some elegance to it... no?
+      # >_> *wipes sweat off forehead*
+      user.email = "user.#{user.username.split.join}@fake.hacky.solution.com"
+      user.save
+    rescue ActiveRecord::RecordNotUnique
+      retry
+    end
+    
+    return user
+  end
+  
+  # Adjective Adjective Animal
+  # Very simple... don't need to worry about efficiency right now but once we do... that'll be a good thing and we can
+  # fix this
+  def generate_unique_username! 
+    pieces = []
+          
+    pieces << GenerationWord.where(kind: "adjective").sample.word
+    pieces << GenerationWord.where(kind: "adjective").where.not(word: pieces.first).sample.word
+    pieces << GenerationWord.where(kind: "animal").sample.word
+    
+    pieces.map! { |word| word.split.map(&:capitalize).join(' ') }
+          
+    self.username = pieces.join(' ')  
+  end
+  
   private
+  
+  def ensure_non_meta_username_for_account
+    return if self.meta
+    
+    string_being_checked = self.username.downcase.strip
+    
+    split_string = string_being_checked.split
+    
+    return if split_string.count <= 2
+    
+    error = false
+    
+    # Assumptions: At max, adjectives could be two words. At max, animals could be two words.
+    if split_string.count == 3 
+      # This only corresponds to 1 word Adj, 1 word Adj, 1 word Animal.
+      if GenerationWord.find_by(word: split_string[0], kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[1], kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[2], kind: "animal")
+                 
+        error = true
+      end
+    elsif split_string.count == 4
+      # This corresponds to one of the 3 terms being 2 words.
+      if (GenerationWord.find_by(word: "#{split_string[0]} #{split_string[1]}", kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[2], kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[3], kind: "animal")) ||
+         (GenerationWord.find_by(word: split_string[0], kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[1]} #{split_string[2]}", kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[3], kind: "animal")) ||
+         (GenerationWord.find_by(word: split_string[0], kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[1], kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[2]} #{split_string[3]}", kind: "animal"))
+        
+        error = true
+      end
+    elsif split_string.count == 5
+      # This corresponds to two of the 3 terms being 2 words.
+      if (GenerationWord.find_by(word: "#{split_string[0]} #{split_string[1]}", kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[2]} #{split_string[3]}", kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[4], kind: "animal")) ||
+         (GenerationWord.find_by(word: "#{split_string[0]} #{split_string[1]}", kind: "adjective") &&
+         GenerationWord.find_by(word: split_string[2], kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[3]} #{split_string[4]}", kind: "animal")) ||
+         (GenerationWord.find_by(word: split_string[0], kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[1]} #{split_string[2]}", kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[3]} #{split_string[4]}", kind: "animal"))
+        
+        error = true
+      end
+    elsif split_string.count == 6
+      # This only corresponds to 2 word Adj, 2 word Adj, 2 word Animal
+      if GenerationWord.find_by(word: "#{split_string[0]} #{split_string[1]}", kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[2]} #{split_string[3]}", kind: "adjective") &&
+         GenerationWord.find_by(word: "#{split_string[4]} #{split_string[5]}", kind: "animal")
+         
+         error = true
+      end
+    end
+    
+    errors.add(:username, "is reserved for those without accounts") if error
+  end
   
   def normalize_data
     self.email = self.email.strip

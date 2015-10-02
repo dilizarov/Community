@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       
       post 'sessions'             => 'sessions#create',  as: 'login'
       post 'sessions/logout'      => 'sessions#destroy', as: 'logout'
+      post 'sessions/meta_account' => 'sessions#generate_meta_account'
             
       #Communities can have spaces in their names, which makes a truly restful API
       #a tad difficult... not to mention they can also have / in them, which
