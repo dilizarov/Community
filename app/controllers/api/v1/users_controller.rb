@@ -19,14 +19,14 @@ class Api::V1::UsersController < ApiController
         current_user.generate_unique_username!
       
         # Borrowed cringe from method in User.rb
-        current_user.email = "user.#{user.username.split.join}@fake.hacky.solution.com"
+        current_user.email = "user.#{current_user.username.split.join}@fake.hacky.solution.com"
         current_user.save
       rescue ActiveRecord::RecordNotUnique
         retry
       end
       
       render status: 200,
-      json: @user,
+      json: current_user,
       serializer: CurrentUserSerializer,
       root: "user",
       meta: { success: true,
