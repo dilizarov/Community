@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :users, param: :user_id do
         member do
           post :profile_pic, action: :upload_profile_pic
+          post :meta_username, action: :request_another_meta_username
         end
       end
     end
