@@ -150,5 +150,5 @@ class User < ActiveRecord::Base
   def normalize_data
     self.email = self.email.strip
     self.username = self.username.strip
-  end
+  end  
 end

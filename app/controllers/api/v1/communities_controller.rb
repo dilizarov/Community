@@ -52,14 +52,29 @@ class Api::V1::CommunitiesController < ApiController
       end
     end
     
-    if @relationship.save
-      render status: :ok,
-      json: @relationship,
-      root: "community",
-      serializer: CommunitySerializer
-    else
-      render status: :unprocessable_entity,
-      json: { errors: @relationship.errors.full_messages }
+    begin
+      if @relationship.save
+        render status: :ok,
+        json: @relationship,
+        root: "community",
+        serializer: CommunitySerializer
+      else
+        render status: :unprocessable_entity,
+        json: { errors: @relationship.errors.full_messages }
+      end
+    rescue ActiveRecord::RecordNotUnique
+      
+      conflicting_relationship = JoinedCommunity.where(normalized_name: normalized_name).where('lower(username) = ?', params[:username].downcase).includes(:user).first
+      
+      # Users that are not meta can take meta user's usernames.
+      if !current_user.meta && conflicting_relationship.user.meta
+        conflicting_relationship.username = nil
+        conflicting_relationship.save!
+        retry
+      else
+        render status: :unprocessable_entity,
+        json: { errors: ["Username is already taken"] }
+      end
     end
   end
   

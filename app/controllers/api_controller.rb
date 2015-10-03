@@ -9,7 +9,7 @@ class ApiController < ApplicationController
   
   rescue_from ActiveRecord::RecordNotFound do |exception|
     render status: :not_found,
-    json: { error: "We could not find what you were looking for. It may have been deleted by another user." }
+    json: { error: "We could not find what you were looking for. It may have been deleted." }
   end
   
   respond_to :json

@@ -7,7 +7,7 @@ class JoinedCommunity < ActiveRecord::Base
   
   belongs_to :user
   
-  before_validation :normalize_data
+  before_validation :normalize_data  
   validates :name, presence: true
   validate :unique_combination_of_name_and_user, on: :create
   
@@ -25,6 +25,7 @@ class JoinedCommunity < ActiveRecord::Base
       # "Cmon LETS NoRMalize This!" -> "cmon_lets_normalize_this!"
       self.normalized_name = self.name.downcase.gsub(" ", "_")
     end
-  end
-  
+    
+    self.username = self.username.strip unless self.username.nil?
+  end  
 end
