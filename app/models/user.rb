@@ -84,6 +84,15 @@ class User < ActiveRecord::Base
     self.username = pieces.join(' ')  
   end
   
+  def transfer_communities_to!(user)
+    
+    # We could always work towards a bulk import solution, but right now not really important. Realistically this isn't too large a number anyways...
+    # I hope... and it isn't called often.
+    self.communities.find_each do |community|
+      JoinedCommunity.create(name: community.name, user_id: user.id) rescue ActiveRecord::RecordNotUnique
+    end        
+  end
+  
   private
   
   def ensure_non_meta_username_for_account

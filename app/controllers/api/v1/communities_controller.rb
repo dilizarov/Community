@@ -15,9 +15,13 @@ class Api::V1::CommunitiesController < ApiController
   def create
     relationship = JoinedCommunity.new(name: params[:community], user_id: current_user.id)
     
-    if relationship.save
-      head :no_content
-    else
+    begin
+      if relationship.save
+        head :no_content
+      else
+        head :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotUnique
       head :unprocessable_entity
     end    
   end
