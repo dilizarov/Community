@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: MyText
+  platform: MyText
+  user_id: 1
+  auth_id: 1
+
+two:
+  token: MyText
+  platform: MyText
+  user_id: 1
+  auth_id: 1

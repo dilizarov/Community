@@ -5,6 +5,9 @@ class AuthenticationToken < ActiveRecord::Base
   validates :user_id, presence: true
 
   belongs_to :user
+  has_one :device,
+          foreign_key: :auth_id,
+          dependent: :destroy
   
   def set_authentication_token!
     

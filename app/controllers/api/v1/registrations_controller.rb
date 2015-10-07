@@ -28,6 +28,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
         end
         
         resource.login!
+        resource.sync_device!(params[:device]) if params[:device]
       
         render status: 200,
         json: resource,

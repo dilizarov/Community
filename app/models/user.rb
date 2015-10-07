@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   has_many :authentication_tokens
   has_many :communities, -> { order 'joined_communities.normalized_name' },
   class_name: "JoinedCommunity"
+  
+  has_many :devices
 
   # The following two methods are used by devise and overridden to handle meta accounts
   def email_required?
@@ -44,13 +46,25 @@ class User < ActiveRecord::Base
   end
 
   def login!
-    self.auth_token = AuthenticationToken.create(user_id: self.id).token
+    self.auth_token = AuthenticationToken.create(user_id: self.id)
   end
   
-  def logout!(auth_token)
-    AuthenticationToken.where(token: auth_token).first.destroy
+  # We can do self.auth_token.destroy, but that won't trigger a RecordNotFound on race-conditions.
+  def logout!
+    AuthenticationToken.destroy(self.auth_token.id)
   end
   
+  def sync_device!(device_data)
+    return if device_data[:token].nil? || device_data[:platform].nil?
+    
+    device = Device.find_or_initialize_by(auth_id: self.auth_token.id)
+    device.platform = device_data[:platform]
+    device.token = device_data[:token]
+    device.user_id = self.id
+    
+    device.save
+  end
+    
   def self.create_meta_account!
     user = User.new(meta: true)
     
