@@ -34,6 +34,10 @@ class Api::V1::SessionsController < ApiController
   end
   
   def sync_device
+    unless params[:device].present?
+      head status: :no_content
+    end
+    
     current_user.sync_device!(params[:device])
     
     unless current_user.meta
