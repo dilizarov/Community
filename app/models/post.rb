@@ -15,6 +15,8 @@ class Post < ActiveRecord::Base
   
   belongs_to :user
   
+  has_many :notifications
+  
   has_many :replies,
            -> { order(created_at: :asc) },
            dependent: :destroy,

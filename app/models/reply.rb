@@ -10,6 +10,8 @@ class Reply < ActiveRecord::Base
   validates :post_id, presence: true
   validates :body, presence: true
   
+  has_many :notifications
+  
   belongs_to :user
   belongs_to :post, counter_cache: true, inverse_of: :replies
   

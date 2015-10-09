@@ -17,6 +17,15 @@ gem 'kaminari', '0.16.1'
 # Used for liking functionality
 gem 'acts_as_votable', '~> 0.10.0'
 
+# Notifications sender for Andorid, iOS, etc.
+gem 'pushmeup', '~> 0.3.0'
+
+# Background worder to do tasks off a REDIS queue
+gem 'sidekiq', '~> 3.5'
+
+# Bulk imports
+gem 'activerecord-import', '~> 0.10'
+
 # Handles image uploading and storage
 gem 'carrierwave', '0.10.0'
 gem 'fog', '1.33.0'

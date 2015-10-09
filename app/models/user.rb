@@ -23,6 +23,11 @@ class User < ActiveRecord::Base
   has_many :communities, -> { order 'joined_communities.normalized_name' },
   class_name: "JoinedCommunity"
   
+  has_many :user_notifications, -> { order(created_at: :desc) }
+  
+  has_many :notifications,
+  through: :user_notifications
+  
   has_many :devices
 
   # The following two methods are used by devise and overridden to handle meta accounts

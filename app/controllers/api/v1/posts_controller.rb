@@ -22,6 +22,9 @@ class Api::V1::PostsController < ApiController
     @post = Post.new(post_params)
     
     if @post.save
+      
+      @post.notifications << Notification.new(user_id: current_user.id, kind: "post_created")
+      
       render status: 200,
       json: @post
     else
@@ -34,9 +37,11 @@ class Api::V1::PostsController < ApiController
     @post = Post.find_by!(external_id: params[:id])
     
     if params[:dislike]
-      @post.unliked_by(current_user)
+      @post.unliked_by(current_user)      
     else
       @post.liked_by(current_user)
+      
+      @post.notifications.create(user_id: current_user.id, kind: "post_liked") rescue ActiveRecord::RecordNotUnique
     end
     
     head :no_content

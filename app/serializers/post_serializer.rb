@@ -5,15 +5,19 @@ class PostSerializer < ActiveModel::Serializer
     data = super
     data[:liked] = object.liked unless object.liked.nil?
     
-    unless object.user.nil?
-      data[:user] = { external_id: object.user.external_id }
+    data[:user] = { external_id: object.user.external_id, avatar_url: object.user.avatar.url, username: object.user.username }
     
-      relationship = object.user.communities.select { |community| community.normalized_name == object.community }.first
+    #object.user.communities is cached from an eager load
+    relationship = object.user.communities.select { |community| community.normalized_name == object.community }.first
       
-      data[:user][:avatar_url] = relationship.avatar.url.nil? ? object.user.avatar.url : relationship.avatar.url
-      data[:user][:username] = relationship.username.nil? ? object.user.username : relationship.username
-    else
-      data[:user] = { username: object.username }
+    if relationship.present?
+      unless relationship.avatar.url.nil?
+        data[:user][:avatar_url] = relationship.avatar.url
+      end
+      
+      unless relationship.username.nil?
+        data[:user][:username] = relationship.username
+      end
     end
     
     data

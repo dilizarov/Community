@@ -37,4 +37,32 @@ class Api::V1::UsersController < ApiController
     end
   end
   
+  def notifications
+    relationships = current_user.
+                    user_notifications.
+                    includes(notification: [{post: {user: :communities}}, {reply: [:post, {user: :communities}]}, {user: :communities}]).
+                    to_a
+    
+    max = 10
+    
+    if relationships.count > max
+      relationships, void_relationships = relationships[0..max-1], relationships[max..-1]
+      UserNotification.destroy(void_relationships)
+      void_relationships.each do |relationship|
+        if relationship.notification.present? && relationship.notification.users.count == 0
+          relationship.notification.destroy
+        end
+      end
+    end
+    
+    notifications = relationships.map do |relationship|
+      relationship.notification.read = relationship.read
+      relationship.notification
+    end
+    
+    render status: :ok,
+    json: notifications,
+    each_serializer: NotificationSerializer
+  end
+  
 end

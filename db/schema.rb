@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007201138) do
+ActiveRecord::Schema.define(version: 20151008073815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,21 @@ ActiveRecord::Schema.define(version: 20151007201138) do
   add_index "joined_communities", ["normalized_name"], name: "index_joined_communities_on_normalized_name", using: :btree
   add_index "joined_communities", ["user_id"], name: "index_joined_communities_on_user_id", using: :btree
 
+  create_table "notifications", force: true do |t|
+    t.integer  "post_id"
+    t.integer  "user_id",    null: false
+    t.integer  "reply_id"
+    t.text     "kind",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["post_id", "user_id"], name: "index_notifications_on_post_id_and_user_id", unique: true, using: :btree
+  add_index "notifications", ["post_id"], name: "index_notifications_on_post_id", using: :btree
+  add_index "notifications", ["reply_id", "user_id"], name: "index_notifications_on_reply_id_and_user_id", unique: true, using: :btree
+  add_index "notifications", ["reply_id"], name: "index_notifications_on_reply_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+
   create_table "posts", force: true do |t|
     t.uuid     "external_id",                 null: false
     t.text     "title"
@@ -95,6 +110,17 @@ ActiveRecord::Schema.define(version: 20151007201138) do
   add_index "replies", ["external_id"], name: "index_replies_on_external_id", unique: true, using: :btree
   add_index "replies", ["post_id"], name: "index_replies_on_post_id", using: :btree
   add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
+
+  create_table "user_notifications", force: true do |t|
+    t.integer  "user_id",                         null: false
+    t.integer  "notification_id",                 null: false
+    t.boolean  "read",            default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_notifications", ["notification_id"], name: "index_user_notifications_on_notification_id", using: :btree
+  add_index "user_notifications", ["user_id"], name: "index_user_notifications_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
