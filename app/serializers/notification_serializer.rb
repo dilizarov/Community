@@ -24,6 +24,6 @@ class NotificationSerializer < ActiveModel::Serializer
     data
   end
   
-  belongs_to :post
-  belongs_to :reply
+  has_one :post
+  has_one :reply
 end
