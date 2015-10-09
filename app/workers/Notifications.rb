@@ -59,7 +59,7 @@ class Notifications
       end
     end
     
-    summary = "#{username_used} posted in #{notification.post.community}"
+    summary = "#{username_used} posted in &#{notification.post.community}"
     
     ios_data = {
       alert: summary,
@@ -110,7 +110,7 @@ class Notifications
       end
     end
     
-    summary = "#{username_used} likes your post in #{notification.post.community}"
+    summary = "#{username_used} likes your post in &#{notification.post.community}"
     
     ios_data = {
       alert: summary,
@@ -165,7 +165,7 @@ class Notifications
       end
     end
     
-    summary = "#{username_used} replied to a post in #{notification.reply.post.community}"
+    summary = "#{username_used} replied to a post in &#{notification.reply.post.community}"
     
     ios_data = {
       alert: summary,
