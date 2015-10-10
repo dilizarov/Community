@@ -12,7 +12,7 @@ class Api::V1::RepliesController < ApiController
       
       render status: 200,
              json: @replies,
-             meta: { serialized_post }
+             meta: serialized_post
     else
       render status: 200,
              json: @replies
