@@ -34,14 +34,12 @@ class Notifications
       user_badge_count = user.user_notifications.reject { |relation| relation.read }.count
       user_badge_count = 1 if user_badge_count.zero?
       
-      eligible_devices = []
-      
       if user.meta
         potentially_shared_devices = Device.where(token: user.devices.map(&:token))
         valid_tokens = potentially_shared_devices.group_by(&:token).delete_if { |key, value| value.count > 1 }.keys
-        eligible_devices << user.devices.select { |device| valid_tokens.include? device.token }
+        eligible_devices = user.devices.select { |device| valid_tokens.include? device.token }
       else
-        eligible_devices << user.devices.to_a
+        eligible_devices = user.devices.to_a
       end
       
       eligible_devices.each do |device|
@@ -157,15 +155,13 @@ class Notifications
       
       user_badge_count = user.user_notifications.reject { |relation| relation.read }.count
       user_badge_count = 1 if user_badge_count.zero?
-      
-      eligible_devices = []
-      
+            
       if user.meta
         potentially_shared_devices = Device.where(token: user.devices.map(&:token))
         valid_tokens = potentially_shared_devices.group_by(&:token).delete_if { |key, value| value.count > 1 }.keys
-        eligible_devices << user.devices.select { |device| valid_tokens.include? device.token }
+        eligible_devices = user.devices.select { |device| valid_tokens.include? device.token }
       else
-        eligible_devices << user.devices.to_a
+        eligible_devices = user.devices.to_a
       end
       
       eligible_devices.each do |device|
