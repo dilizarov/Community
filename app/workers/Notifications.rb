@@ -7,6 +7,7 @@ class Notifications
   def perform(notification_id)
     
     notification = Notification.includes(:post, :user, :reply).find(notification_id)
+    
     case notification.kind
     when "post_created"
       send_post_created_notification(notification)
@@ -22,19 +23,32 @@ class Notifications
   def send_post_created_notification(notification)
     return unless notification.post.present?
     
-    users = notification.users.includes(:devices).to_a
+    users = notification.users.includes(:devices, :user_notifications).to_a
 
     devices = []
+    badge_counts = {}
     
     users.each do |user|
       next if user.id == notification.user_id
+      
+      user_badge_count = user.user_notifications.reject { |relation| relation.read }.count
+      user_badge_count = 1 if user_badge_count.zero?
+      
+      eligible_devices = []
+      
       if user.meta
         potentially_shared_devices = Device.where(token: user.devices.map(&:token))
         valid_tokens = potentially_shared_devices.group_by(&:token).delete_if { |key, value| value.count > 1 }.keys
-        devices << user.devices.select { |device| valid_tokens.include? device.token }
+        eligible_devices << user.devices.select { |device| valid_tokens.include? device.token }
       else
-        devices << user.devices.to_a
+        eligible_devices << user.devices.to_a
       end
+      
+      eligible_devices.each do |device|
+        badge_counts[device.token] = user_badge_count
+      end
+      
+      devices << eligible_devices
     end
     
     devices.flatten!
@@ -64,10 +78,11 @@ class Notifications
     ios_data = {
       alert: summary,
       sound: "default",
-      other: { notification_type: notification.kind, post_id: notification.post.external_id }
+      other: { notification_type: notification.kind, post_id: notification.post.external_id, community: notification.post.community }
     }
     
     notifications = ios_destinations.map do |ios_dest|
+      ios_data[:badge] = badge_counts[ios_dest]
       APNS::Notification.new(ios_dest, ios_data)
     end
     
@@ -79,6 +94,9 @@ class Notifications
     notification.post.nil? || notification.post.user_id == notification.user_id
     
     devices = notification.post.user.devices.to_a
+    
+    badge_count = UserNotification.where(user_id: notification.post.user_id, read: false).count
+    badge_count = 1 if badge_count.zero?
     
     # If the user is meta, we need to ensure that no other user is currently on that device
     if notification.post.user.meta
@@ -113,9 +131,10 @@ class Notifications
     summary = "#{username_used} likes your post in &#{notification.post.community}"
     
     ios_data = {
+      badge: badge_count,
       alert: summary,
       sound: "default",
-      other: { notification_type: notification.kind, post_id: notification.post.external_id }
+      other: { notification_type: notification.kind, post_id: notification.post.external_id, community: notification.post.community }
     }
     
     notifications = ios_destinations.map do |ios_dest|
@@ -128,19 +147,32 @@ class Notifications
   def send_reply_created_notification(notification)
     return unless notification.reply.present?
     
-    users = notification.users.includes(:devices).to_a
+    users = notification.users.includes(:devices, :user_notifications).to_a
 
     devices = []
+    badge_counts = {}
     
     users.each do |user|
       next if user.id == notification.user_id
+      
+      user_badge_count = user.user_notifications.reject { |relation| relation.read }.count
+      user_badge_count = 1 if user_badge_count.zero?
+      
+      eligible_devices = []
+      
       if user.meta
         potentially_shared_devices = Device.where(token: user.devices.map(&:token))
         valid_tokens = potentially_shared_devices.group_by(&:token).delete_if { |key, value| value.count > 1 }.keys
-        devices << user.devices.select { |device| valid_tokens.include? device.token }
+        eligible_devices << user.devices.select { |device| valid_tokens.include? device.token }
       else
-        devices << user.devices.to_a
+        eligible_devices << user.devices.to_a
       end
+      
+      eligible_devices.each do |device|
+        badge_counts[device.token] = user_badge_count
+      end
+      
+      devices << eligible_devices
     end
     
     devices.flatten!
@@ -170,10 +202,11 @@ class Notifications
     ios_data = {
       alert: summary,
       sound: "default",
-      other: { notification_type: notification.kind, post_id: notification.reply.post.external_id, reply_id: notification.reply.external_id }
+      other: { notification_type: notification.kind, post_id: notification.reply.post.external_id, reply_id: notification.reply.external_id, community: notification.reply.post.community }
     }
     
     notifications = ios_destinations.map do |ios_dest|
+      ios_data[:badge] = badge_counts[ios_dest]
       APNS::Notification.new(ios_dest, ios_data)
     end
     
@@ -184,6 +217,9 @@ class Notifications
     return if notification.reply.nil? || notification.reply.user_id == notification.user_id
     
     devices = notification.reply.user.devices.to_a
+    
+    badge_count = UserNotification.where(user_id: notification.reply.user_id, read: false).count
+    badge_count = 1 if badge_count.zero?
     
     # If the user is meta, we need to ensure that no other user is currently on that device
     if notification.reply.user.meta
@@ -218,9 +254,10 @@ class Notifications
     summary = "#{username_used} likes your reply"
     
     ios_data = {
+      badge: badge_count,
       alert: summary,
       sound: "default",
-      other: { notification_type: notification.kind, reply_id: notification.reply.external_id, post_id: notification.reply.post.external_id }
+      other: { notification_type: notification.kind, reply_id: notification.reply.external_id, post_id: notification.reply.post.external_id, community: notification.reply.post.community }
     }
     
     notifications = ios_destinations.map do |ios_dest|

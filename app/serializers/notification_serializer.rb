@@ -3,7 +3,6 @@ class NotificationSerializer < ActiveModel::Serializer
   
   def attributes
     data = super
-    data[:read] = object.read unless object.read.nil?
     
     data[:user] = { external_id: object.user.external_id, avatar_url: object.user.avatar.url, username: object.user.username }
     

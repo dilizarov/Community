@@ -7,8 +7,16 @@ class Api::V1::RepliesController < ApiController
     
     current_user.mark_liked_replies!(@replies)
     
-    render status: 200,
-           json: @replies
+    if params[:include_post]
+      serialized_post = PostSerializer.new(@post).as_json
+      
+      render status: 200,
+             json: @replies,
+             meta: { serialized_post }
+    else
+      render status: 200,
+             json: @replies
+    end    
   end
   
   def create

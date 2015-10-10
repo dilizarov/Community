@@ -40,12 +40,13 @@ class Api::V1::UsersController < ApiController
   def notifications
     relationships = current_user.
                     user_notifications.
-                    includes(notification: [{post: {user: :communities}}, {reply: [:post, {user: :communities}]}, {user: :communities}]).
-                    to_a
+                    includes(notification: [{post: {user: :communities}}, {reply: [:post, {user: :communities}]}, {user: :communities}])
+    
+    relationships.update_all(read: true)
     
     max = 10
     
-    if relationships.count > max
+    if relationships.to_a.count > max
       relationships, void_relationships = relationships[0..max-1], relationships[max..-1]
       UserNotification.destroy(void_relationships)
       void_relationships.each do |relationship|
@@ -53,11 +54,6 @@ class Api::V1::UsersController < ApiController
           relationship.notification.destroy
         end
       end
-    end
-    
-    notifications = relationships.map do |relationship|
-      relationship.notification.read = relationship.read
-      relationship.notification
     end
     
     render status: :ok,
