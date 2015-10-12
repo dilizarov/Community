@@ -56,9 +56,12 @@ class Api::V1::UsersController < ApiController
       end
     end
     
+    actual_notifications = relationships.map(&:notification)
+        
     render status: :ok,
-    json: notifications,
-    each_serializer: NotificationSerializer
+    json: actual_notifications,
+    each_serializer: NotificationSerializer,
+    root: "notifications"
   end
   
 end

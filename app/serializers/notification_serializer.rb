@@ -8,6 +8,7 @@ class NotificationSerializer < ActiveModel::Serializer
     
     community_name = object.post.present? ? object.post.community : object.reply.post.community
     data[:post_id] = object.post.present? ? object.post.external_id : object.reply.post.external_id
+    
     #object.user.communities is cached from an eager load
     relationship = object.user.communities.select { |community| community.normalized_name == community_name }.first
     
