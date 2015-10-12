@@ -32,7 +32,7 @@ Rails.application.routes.draw do
         end
       end
             
-      resources :users, param: :user_id do
+      resources :users, param: :user_id, only: [] do
         member do
           post :profile_pic, action: :upload_profile_pic
           post :meta_username, action: :request_another_meta_username
