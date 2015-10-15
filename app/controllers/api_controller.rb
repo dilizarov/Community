@@ -14,7 +14,7 @@ class ApiController < ApplicationController
   
   respond_to :json
   
-  #before_action :authenticate_api_key!
+  before_action :authenticate_api_key!
   before_action :ensure_current_user!
   
   def authenticate_api_key!
