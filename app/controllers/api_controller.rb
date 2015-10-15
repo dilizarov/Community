@@ -18,7 +18,7 @@ class ApiController < ApplicationController
   before_action :ensure_current_user!
   
   def authenticate_api_key!
-    unless params[:api_key] == ENV["ANDROID_API_KEY"] || params[:api_key] == ENV["IOS_API_KEY"]
+    unless params[:api_key] == ENV["IOS_API_KEY"]
       render status: :unauthorized,
              json: { error: "Invalid API key" }
     end

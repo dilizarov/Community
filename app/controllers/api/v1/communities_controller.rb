@@ -13,11 +13,14 @@ class Api::V1::CommunitiesController < ApiController
   end
   
   def create
-    relationship = JoinedCommunity.new(name: params[:community], user_id: current_user.id)
+    @relationship = JoinedCommunity.new(name: params[:community], user_id: current_user.id)
     
     begin
-      if relationship.save
-        head :no_content
+      if @relationship.save
+        render status: :ok,
+        json: @relationship,
+        root: "community",
+        serializer: CommunitySerializer
       else
         head :unprocessable_entity
       end
