@@ -42,7 +42,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
         end
     rescue ActiveRecord::RecordNotUnique
       render status: :unprocessable_entity,
-      json: { errors: [ "Username is already taken"] }
+      json: { errors: [ "Username or email is already taken"] }
     end
   end
   

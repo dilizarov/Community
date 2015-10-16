@@ -112,6 +112,18 @@ class User < ActiveRecord::Base
     end        
   end
   
+  def send_password_reset_email!
+    
+    begin
+      user.reset_password_token = SecureRandom.uuid
+      user.save
+    rescue ActiveRecord::RecordNotUnique
+      retry
+    end  
+    
+    ResetPasswordEmail.perform_async(self.id)
+  end
+  
   private
   
   def ensure_non_meta_username_for_account

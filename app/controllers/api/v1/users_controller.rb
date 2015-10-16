@@ -64,4 +64,11 @@ class Api::V1::UsersController < ApiController
     root: "notifications"
   end
   
+  def forgot_password
+    @user = User.find_by!(email: params[:email])
+    
+    @user.send_password_reset_email!
+    
+    head status: :no_content
+  end
 end
