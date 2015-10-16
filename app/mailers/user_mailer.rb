@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "password@get.community"
+  default from: "Community <password@get.community>"
   
   def reset_password(user)
     @user = user
