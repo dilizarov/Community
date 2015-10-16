@@ -115,8 +115,8 @@ class User < ActiveRecord::Base
   def send_password_reset_email!
     
     begin
-      user.reset_password_token = SecureRandom.uuid
-      user.save
+      self.reset_password_token = SecureRandom.uuid
+      self.save
     rescue ActiveRecord::RecordNotUnique
       retry
     end  
