@@ -1,5 +1,7 @@
 class Api::V1::UsersController < ApiController
   
+  skip_before_filter :ensure_current_user!, only: [:forgot_password]
+  
   def upload_profile_pic
     current_user.avatar = params[:avatar]
     
@@ -65,10 +67,15 @@ class Api::V1::UsersController < ApiController
   end
   
   def forgot_password
-    @user = User.find_by!(email: params[:email])
+    @user = User.find_by(email: params[:email])
     
-    @user.send_password_reset_email!
+    if @user
+      @user.send_password_reset_email!
     
-    head status: :no_content
+      head status: :no_content
+    else
+      render status: :not_found,
+      json: { error: "No user found with this email"}
+    end
   end
 end
