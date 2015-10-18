@@ -44,8 +44,7 @@ class Api::V1::PostsController < ApiController
       @post.notifications.create(user_id: current_user.id, kind: "post_liked") rescue ActiveRecord::RecordNotUnique
     end
     
-    render status: :ok,
-    json: {}
+    head :ok
   end
 
   private
