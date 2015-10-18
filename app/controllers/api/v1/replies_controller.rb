@@ -48,14 +48,16 @@ class Api::V1::RepliesController < ApiController
       @reply.notifications.create(user_id: current_user.id, kind: "reply_liked") rescue ActiveRecord::RecordNotUnique
     end
     
-    head :ok
+    render status: :ok,
+    json: {}
   end
   
   def destroy
     @reply = Reply.find_by!(external_id: params[:id])
     
     @reply.destroy
-    head :ok
+    render status: :ok,
+    json: {}
   end
   
   private

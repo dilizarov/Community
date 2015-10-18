@@ -72,7 +72,8 @@ class Api::V1::UsersController < ApiController
     if @user
       @user.send_password_reset_email!
     
-      head :ok
+      render status: :ok,
+      json: {}
     else
       render status: :not_found,
       json: { error: "No user found with this email"}
