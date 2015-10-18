@@ -70,7 +70,7 @@ class Api::V1::SessionsController < ApiController
   def destroy
     current_user.logout!
     
-    head :no_content
+    render status: :no_content
   end
   
 end
