@@ -11,7 +11,8 @@ class Notification < ActiveRecord::Base
   
   validates :kind, presence: true, inclusion: { in: ["post_liked", "post_created", "reply_liked", "reply_created"], case_sensitive: false }
   
-  after_create :mark_users_who_get_sent_notification, :send_notification
+  after_create :mark_users_who_get_sent_notification
+  after_commit :send_notification, on: :create
   
   private
   
