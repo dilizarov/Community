@@ -206,6 +206,8 @@ class Notifications
       APNS::Notification.new(ios_dest, ios_data)
     end
     
+    p notifications
+    
     APNS.send_notifications(notifications) unless ios_destinations.empty?
   end
   
