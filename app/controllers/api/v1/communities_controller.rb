@@ -22,12 +22,10 @@ class Api::V1::CommunitiesController < ApiController
         root: "community",
         serializer: CommunitySerializer
       else
-        render status: :unprocessable_entity,
-        json: {}
+        head :unprocessable_entity
       end
     rescue ActiveRecord::RecordNotUnique
-      render status: :unprocessable_entity,
-      json: {}
+      head :unprocessable_entity
     end    
   end
   
@@ -90,8 +88,7 @@ class Api::V1::CommunitiesController < ApiController
   def destroy
     JoinedCommunity.find_by!(normalized_name: normalized_name, user_id: current_user.id).destroy
     
-    render status: :ok,
-    json: {}
+    head :ok
   end
   
   private

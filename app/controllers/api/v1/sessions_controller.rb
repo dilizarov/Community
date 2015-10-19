@@ -35,8 +35,7 @@ class Api::V1::SessionsController < ApiController
   
   def sync_device
     unless params[:device].present?
-      render status: :ok,
-      json: {}
+      head :ok
     end
     
     current_user.sync_device!(params[:device])
@@ -65,15 +64,13 @@ class Api::V1::SessionsController < ApiController
       end
     end
     
-    render status: :ok,
-    json: {}
+    head :ok
   end
   
   def destroy
     current_user.logout!
     
-    render status: :ok,
-    json: {}
+    head :ok
   end
   
 end
