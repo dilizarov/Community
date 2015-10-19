@@ -126,7 +126,7 @@ class Notifications
       end
     end
     
-    summary = "#{username_used} likes your post in &#{notification.post.community}"
+    summary = "#{username_used} likes your post"
     
     ios_data = {
       badge: badge_count,
@@ -193,12 +193,12 @@ class Notifications
       end
     end
     
-    summary = "#{username_used} replied to a post in &#{notification.reply.post.community}"
+    summary = "#{username_used} replied to a post"
     
     ios_data = {
       alert: summary,
       sound: "default",
-      other: { notification_type: notification.kind, post_id: notification.reply.post.external_id, reply_id: notification.reply.external_id, community: notification.reply.post.community }
+      other: { notification_type: notification.kind, post_id: notification.reply.post.external_id, community: notification.reply.post.community }
     }
     
     notifications = ios_destinations.map do |ios_dest|
@@ -255,7 +255,7 @@ class Notifications
       badge: badge_count,
       alert: summary,
       sound: "default",
-      other: { notification_type: notification.kind, reply_id: notification.reply.external_id, post_id: notification.reply.post.external_id, community: notification.reply.post.community }
+      other: { notification_type: notification.kind, post_id: notification.reply.post.external_id, community: notification.reply.post.community }
     }
     
     notifications = ios_destinations.map do |ios_dest|
