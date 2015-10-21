@@ -73,6 +73,8 @@ class Notifications
     
     summary = "#{username_used} posted in &#{notification.post.community}"
     
+    if summary.length 
+    
     ios_data = {
       alert: summary,
       sound: "default",
