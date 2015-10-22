@@ -88,7 +88,7 @@ class Api::V1::CommunitiesController < ApiController
   def destroy
     JoinedCommunity.find_by!(normalized_name: normalized_name, user_id: current_user.id).destroy
     
-    head :ok
+    head :no_content
   end
   
   private
