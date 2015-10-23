@@ -1,11 +1,103 @@
 var Post = React.createClass({
+  
+  getInitialState: function() {
+    return { repliesLoaded: false };
+  },
+    
+  likePost: function() {
+    alert("woo")
+  },
       
-  render: function() {
+  showReplies: function(e) {
+    e.stopPropagation();
+    
+    var auth_token = "s2erStcfxkL-mifC2jsc";
+    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
+    
+    $.ajax({
+      method: "GET",
+      url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json?auth_token=" + auth_token +"&user_id=" + user_id,
+      success: function(res) {
+        if (this.isMounted()) {
+          this.setState({
+            replies: res.replies,
+            repliesLoaded: true,
+            error: false
+          });
+        }
+      }.bind(this),
+      error: function(err) {
+        if (this.isMounted()) {
+          this.setState({
+            loaded: true,
+            error: true
+            //Do some error data stuff as well.
+          });
+        }
+      }.bind(this)
+    })
+  },
+  
+  renderPostInitial: function() {
     return(
       <li>
-        {this.props.post.body}
+        <div className="post-username">{this.props.post.user.username}</div>
+        <div className="post-title">{this.props.post.title}</div>
+        <div className="post-body">{this.props.post.body}</div>
+        <div className="post-likes">likes {this.props.post.likes}</div>
+        <div className="post-replies-count">replies {this.props.post.replies_count}</div>
+        <div className="post-like" onClick={this.likePost} >{this.props.post.liked.toString()}</div>
+        <a className="button tiny radius" onClick={this.showReplies}>
+          Replies
+        </a>
       </li>
     );
+  },
+  
+  renderPostNoReplies: function() {
+    return(
+      <li>
+        <div className="post-username">{this.props.post.user.username}</div>
+        <div className="post-title">{this.props.post.title}</div>
+        <div className="post-body">{this.props.post.body}</div>
+        <div className="post-likes">likes {this.props.post.likes}</div>
+        <div className="post-replies-count">replies {this.props.post.replies_count}</div>
+        <div className="post-like" onClick={this.likePost} >{this.props.post.liked.toString()}</div>
+        <div className="post-noreplies">No Replies</div>
+      </li>
+    );
+  },
+  
+  renderPostReplies: function() {
+    return(
+      <li>
+        <div className="post-username">{this.props.post.user.username}</div>
+        <div className="post-title">{this.props.post.title}</div>
+        <div className="post-body">{this.props.post.body}</div>
+        <div className="post-likes">likes {this.props.post.likes}</div>
+        <div className="post-replies-count">replies {this.props.post.replies_count}</div>
+        <div className="post-like" onClick={this.likePost} >{this.props.post.liked.toString()}</div>
+        <ul className="post-replies no-bullet">
+          {this.state.replies.map(function(reply) {
+            return <Reply key={reply.external_id}
+                          reply={reply} />
+            
+          }.bind(this))}
+        </ul>
+      </li>
+    );
+  },
+      
+  render: function() {
+    if (this.state.repliesLoaded === false) {
+      return this.renderPostInitial();
+    } else if (this.state.error === true) {
+      return this.renderPostInitial();
+    } else if (this.state.replies.length === 0) {
+      return this.renderPostNoReplies();
+    } else {
+      return this.renderPostReplies();
+    }
   }
   
 });
