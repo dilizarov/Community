@@ -72,9 +72,7 @@ class Notifications
     end
     
     summary = "#{username_used} posted in &#{notification.post.community}"
-    
-    if summary.length 
-    
+      
     ios_data = {
       alert: summary,
       sound: "default",
@@ -207,9 +205,7 @@ class Notifications
       ios_data[:badge] = badge_counts[ios_dest]
       APNS::Notification.new(ios_dest, ios_data)
     end
-    
-    p notifications
-    
+        
     APNS.send_notifications(notifications) unless ios_destinations.empty?
   end
   

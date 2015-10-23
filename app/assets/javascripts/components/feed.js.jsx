@@ -32,6 +32,15 @@ var Feed = React.createClass({
     })
   },
   
+  likePost: function(post) {
+    var index = this.state.posts.indexOf(post);
+    post.liked = !post.liked
+
+    var posts = React.addons.update(this.state.posts, { $splice: [[index, 1, post]] });
+    
+    this.setState({ posts: posts });
+  },
+  
   renderLoading: function() {
     return (
       <div className='feed'>
@@ -62,7 +71,8 @@ var Feed = React.createClass({
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
             return <Post key={post.external_id} 
-                              post={post} />
+                              post={post}
+                              toggleLikePost={this.likePost} />
                         
           }.bind(this))}
         </ul>

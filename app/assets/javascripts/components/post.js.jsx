@@ -4,19 +4,38 @@ var Post = React.createClass({
     return { repliesLoaded: false };
   },
     
-  likePost: function() {
-    alert("woo")
+  likePost: function() {    
+    var auth_token = "s2erStcfxkL-mifC2jsc";
+    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
+    
+    var data = { auth_token: auth_token, user_id: user_id }
+    
+    if (this.props.post.liked === true) {
+      data.dislike = true
+    }
+    
+    this.props.toggleLikePost(this.props.post)
+    
+    $.ajax({
+      method: "GET",
+      url: "/api/v1/posts/" + this.props.post.external_id + "/like.json",
+      data: data,
+      error: function(err) {
+        if (this.isMounted()) {
+           this.props.toggleLikePost(this.props.post)
+        }
+      }.bind(this)
+    })
   },
       
   showReplies: function(e) {
-    e.stopPropagation();
-    
     var auth_token = "s2erStcfxkL-mifC2jsc";
     var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
     $.ajax({
       method: "GET",
-      url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json?auth_token=" + auth_token +"&user_id=" + user_id,
+      url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
+      data: {auth_token: auth_token, user_id: user_id},
       success: function(res) {
         if (this.isMounted()) {
           this.setState({
