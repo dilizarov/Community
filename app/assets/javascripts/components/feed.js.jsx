@@ -34,8 +34,27 @@ var Feed = React.createClass({
   
   likePost: function(post) {
     var index = this.state.posts.indexOf(post);
-    post.liked = !post.liked
-
+    if (post.liked === true) {
+      post.liked = false
+      // Should always hold, but might as well check.
+      if (post.likes > 0) {
+        post.likes -= 1        
+      }
+    } else {
+      post.liked = true
+      post.likes += 1
+    }
+    
+    var posts = React.addons.update(this.state.posts, { $splice: [[index, 1, post]] });
+    
+    this.setState({ posts: posts });
+  },
+  
+  updateRepliesCount: function(post, count) {
+    var index = this.state.posts.indexOf(post);
+    
+    post.replies_count = count
+    
     var posts = React.addons.update(this.state.posts, { $splice: [[index, 1, post]] });
     
     this.setState({ posts: posts });
@@ -71,8 +90,9 @@ var Feed = React.createClass({
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
             return <Post key={post.external_id} 
-                              post={post}
-                              toggleLikePost={this.likePost} />
+                         post={post}
+                         toggleLikePost={this.likePost}
+                         handleUpdateRepliesCount={this.updateRepliesCount} />
                         
           }.bind(this))}
         </ul>

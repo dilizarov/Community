@@ -43,6 +43,8 @@ var Post = React.createClass({
             repliesLoaded: true,
             error: false
           });
+          
+          this.props.handleUpdateRepliesCount(this.props.post, res.replies.length);
         }
       }.bind(this),
       error: function(err) {
