@@ -1,7 +1,7 @@
 var Feed = React.createClass({
   
   getInitialState: function() {
-    return { loaded: false };
+    return { loaded: false, posts: [] };
   },
   
   componentDidMount: function() {
@@ -30,6 +30,37 @@ var Feed = React.createClass({
         }
       }.bind(this)
     })
+    
+    $('#write-post-cfb').keyup(function (e) {
+      if (e.keyCode === 13) {
+        var auth_token = "s2erStcfxkL-mifC2jsc";
+        var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
+    
+        var data = { auth_token: auth_token, user_id: user_id }
+        
+        data.post = { body: $('#write-post-cfb').val(), community: "cfb" }
+        
+        $.ajax({
+          method: "POST",
+          url: "/api/v1/posts.json",
+          data: data,
+          success: function(res) {
+            if (this.isMounted()) {
+            
+              this.setState({
+                posts: [res.post].concat(this.state.posts)
+              });
+
+            }
+          }.bind(this),
+          error: function(err) {
+            if (this.isMounted()) {
+              alert('blergh that failed.')
+            }
+          }.bind(this)
+        })
+      }
+    }.bind(this));
   },
   
   likePost: function(post) {
@@ -66,6 +97,9 @@ var Feed = React.createClass({
         <h2 className='title'>
           LOADING
         </h2>
+        <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
+          <input type="text" id='write-post-cfb'>what</input>
+        </div>
       </div>
     )
   },
@@ -76,6 +110,9 @@ var Feed = React.createClass({
         <h2 className='title'>
           Feed
         </h2>
+        <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
+          <input type="text" id='write-post-cfb'>what</input>
+        </div>
         You haven not joined any communities
       </div>
     )
@@ -87,6 +124,9 @@ var Feed = React.createClass({
         <h2 className='title'>
           Feed
         </h2>
+        <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
+          <input type="text" id='write-post-cfb'>what</input>
+        </div>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
             return <Post key={post.external_id} 
@@ -101,6 +141,7 @@ var Feed = React.createClass({
   },
   
   render: function() {
+
     if (this.state.loaded === false) {
       return this.renderLoading();
     } else if (this.state.error === true) {

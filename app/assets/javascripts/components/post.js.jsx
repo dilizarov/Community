@@ -127,6 +127,7 @@ var Post = React.createClass({
   },
   
   renderPostReplies: function() {
+    
     return(
       <li>
         <div className="post-username">{this.props.post.user.username}</div>

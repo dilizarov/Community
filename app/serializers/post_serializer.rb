@@ -3,7 +3,8 @@ class PostSerializer < ActiveModel::Serializer
   
   def attributes
     data = super
-    data[:liked] = object.liked unless object.liked.nil?
+    
+    data[:liked] = !!object.liked
     
     data[:user] = { external_id: object.user.external_id, avatar_url: object.user.avatar.url, username: object.user.username }
     
