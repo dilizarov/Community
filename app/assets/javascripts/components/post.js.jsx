@@ -1,7 +1,40 @@
 var Post = React.createClass({
   
   getInitialState: function() {
-    return { repliesLoaded: false };
+    return { repliesLoaded: false, replies: [] };
+  },
+  
+  componentDidMount: function() {
+    $('#write-reply-' + this.props.post.external_id).keyup(function (e) {
+      if (e.keyCode === 13) {
+        var auth_token = "s2erStcfxkL-mifC2jsc";
+        var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
+    
+        var data = { auth_token: auth_token, user_id: user_id }
+        
+        data.reply = { body: $('#write-reply-' + this.props.post.external_id).val() }
+        
+        $.ajax({
+          method: "POST",
+          url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
+          data: data,
+          success: function(res) {
+            if (this.isMounted()) {
+            
+              this.setState({
+                replies: this.state.replies.concat([res.reply])
+              });
+
+            }
+          }.bind(this),
+          error: function(err) {
+            if (this.isMounted()) {
+              alert('blergh that failed.')
+            }
+          }.bind(this)
+        })
+      }
+    }.bind(this));
   },
     
   likePost: function() {    
@@ -38,6 +71,7 @@ var Post = React.createClass({
       data: {auth_token: auth_token, user_id: user_id},
       success: function(res) {
         if (this.isMounted()) {
+          
           this.setState({
             replies: res.replies,
             repliesLoaded: true,
@@ -71,6 +105,9 @@ var Post = React.createClass({
         <a className="button tiny radius" onClick={this.showReplies}>
           Replies
         </a>
+        <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
+          <input type="text" id={'write-reply-' + this.props.post.external_id}>what</input>
+        </div>
       </li>
     );
   },
@@ -105,6 +142,9 @@ var Post = React.createClass({
             
           }.bind(this))}
         </ul>
+        <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
+          <input type="text" id={'write-reply-' + this.props.post.external_id}>what</input>
+        </div>
       </li>
     );
   },
