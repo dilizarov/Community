@@ -42,7 +42,7 @@ var Community = React.createClass({
   },
   
   goToCommunity: function(e) {
-    alert(this.props.community.name)
+    this.props.handleSelectCommunity(this.props.community.name)
   },
   
   render: function() {

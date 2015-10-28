@@ -8,37 +8,14 @@ var Feed = React.createClass({
     var auth_token = "s2erStcfxkL-mifC2jsc";
     var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
-    $.ajax({
-      method: "GET",
-      url: "/api/v1/posts.json?auth_token=" + auth_token +"&user_id=" + user_id + "&community=cfb",
-      success: function(res) {
-        if (this.isMounted()) {
-          this.setState({
-            posts: res.posts,
-            loaded: true,
-            error: false
-          });
-        }
-      }.bind(this),
-      error: function(err) {
-        if (this.isMounted()) {
-          this.setState({
-            loaded: true,
-            error: true
-            //Do some error data stuff as well.
-          });
-        }
-      }.bind(this)
-    })
-    
-    $('#write-post-cfb').keyup(function (e) {
+    $('#write-post').keyup(function (e) {
       if (e.keyCode === 13) {
         var auth_token = "s2erStcfxkL-mifC2jsc";
         var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
         var data = { auth_token: auth_token, user_id: user_id }
         
-        data.post = { body: $('#write-post-cfb').val(), community: "cfb" }
+        data.post = { body: $('#write-post').val(), community: this.props.communityNameNormalized }
         
         $.ajax({
           method: "POST",
@@ -61,6 +38,39 @@ var Feed = React.createClass({
         })
       }
     }.bind(this));
+  },
+  
+  componentWillReceiveProps: function(props) {
+    
+    var auth_token = "s2erStcfxkL-mifC2jsc";
+    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
+    
+    this.setState({
+      loaded: false
+    })
+    
+    $.ajax({
+      method: "GET",
+      url: "/api/v1/posts.json?auth_token=" + auth_token +"&user_id=" + user_id + "&community=" + props.communityNameNormalized,
+      success: function(res) {
+        if (this.isMounted()) {
+          this.setState({
+            posts: res.posts,
+            loaded: true,
+            error: false
+          });
+        }
+      }.bind(this),
+      error: function(err) {
+        if (this.isMounted()) {
+          this.setState({
+            loaded: true,
+            error: true
+            //Do some error data stuff as well.
+          });
+        }
+      }.bind(this)
+    })
   },
   
   likePost: function(post) {
@@ -98,7 +108,7 @@ var Feed = React.createClass({
           LOADING
         </h2>
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post-cfb'>what</input>
+          <input type="text" id='write-post'>what</input>
         </div>
       </div>
     )
@@ -108,10 +118,10 @@ var Feed = React.createClass({
     return (
       <div className='feed'>
         <h2 className='title'>
-          Feed
+          {this.props.communityName}
         </h2>
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post-cfb'>what</input>
+          <input type="text" id='write-post'>what</input>
         </div>
         You haven not joined any communities
       </div>
@@ -122,10 +132,10 @@ var Feed = React.createClass({
     return (
       <div className='feed'>
         <h2 className='title'>
-          Feed
+          {this.props.communityName}
         </h2>
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post-cfb'>what</input>
+          <input type="text" id='write-post'>what</input>
         </div>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
