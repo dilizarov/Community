@@ -16,6 +16,10 @@ var App = React.createClass({
     })
   },
   
+  notificationPressed: function() {
+    alert('well, damn')
+  },
+  
   render: function() {
     return (
       <div className='app'>
@@ -26,9 +30,12 @@ var App = React.createClass({
           <div className='small-4 column'>
             <Communities handleSelectCommunity={this.selectCommunity} />
           </div>
-          <div className='small-8 column'>
+          <div className='small-7 column'>
             <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
                   communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}/>
+          </div>
+          <div className='small-1 column'>
+            <Notifications handleNotificationPressed={this.notificationPressed} />
           </div>
         </div>
       </div>

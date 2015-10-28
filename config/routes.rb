@@ -41,6 +41,7 @@ Rails.application.routes.draw do
           post :profile_pic, action: :upload_profile_pic
           post :meta_username, action: :request_another_meta_username
           get :notifications
+          get :notifications_count
         end
       end
     end

@@ -1,5 +1,7 @@
 class Notification < ActiveRecord::Base
   
+  attr_accessor :read
+  
   belongs_to :post
   belongs_to :reply
   belongs_to :user

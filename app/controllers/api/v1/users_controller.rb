@@ -66,6 +66,13 @@ class Api::V1::UsersController < ApiController
     root: "notifications"
   end
   
+  def notifications_count
+    count = current_user.user_notifications.where(read: false).count
+    
+    render status: :ok,
+    json: { notifications_count: count }
+  end
+  
   def forgot_password
     @user = User.find_by(email: params[:email])
     
