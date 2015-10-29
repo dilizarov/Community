@@ -27,6 +27,10 @@ var App = React.createClass({
     });
   },
   
+  addCommunityToList: function(community) {
+    this.refs.communitiesList.addCommunity(community)
+  },
+  
   render: function() {
     
     var mainContent;
@@ -36,7 +40,8 @@ var App = React.createClass({
     } else {
       mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
                   communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}
-                  forceReceiveProps={this.state.forceReceiveProps}/>
+                  forceReceiveProps={this.state.forceReceiveProps}
+                  handleAddCommunityToList={this.addCommunityToList}/>
     }
     
     return (
@@ -46,7 +51,7 @@ var App = React.createClass({
         </div>
         <div className='row'>
           <div className='small-4 column'>
-            <Communities handleSelectCommunity={this.selectCommunity} />
+            <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
           </div>
           <div className='small-7 column'>
             {mainContent}
