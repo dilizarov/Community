@@ -3,7 +3,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       communitySelected: false,
-      notificationPresent: false
+      notificationPresent: false,
+      triggerWelcome: Session.needsMetaAccount()
     };
   },
   
@@ -31,37 +32,58 @@ var App = React.createClass({
     this.refs.communitiesList.addCommunity(community)
   },
   
+  goToApp: function() {
+    this.setState({
+      triggerWelcome: false
+    })
+  },
+  
+  sessionChanged: function() {
+    
+  },
+  
   render: function() {
     
-    var mainContent;
-    
-    if (this.state.notificationPresent === true) {
-      mainContent = <NotificationPost postId={this.state.notification.post_id} />
+    if (this.state.triggerWelcome === true) {
+      return (
+        <div className="welcome">
+          <Welcome segueToApp={this.goToApp} />
+        </div>
+      )
     } else {
-      mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
-                  communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}
-                  forceReceiveProps={this.state.forceReceiveProps}
-                  handleAddCommunityToList={this.addCommunityToList}/>
-    }
+      var mainContent;
     
-    return (
-      <div className='app'>
-        <div className='row'>
-          <Search handleSelectCommunity={this.selectCommunity} />
+      if (this.state.notificationPresent === true) {
+        mainContent = <NotificationPost postId={this.state.notification.post_id} />
+      } else {
+        mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
+                    communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}
+                    forceReceiveProps={this.state.forceReceiveProps}
+                    handleAddCommunityToList={this.addCommunityToList}/>
+      }
+    
+      return (
+        <div className='app'>
+          <div className='row'>
+            <SessionHandler handleSessionChange={this.sessionChanged} />
+          </div>
+          <div className='row'>
+            <Search handleSelectCommunity={this.selectCommunity} />
+          </div>
+          <div className='row'>
+            <div className='small-4 column'>
+              <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
+            </div>
+            <div className='small-7 column'>
+              {mainContent}
+            </div>
+            <div className='small-1 column'>
+              <Notifications handleNotificationPressed={this.notificationPressed} />
+            </div>
+          </div>
         </div>
-        <div className='row'>
-          <div className='small-4 column'>
-            <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
-          </div>
-          <div className='small-7 column'>
-            {mainContent}
-          </div>
-          <div className='small-1 column'>
-            <Notifications handleNotificationPressed={this.notificationPressed} />
-          </div>
-        </div>
-      </div>
-    )
+      )
+    }
   }
   
 })
