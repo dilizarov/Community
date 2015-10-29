@@ -2,7 +2,8 @@ var Notifications = React.createClass({
   
   getInitialState: function() {
     return {
-      notificationsCount: 0
+      notificationsCount: 0,
+      notifications: []
     };
   },
   
@@ -53,11 +54,48 @@ var Notifications = React.createClass({
     })
   },
   
+  getNotifications: function() {
+    var auth_token = "s2erStcfxkL-mifC2jsc";
+    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
+    
+    var data = { auth_token: auth_token }
+        
+    $.ajax({
+      method: "GET",
+      url: "/api/v1/users/" + user_id + "/notifications.json",
+      data: data,
+      success: function(res) {
+        if (this.isMounted()) {
+        
+          this.setState({
+            notifications: res.notifications,
+            notificationsCount: 0
+          });
+
+        }
+      }.bind(this),
+      error: function(err) {
+        if (this.isMounted()) {
+          alert('FAILURE SUCKS')
+        }
+      }.bind(this)
+    })
+  },
+  
   render: function() {
       
     return (
       <div className="notifications">
-        {'COUNT: ' + this.state.notificationsCount}
+        <div className="notifications-count" onClick={this.getNotifications}>
+          {'COUNT: ' + this.state.notificationsCount}
+        </div>
+        <ul className="no-bullet notifications-list">
+          {this.state.notifications.map(function(notification) {
+            return <Notification notification={notification}
+                                 handleNotificationPressed={this.props.handleNotificationPressed} />
+                        
+          }.bind(this))}
+        </ul>
       </div>
     )
   }

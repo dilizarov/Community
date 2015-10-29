@@ -2,7 +2,8 @@ var App = React.createClass({
   
   getInitialState: function() {
     return {
-      communitySelected: false
+      communitySelected: false,
+      notificationPresent: false
     };
   },
   
@@ -12,15 +13,32 @@ var App = React.createClass({
     this.setState({
       communitySelected: true,
       communityName: community,
-      communityNameNormalized: normalizedCommunity
+      communityNameNormalized: normalizedCommunity,
+      notificationPresent: false,
+      forceReceiveProps: true
     })
   },
   
-  notificationPressed: function() {
-    alert('well, damn')
+  notificationPressed: function(notification) {
+    this.setState({
+      communitySelected: false,
+      notificationPresent: true,
+      notification: notification
+    });
   },
   
   render: function() {
+    
+    var mainContent;
+    
+    if (this.state.notificationPresent === true) {
+      mainContent = <NotificationPost postId={this.state.notification.post_id} />
+    } else {
+      mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
+                  communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}
+                  forceReceiveProps={this.state.forceReceiveProps}/>
+    }
+    
     return (
       <div className='app'>
         <div className='row'>
@@ -31,8 +49,7 @@ var App = React.createClass({
             <Communities handleSelectCommunity={this.selectCommunity} />
           </div>
           <div className='small-7 column'>
-            <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
-                  communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}/>
+            {mainContent}
           </div>
           <div className='small-1 column'>
             <Notifications handleNotificationPressed={this.notificationPressed} />

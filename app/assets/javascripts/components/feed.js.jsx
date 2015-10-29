@@ -38,10 +38,13 @@ var Feed = React.createClass({
         })
       }
     }.bind(this));
+    
+    if (this.props.forceReceiveProps === true) {
+      this.componentWillReceiveProps(this.props);
+    }
   },
   
   componentWillReceiveProps: function(props) {
-    
     var auth_token = "s2erStcfxkL-mifC2jsc";
     var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
