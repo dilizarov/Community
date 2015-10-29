@@ -2,7 +2,8 @@ var SessionHandler = React.createClass({
   
   getInitialState: function() {
     return {
-      login: true
+      login: true,
+      forgotPassword: false
     }
   },
   
@@ -17,7 +18,9 @@ var SessionHandler = React.createClass({
   },
   
   toggleForgotPassword: function() {
-    console.log("wut")
+    this.setState({
+      forgotPassword: !this.state.forgotPassword
+    })
   },
   
   render: function() {
@@ -32,7 +35,13 @@ var SessionHandler = React.createClass({
       
       var accessAccount;
       
-      if (this.state.login === true) {
+      if (this.state.forgotPassword === true) {
+        accessAccount = (<div className="forgot-password">
+                   <input type="text" placeholder="EMAIL" />
+                    <a className="button tiny radius">Send Email</a>
+                    <a className="button tiny radius" onClick={this.toggleForgotPassword}>Whoops</a>
+                 </div>)
+      } else if (this.state.login === true) {
         accessAccount = (<div className="login">
                    <input type="text" placeholder="EMAIL" />
                    <input type="text" placeholder="PASSWORDO" />
