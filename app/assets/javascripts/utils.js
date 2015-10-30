@@ -29,7 +29,7 @@ var Session = {
       return localStorage.getItem(this.keys.metaUserId)
     }
   },
-  
+    
   userInfo: function() {
     if (this.loggedIn()) {
       return {
@@ -74,12 +74,25 @@ var Session = {
     localStorage.setItem(this.keys.metaUsername, username)
   },
   
-  login: function() {
+  login: function(username, email, userId, authToken, createdAt, avatarUrl) {
+    localStorage.setItem(this.keys.accountUsername, username)
+    localStorage.setItem(this.keys.accountEmail, email)
+    localStorage.setItem(this.keys.accountUserId, userId)
+    localStorage.setItem(this.keys.accountAuthToken, authToken)
+    localStorage.setItem(this.keys.accountCreatedAt, createdAt)
     
+    if (avatarUrl !== null) {
+      localStorage.setItem(this.keys.accountAvatarUrl, avatarUrl)      
+    }
   },
   
   logout: function() {
-    
+    localStorage.removeItem(this.keys.accountAuthToken)
+    localStorage.removeItem(this.keys.accountUsername)
+    localStorage.removeItem(this.keys.accountEmail)
+    localStorage.removeItem(this.keys.accountUserId)
+    localStorage.removeItem(this.keys.accountCreatedAt)
+    localStorage.removeItem(this.keys.accountAvatarUrl)
   }
   
 }

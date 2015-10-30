@@ -6,13 +6,10 @@ var NotificationPost = React.createClass({
   
   componentDidMount: function() {
     
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
-
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + this.props.postId + "/replies.json",
-      data: {auth_token: auth_token, user_id: user_id, include_post: true},
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), include_post: true },
       success: function(res) {
         if (this.isMounted()) {
       
@@ -42,10 +39,8 @@ var NotificationPost = React.createClass({
   setupWriteReplyHandler: function() {
     $('#write-reply-' + this.props.postId).keyup(function (e) {
        if (e.keyCode === 13) {
-         var auth_token = "s2erStcfxkL-mifC2jsc";
-         var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
 
-         var data = { auth_token: auth_token, user_id: user_id }
+         var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
          data.reply = { body: $('#write-reply-' + this.props.postId).val() }
 
@@ -78,10 +73,8 @@ var NotificationPost = React.createClass({
   },
   
   likePost: function() {    
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
-    var data = { auth_token: auth_token, user_id: user_id }
+    var data = { auth_token: Session.authToken(), user_id: Session.userId() }
     
     if (this.state.post.liked === true) {
       data.dislike = true

@@ -14,11 +14,8 @@ var Community = React.createClass({
     e.stopPropagation();
 
     this.props.handleRemoveCommunity(this.props.community);
-    
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
-    
-    var data = { community: this.props.community.normalized_name, auth_token: auth_token, user_id: user_id };
+        
+    var data = { community: this.props.community.normalized_name, auth_token: Session.authToken(), user_id: Session.userId() };
     
     $.ajax({
       method: 'DELETE',

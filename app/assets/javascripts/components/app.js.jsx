@@ -39,7 +39,7 @@ var App = React.createClass({
   },
   
   sessionChanged: function() {
-    
+    window.location.reload()
   },
   
   render: function() {

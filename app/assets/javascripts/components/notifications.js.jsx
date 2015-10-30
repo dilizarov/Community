@@ -27,14 +27,12 @@ var Notifications = React.createClass({
   },
   
   poll: function() {
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
-    var data = { auth_token: auth_token }
-        
+    var data = { auth_token: Session.authToken() }
+
     $.ajax({
       method: "GET",
-      url: "/api/v1/users/" + user_id + "/notifications_count.json",
+      url: "/api/v1/users/" + Session.userId() + "/notifications_count.json",
       data: data,
       timeout: 4 * 60 * 1000, // request has 4 minutes... ensures this is within 5 minute poll.
       success: function(res) {
@@ -55,14 +53,12 @@ var Notifications = React.createClass({
   },
   
   getNotifications: function() {
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
-    var data = { auth_token: auth_token }
+    var data = { auth_token: Session.authToken() }
         
     $.ajax({
       method: "GET",
-      url: "/api/v1/users/" + user_id + "/notifications.json",
+      url: "/api/v1/users/" + Session.userId() + "/notifications.json",
       data: data,
       success: function(res) {
         if (this.isMounted()) {

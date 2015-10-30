@@ -4,40 +4,7 @@ var Feed = React.createClass({
     return { loaded: false, posts: [], joined: null };
   },
   
-  componentDidMount: function() {
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
-    
-    $('#write-post').keyup(function (e) {
-      if (e.keyCode === 13) {
-        var auth_token = "s2erStcfxkL-mifC2jsc";
-        var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
-    
-        var data = { auth_token: auth_token, user_id: user_id }
-        
-        data.post = { body: $('#write-post').val(), community: this.props.communityNameNormalized }
-        
-        $.ajax({
-          method: "POST",
-          url: "/api/v1/posts.json",
-          data: data,
-          success: function(res) {
-            if (this.isMounted()) {
-            
-              this.setState({
-                posts: [res.post].concat(this.state.posts)
-              });
-
-            }
-          }.bind(this),
-          error: function(err) {
-            if (this.isMounted()) {
-              alert('blergh that failed.')
-            }
-          }.bind(this)
-        })
-      }
-    }.bind(this));
+  componentDidMount: function() {    
     
     if (this.props.forceReceiveProps === true) {
       this.componentWillReceiveProps(this.props);
@@ -45,16 +12,14 @@ var Feed = React.createClass({
   },
   
   componentWillReceiveProps: function(props) {
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
-    
     this.setState({
       loaded: false
     })
     
     $.ajax({
       method: "GET",
-      url: "/api/v1/posts.json?auth_token=" + auth_token +"&user_id=" + user_id + "&community=" + props.communityNameNormalized,
+      url: "/api/v1/posts.json",
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: props.communityNameNormalized},
       success: function(res) {
         if (this.isMounted()) {
           this.setState({
@@ -78,7 +43,7 @@ var Feed = React.createClass({
     $.ajax({
       method: "GET",
       url: '/api/v1/communities/show.json',
-      data: { auth_token: auth_token, user_id: user_id, community: props.communityNameNormalized },
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: props.communityNameNormalized },
       success: function(res) {
         if (this.isMounted()) {
           this.setState({
@@ -91,6 +56,32 @@ var Feed = React.createClass({
           this.setState({
             joined: false
           })
+        }
+      }.bind(this)
+    })
+  },
+  
+  submitPost: function() {
+    var data = { auth_token: Session.authToken(), user_id: Session.userId() }
+  
+    data.post = { body: $('#write-post').val(), community: this.props.communityNameNormalized }
+  
+    $.ajax({
+      method: "POST",
+      url: "/api/v1/posts.json",
+      data: data,
+      success: function(res) {
+        if (this.isMounted()) {
+        
+          this.setState({
+            posts: [res.post].concat(this.state.posts)
+          });
+
+        }
+      }.bind(this),
+      error: function(err) {
+        if (this.isMounted()) {
+          alert('blergh that failed.')
         }
       }.bind(this)
     })
@@ -129,13 +120,11 @@ var Feed = React.createClass({
   },
   
   joinCommunity: function() {
-    var auth_token = "s2erStcfxkL-mifC2jsc";
-    var user_id = "6c08a62f-7971-4928-8d7d-cef07e2a675d";
     
     $.ajax({
       method: "POST",
       url: "api/v1/communities.json",
-      data: { auth_token: auth_token, user_id: user_id, community: this.props.communityNameNormalized },
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityNameNormalized },
       success: function(res) {
         this.setState({
           joined: true
@@ -157,6 +146,7 @@ var Feed = React.createClass({
         </h2>
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
           <input type="text" id='write-post'>what</input>
+          <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
       </div>
     )
@@ -170,6 +160,7 @@ var Feed = React.createClass({
         </h2>
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
           <input type="text" id='write-post'>what</input>
+          <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
         You haven not joined any communities
       </div>
@@ -194,7 +185,8 @@ var Feed = React.createClass({
         </h2>
         {join}
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post'>what</input>
+          <input type="text" id='write-post' placeholder="WRITE POST" />
+        <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
