@@ -42,6 +42,14 @@ var App = React.createClass({
     window.location.reload()
   },
   
+  changeProfilePic: function() {
+    $('#profile-pic-picker').click()
+  },
+  
+  cropImageUI: function() {
+    console.log("hell yeah")
+  },
+  
   render: function() {
     
     if (this.state.triggerWelcome === true) {
@@ -66,6 +74,8 @@ var App = React.createClass({
         <div className='app'>
           <div className='row'>
             <SessionHandler handleSessionChange={this.sessionChanged} />
+            <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
+            <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
           </div>
           <div className='row'>
             <Search handleSelectCommunity={this.selectCommunity} />
