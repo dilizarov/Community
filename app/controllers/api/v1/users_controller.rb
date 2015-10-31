@@ -7,11 +7,16 @@ class Api::V1::UsersController < ApiController
     
     if current_user.save
       render status: :ok,
-      json: { avatar: { url: current_user.avatar.url} }
+      json: { avatar: { url: current_user.avatar.url } }
     else
       render status: :unprocessable_entity,
       json: { errors: current_user.errors.full_messages }
     end
+  end
+  
+  def profile_pic
+    render status: :ok,
+    json: { avatar: { url: current_user.avatar.url } }
   end
   
   def request_another_meta_username

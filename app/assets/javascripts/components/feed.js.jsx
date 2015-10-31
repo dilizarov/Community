@@ -138,31 +138,48 @@ var Feed = React.createClass({
     })
   },
   
+  renderNoCommunity: function() {
+    return (
+      <div className='feed'>
+        <h2 className='title'>
+          No Community Selected
+        </h2>
+      </div>
+    )
+  },
+  
   renderLoading: function() {
     return (
       <div className='feed'>
         <h2 className='title'>
           LOADING
         </h2>
-        <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post'>what</input>
-          <a className="button tiny radius" onClick={this.submitPost}>Post</a>
-        </div>
       </div>
     )
   },
   
   renderEmpty: function() {
+    var join;
+    
+    if (this.state.joined === null) {
+      join = <a className='button tiny radius disabled'>Loading</a> 
+    } else if (this.state.joined === true) {
+      join = <a className='button tiny radius' onClick={this.showCommunitySettings}>Settings</a>
+    } else {
+      join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
+    }
+    
     return (
       <div className='feed'>
         <h2 className='title'>
           {this.props.communityName}
         </h2>
+        {join}
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
           <input type="text" id='write-post'>what</input>
           <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
-        You haven not joined any communities
+        You have not joined any communities
       </div>
     )
   },
@@ -203,9 +220,12 @@ var Feed = React.createClass({
   
   render: function() {
 
-    if (this.state.loaded === false) {
+    if (this.props.communityNameNormalized === '') {
+      return this.renderNoCommunity();
+    } else if (this.state.loaded === false) {
       return this.renderLoading();
     } else if (this.state.error === true) {
+      // I need an actual renderError(), but this suffices to take its place for now.
       return this.renderEmpty();
     } else if (this.state.posts.length === 0) {
       return this.renderEmpty();

@@ -1,9 +1,3 @@
-// Props expected:
-// name
-// normalizedName
-// username
-// avatar_url
-
 var Community = React.createClass({
   
   bringUpSettings: function(e) {

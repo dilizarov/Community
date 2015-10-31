@@ -93,6 +93,7 @@ var Communities = React.createClass({
     if (this.state.loaded === false) {
       return this.renderLoading();
     } else if (this.state.error === true) {
+      // I need a renderError(), but for now this suffices.
       return this.renderEmpty();
     } else if (this.state.communities.length === 0) {
       return this.renderEmpty();
