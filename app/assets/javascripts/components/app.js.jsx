@@ -47,7 +47,38 @@ var App = React.createClass({
   },
   
   cropImageUI: function() {
-    console.log("hell yeah")
+    
+    var input = $("#profile-pic-picker")[0]
+    
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function (e) {
+        $("#profile-pic").attr('src', e.target.result)
+        
+        $("#profile-pic").cropper({
+          aspectRatio: 1 / 1,
+          autoCropArea: 0.85
+        })
+        
+        $("#profile-pic").on('zoom.cropper', function (e) {
+          
+          console.log("wat")
+          var maxRatio = 5;
+          
+          var imageData = $(this).cropper('getImageData');
+          
+          var currentRatio = imageData.width / imageData.naturalWidth;
+          
+          if (e.ratio > 0 && currentRatio > maxRatio) {
+            e.preventDefault()
+          }
+          
+        })
+      }
+      
+      reader.readAsDataURL(input.files[0])
+    }
   },
   
   render: function() {
@@ -76,6 +107,7 @@ var App = React.createClass({
             <SessionHandler handleSessionChange={this.sessionChanged} />
             <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
             <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
+            <img id="profile-pic" src="#" />
           </div>
           <div className='row'>
             <Search handleSelectCommunity={this.selectCommunity} />
