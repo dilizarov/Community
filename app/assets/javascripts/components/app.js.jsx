@@ -4,12 +4,44 @@ var App = React.createClass({
     return {
       communitySelected: false,
       notificationPresent: false,
-      triggerWelcome: Session.needsMetaAccount()
+      triggerWelcome: Session.needsMetaAccount()    
     };
   },
   
+  componentDidMount: function() {
+    var communityParam = getUrlParameter("c")
+    
+    if (communityParam !== undefined && communityParam !== true) {
+      this.selectCommunity(communityParam)
+    }
+    
+    // Used to detect initial (useless) popstate.
+    // If history.state exists, assume browser isn't going to fire initial popstate.
+    var popped = ('state' in window.history && window.history.state !== null), initialURL = location.href;
+
+    $(window).bind('popstate', function (event) {
+      // Ignore inital popstate that some browsers fire on page load
+      var initialPop = !popped && location.href == initialURL
+      popped = true
+      if (initialPop) return;
+
+      var communityParam = getUrlParameter("c")
+    
+      if (communityParam !== undefined && communityParam !== true) {
+        this.selectCommunity(communityParam)
+      }
+    }.bind(this));
+  },
+  
   selectCommunity: function(community) {
-    var normalizedCommunity = $.trim(community.toLowerCase()).split(' ').join('_')
+    var normalizedCommunity = normalizeCommunity(community)
+    
+    if (history.pushState) {
+        var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?c=' + encodeURIComponent(normalizedCommunity);
+        if (window.location.href !== newUrl) {
+          window.history.pushState({ path: newUrl },'',newUrl);          
+        }
+    }
     
     this.setState({
       communitySelected: true,
@@ -95,10 +127,10 @@ var App = React.createClass({
       if (this.state.notificationPresent === true) {
         mainContent = <NotificationPost postId={this.state.notification.post_id} />
       } else {
-        mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : 'No Community'}
-                    communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : 'No Community'}
+        mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : ''}
+                    communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : ''}
                     forceReceiveProps={this.state.forceReceiveProps}
-                    handleAddCommunityToList={this.addCommunityToList}/>
+                    handleAddCommunityToList={this.addCommunityToList} />
       }
     
       return (
@@ -107,7 +139,7 @@ var App = React.createClass({
             <SessionHandler handleSessionChange={this.sessionChanged} />
             <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
             <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
-            <img id="profile-pic" src="#" />
+            <img id="profile-pic" />
           </div>
           <div className='row'>
             <Search handleSelectCommunity={this.selectCommunity} />
