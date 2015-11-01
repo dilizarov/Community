@@ -26,6 +26,9 @@ gem 'sidekiq', '~> 3.5'
 # Bulk imports
 gem 'activerecord-import', '~> 0.10'
 
+# Generate Fake Data
+gem 'faker', '~> 1.4.3'
+
 # Handles image uploading and storage
 gem 'carrierwave', '0.10.0'
 gem 'fog', '1.33.0'

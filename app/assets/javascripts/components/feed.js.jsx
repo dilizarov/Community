@@ -176,7 +176,7 @@ var Feed = React.createClass({
         </h2>
         {join}
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post'>what</input>
+          <input type="text" id='write-post' placeholder="Write a Post"/>
           <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
         You have not joined any communities

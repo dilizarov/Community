@@ -134,7 +134,7 @@ var NotificationPost = React.createClass({
           Replies
         </a>
         <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id={'write-reply-' + this.props.postId}>what</input>
+          <input type="text" id={'write-reply-' + this.props.postId} placeholder="Write a Reply" />
         </div>
       </div>
     );
@@ -172,7 +172,7 @@ var NotificationPost = React.createClass({
           }.bind(this))}
         </ul>
         <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id={'write-reply-' + this.props.postId}>what</input>
+          <input type="text" id={'write-reply-' + this.props.postId} placeholder="Write a Reply" />
         </div>
       </div>
     );

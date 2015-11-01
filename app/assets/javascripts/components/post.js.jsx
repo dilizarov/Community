@@ -100,7 +100,7 @@ var Post = React.createClass({
           Replies
         </a>
         <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id={'write-reply-' + this.props.post.external_id}>what</input>
+          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
         </div>
       </li>
     );
@@ -138,7 +138,7 @@ var Post = React.createClass({
           }.bind(this))}
         </ul>
         <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id={'write-reply-' + this.props.post.external_id}>what</input>
+          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
         </div>
       </li>
     );
