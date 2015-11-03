@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require react
 //= require react_ujs
+//= require_tree ./site
 //= require components
 //= require cropper
 //= require_tree .

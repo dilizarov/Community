@@ -95,7 +95,6 @@ var App = React.createClass({
         
         $("#profile-pic").on('zoom.cropper', function (e) {
           
-          console.log("wat")
           var maxRatio = 5;
           
           var imageData = $(this).cropper('getImageData');

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  root "site#root"
+  get 'reset_password' => 'site#reset_password'
+  
   namespace :api do
     namespace :v1 do
       devise_for :users, only: :registrations, path: '/registrations'
@@ -34,7 +37,8 @@ Rails.application.routes.draw do
             
       resources :users, param: :user_id, only: [] do
         collection do
-          post :forgot_password          
+          post :forgot_password
+          post :reset_password          
         end
         
         member do
@@ -47,7 +51,5 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  root "site#root"
 
 end

@@ -116,12 +116,20 @@ class User < ActiveRecord::Base
     
     begin
       self.reset_password_token = SecureRandom.uuid
+      self.reset_password_sent_at = Time.zone.now
       self.save
     rescue ActiveRecord::RecordNotUnique
       retry
     end  
     
     ResetPasswordEmail.perform_async(self.id)
+  end
+  
+  def reset_password!(password)
+    self.password = password
+    self.reset_password_token = nil
+    self.reset_password_sent_at = nil
+    self.save    
   end
   
   private

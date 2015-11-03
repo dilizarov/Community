@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApiController
   
-  skip_before_filter :ensure_current_user!, only: [:forgot_password]
+  skip_before_filter :ensure_current_user!, only: [:forgot_password, :reset_password]
   
   def upload_profile_pic
     current_user.avatar = params[:avatar]
@@ -88,6 +88,23 @@ class Api::V1::UsersController < ApiController
     else
       render status: :not_found,
       json: { error: "No user found with this email"}
+    end
+  end
+  
+  def reset_password
+    @user = User.find_by(email: params[:email])
+    
+    if @user &&
+       Devise.secure_compare(@user.reset_password_token, params[:reset_token]) &&
+       @user.reset_password_sent_at > 24.hours.ago &&
+       params[:password]
+       
+      @user.reset_password!(params[:password])
+      
+      head :no_content
+    else
+      render status: :unprocessable_entity,
+      json: { error: "We didn't receive all the information we need. Try requesting another email and follow the instructions once more." }
     end
   end
 end
