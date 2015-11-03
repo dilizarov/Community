@@ -19,6 +19,8 @@
 //= require_tree ./site
 //= require components
 //= require cropper
+//= require spin
+//= require react-loader
 //= require_tree .
 
 $(function(){ $(document).foundation(); });

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bundler', '>= 1.8.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
@@ -39,13 +40,19 @@ gem "mini_magick", '4.2.10'
 gem 'foundation-rails', '5.5.3.2'
 
 # React to help modularize and build front-end 
-gem 'react-rails', '1.3.3'
+gem 'react-rails', '1.4.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
+# Front-end Javascript libraries not including Foundation & React
+source 'https://rails-assets.org' do
+  gem 'rails-assets-cropper', '1.0.0' 
+  gem 'rails-assets-react-loader', '2.0.0'
+end
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

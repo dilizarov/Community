@@ -151,9 +151,11 @@ var Feed = React.createClass({
   renderLoading: function() {
     return (
       <div className='feed'>
-        <h2 className='title'>
-          LOADING
-        </h2>
+      <Loader loaded={false} lines={13} length={20} width={10} radius={30}
+          corners={1} rotate={0} direction={1} color="#056A85" speed={1}
+          trail={60} shadow={false} hwaccel={false} className="spinner"
+          zIndex={2e9} top="50%" left="50%" scale={1.00} /> //Need to work out the particulars, but at least it works.
+      
       </div>
     )
   },
@@ -200,7 +202,7 @@ var Feed = React.createClass({
         <h2 className='title'>
           {this.props.communityName}
         </h2>
-        {join}
+        {join}            
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
           <input type="text" id='write-post' placeholder="WRITE POST" />
         <a className="button tiny radius" onClick={this.submitPost}>Post</a>
