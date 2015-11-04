@@ -4,9 +4,9 @@
 #
 # Two others can also be used and messed around with.
 
-user = User.create(email: "test@example.com", password: "test", username: Faker::Internet.user_name)
-user_one = User.create(email: "test2@example.com", password: "test2", username: Faker::Internet.user_name)
-user_two = User.create(email: "test3@example.com", password: "test3", username: Faker::Internet.user_name)
+user = User.create_with(password: "test", username: Faker::Internet.user_name).find_or_create_by(email: "test@example.com")
+user_one = User.create_with(password: "test2", username: Faker::Internet.user_name).find_or_create_by(email: "test2@example.com")
+user_two = User.create_with(password: "test3", username: Faker::Internet.user_name).find_or_create_by(email: "test3@example.com")
 
 users = [user, user_one, user_two]
 
