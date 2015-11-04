@@ -149,13 +149,22 @@ var Feed = React.createClass({
   },
   
   renderLoading: function() {
+    
+    var opts = {
+      lines: 13,
+      length: 20,
+      radius: 15,
+      width: 5,
+      color: '#056A85',
+      trail: 60,
+      scale: 1.00,
+      top: '50%',
+      left: '50%'
+    }
+    
     return (
       <div className='feed'>
-      <Loader loaded={false} lines={13} length={20} width={10} radius={30}
-          corners={1} rotate={0} direction={1} color="#056A85" speed={1}
-          trail={60} shadow={false} hwaccel={false} className="spinner"
-          zIndex={2e9} top="50%" left="50%" scale={1.00} /> //Need to work out the particulars, but at least it works.
-      
+        <Loader loaded={false} className="spiner" options={opts} />
       </div>
     )
   },
