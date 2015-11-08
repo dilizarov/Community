@@ -186,7 +186,7 @@ var Feed = React.createClass({
           {this.props.communityName}
         </h2>
         {join}
-        <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
+        <div className="post-to-community">
           <input type="text" id='write-post' placeholder="Write a Post"/>
           <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
@@ -212,7 +212,7 @@ var Feed = React.createClass({
           {this.props.communityName}
         </h2>
         {join}
-        <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
+        <div className="post-to-community">
           <input type="text" id='write-post' placeholder="Write a new post" />
         <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>

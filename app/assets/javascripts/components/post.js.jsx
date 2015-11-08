@@ -89,16 +89,16 @@ var Post = React.createClass({
 
   renderPostInitial: function() {
     return(
-      <li>
+      <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
-        <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
-        <span className="post-replies-count">{this.props.post.replies_count} replies </span>
-        <a className="button tiny radius" onClick={this.showReplies}>
-          Replies
-        </a>
-        <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
+        <div className="post-stats">
+          <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
+          <span className="post-replies-count">{this.props.post.replies_count} replies </span>
+        </div>
+        <a className="view-replies" onClick={this.showReplies}>View replies</a>
+        <div className="reply-to-post">
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
         </div>
       </li>
@@ -134,7 +134,7 @@ var Post = React.createClass({
 
           }.bind(this))}
         </ul>
-        <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
+        <div className="reply-to-post">
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
         </div>
       </li>

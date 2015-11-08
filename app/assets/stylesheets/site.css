@@ -40,23 +40,16 @@
 
 
 /* Feed styling */
-.feed-wrapper {
-
+.feed-wrapper .post {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
 .feed-wrapper .title {
-  font-size: 24px;
+  font-size: 28px;
   letter-spacing: 1px;
   font-weight: bold;
   text-transform: capitalize;
-}
-
-.feed-wrapper a.button-tiny {
-  background-color: white;
-  color: rgba(0,0,0,0.6);
-  border: 1px solid #60b0c6;
-  padding: 5px 10px;
-  letter-spacing: 1px;
 }
 
 .feed-wrapper .post-username {
@@ -66,7 +59,7 @@
 }
 
 .feed-wrapper .post-title {
-  font-size: 20px;
+  font-size: 22px;
   letter-spacing: 0.5px;
   font-weight: bold;
   color: #333;
@@ -76,4 +69,25 @@
 .feed-wrapper .post-body {
   font-family: 'Lora', serif;
   margin-bottom: 5px;
+}
+
+.feed-wrapper .post-stats, .view-replies {
+  margin-bottom: 5px;
+}
+
+.feed-wrapper .post-liked, .post-not-liked, .post-replies-count, .view-replies {
+  font-size: 13px;
+}
+
+.feed-wrapper .post-not-liked {
+  color: #CCC;
+  cursor: pointer;
+}
+
+.feed-wrapper .post-liked {
+  cursor: pointer;
+}
+
+.feed-wrapper .view-replies {
+  display: block;
 }
