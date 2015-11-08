@@ -1,24 +1,24 @@
 var Post = React.createClass({
-  
+
   getInitialState: function() {
     return { repliesLoaded: false, replies: [] };
   },
-  
+
   componentDidMount: function() {
     $('#write-reply-' + this.props.post.external_id).keyup(function (e) {
       if (e.keyCode === 13) {
-    
+
         var data = { auth_token: Session.authToken(), user_id: Session.userId() }
-        
+
         data.reply = { body: $('#write-reply-' + this.props.post.external_id).val() }
-        
+
         $.ajax({
           method: "POST",
           url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
           data: data,
           success: function(res) {
             if (this.isMounted()) {
-            
+
               this.setState({
                 replies: this.state.replies.concat([res.reply])
               });
@@ -34,17 +34,17 @@ var Post = React.createClass({
       }
     }.bind(this));
   },
-    
-  likePost: function() {    
-    
+
+  likePost: function() {
+
     var data = { auth_token: Session.authToken(), user_id: Session.userId() }
-    
+
     if (this.props.post.liked === true) {
       data.dislike = true
     }
-    
+
     this.props.toggleLikePost(this.props.post)
-    
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + this.props.post.external_id + "/like.json",
@@ -56,22 +56,22 @@ var Post = React.createClass({
       }.bind(this)
     })
   },
-      
+
   showReplies: function(e) {
-    
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
       data: { auth_token: Session.authToken(), user_id: Session.userId() },
       success: function(res) {
         if (this.isMounted()) {
-          
+
           this.setState({
             replies: res.replies,
             repliesLoaded: true,
             error: false
           });
-          
+
           this.props.handleUpdateRepliesCount(this.props.post, res.replies.length);
         }
       }.bind(this),
@@ -86,16 +86,15 @@ var Post = React.createClass({
       }.bind(this)
     })
   },
-  
+
   renderPostInitial: function() {
     return(
       <li>
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
-        <div className="post-likes">likes {this.props.post.likes}</div>
-        <div className="post-replies-count">replies {this.props.post.replies_count}</div>
-        <div className="post-like" onClick={this.likePost} >{this.props.post.liked.toString()}</div>
+        <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
+        <span className="post-replies-count">{this.props.post.replies_count} replies </span>
         <a className="button tiny radius" onClick={this.showReplies}>
           Replies
         </a>
@@ -105,36 +104,34 @@ var Post = React.createClass({
       </li>
     );
   },
-  
+
   renderPostNoReplies: function() {
     return(
       <li>
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
-        <div className="post-likes">likes {this.props.post.likes}</div>
-        <div className="post-replies-count">replies {this.props.post.replies_count}</div>
-        <div className="post-like" onClick={this.likePost} >{this.props.post.liked.toString()}</div>
+        <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
+        <span className="post-replies-count">{this.props.post.replies_count} replies </span>
         <div className="post-noreplies">No Replies</div>
       </li>
     );
   },
-  
+
   renderPostReplies: function() {
-    
+
     return(
       <li>
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
-        <div className="post-likes">likes {this.props.post.likes}</div>
-        <div className="post-replies-count">replies {this.props.post.replies_count}</div>
-        <div className="post-like" onClick={this.likePost} >{this.props.post.liked.toString()}</div>
+        <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost} >{this.props.post.likes} likes </span>
+        <span className="post-replies-count">{this.props.post.replies_count} replies </span>
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
             return <Reply key={reply.external_id}
                           reply={reply} />
-            
+
           }.bind(this))}
         </ul>
         <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
@@ -143,7 +140,7 @@ var Post = React.createClass({
       </li>
     );
   },
-      
+
   render: function() {
     if (this.state.repliesLoaded === false) {
       return this.renderPostInitial();
@@ -155,5 +152,5 @@ var Post = React.createClass({
       return this.renderPostReplies();
     }
   }
-  
+
 });
