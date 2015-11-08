@@ -1,20 +1,20 @@
 var App = React.createClass({
-  
+
   getInitialState: function() {
     return {
       communitySelected: false,
       notificationPresent: false,
-      triggerWelcome: Session.needsMetaAccount()    
+      triggerWelcome: Session.needsMetaAccount()
     };
   },
-  
+
   componentDidMount: function() {
     var communityParam = getUrlParameter("c")
-    
+
     if (communityParam !== undefined && communityParam !== true) {
       this.selectCommunity(communityParam)
     }
-    
+
     // Used to detect initial (useless) popstate.
     // If history.state exists, assume browser isn't going to fire initial popstate.
     var popped = ('state' in window.history && window.history.state !== null), initialURL = location.href;
@@ -26,23 +26,23 @@ var App = React.createClass({
       if (initialPop) return;
 
       var communityParam = getUrlParameter("c")
-    
+
       if (communityParam !== undefined && communityParam !== true) {
         this.selectCommunity(communityParam)
       }
     }.bind(this));
   },
-  
+
   selectCommunity: function(community) {
     var normalizedCommunity = normalizeCommunity(community)
-    
+
     if (history.pushState) {
         var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?c=' + encodeURIComponent(normalizedCommunity);
         if (window.location.href !== newUrl) {
-          window.history.pushState({ path: newUrl },'',newUrl);          
+          window.history.pushState({ path: newUrl },'',newUrl);
         }
     }
-    
+
     this.setState({
       communitySelected: true,
       communityName: community,
@@ -51,7 +51,7 @@ var App = React.createClass({
       forceReceiveProps: true
     })
   },
-  
+
   notificationPressed: function(notification) {
     this.setState({
       communitySelected: false,
@@ -59,61 +59,61 @@ var App = React.createClass({
       notification: notification
     });
   },
-  
+
   addCommunityToList: function(community) {
     this.refs.communitiesList.addCommunity(community)
   },
-  
+
   goToApp: function() {
     this.setState({
       triggerWelcome: false
     })
   },
-  
+
   sessionChanged: function() {
     window.location.reload()
   },
-  
+
   changeProfilePic: function() {
     $('#profile-pic-picker').click()
   },
-  
+
   cropImageUI: function() {
-    
+
     var input = $("#profile-pic-picker")[0]
-    
+
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-      
+
       reader.onload = function (e) {
         $("#profile-pic").attr('src', e.target.result)
-        
+
         $("#profile-pic").cropper({
           aspectRatio: 1 / 1,
           autoCropArea: 0.85
         })
-        
+
         $("#profile-pic").on('zoom.cropper', function (e) {
-          
+
           var maxRatio = 5;
-          
+
           var imageData = $(this).cropper('getImageData');
-          
+
           var currentRatio = imageData.width / imageData.naturalWidth;
-          
+
           if (e.ratio > 0 && currentRatio > maxRatio) {
             e.preventDefault()
           }
-          
+
         })
       }
-      
+
       reader.readAsDataURL(input.files[0])
     }
   },
-  
+
   render: function() {
-    
+
     if (this.state.triggerWelcome === true) {
       return (
         <div className="welcome">
@@ -122,7 +122,7 @@ var App = React.createClass({
       )
     } else {
       var mainContent;
-    
+
       if (this.state.notificationPresent === true) {
         mainContent = <NotificationPost postId={this.state.notification.post_id} />
       } else {
@@ -131,7 +131,7 @@ var App = React.createClass({
                     forceReceiveProps={this.state.forceReceiveProps}
                     handleAddCommunityToList={this.addCommunityToList} />
       }
-    
+
       return (
         <div className='app'>
           <div className='row'>
@@ -144,19 +144,20 @@ var App = React.createClass({
             <Search handleSelectCommunity={this.selectCommunity} />
           </div>
           <div className='row'>
-            <div className='small-4 column'>
-              <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
-            </div>
-            <div className='small-7 column'>
+            <div className='small-8 column feed-wrapper'>
               {mainContent}
             </div>
-            <div className='small-1 column'>
-              <Notifications handleNotificationPressed={this.notificationPressed} />
+            <div className='small-4 column communities-wrapper'>
+              <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
             </div>
+
+            {/*<div className='small-1 column'>
+              <Notifications handleNotificationPressed={this.notificationPressed} />
+            </div>*/}
           </div>
         </div>
       )
     }
   }
-  
+
 })

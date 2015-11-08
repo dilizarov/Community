@@ -2,3 +2,47 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+/* #056a85 #36879d #69a5b5 */
+
+
+/* Communities List styling */
+.communities-wrapper {
+  background-color: #FAFAFA;
+  color: #333;
+}
+
+.communities-wrapper .title {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.communities-wrapper li {
+  margin-bottom: 5px;
+}
+
+.communities-wrapper .community-name {
+  font-size: 13px;
+  color: #60b0c6;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.communities-wrapper a.button.tiny {
+  margin: 0 0 0 10px;
+  padding: 5px 10px;
+  background-color: white;
+  color: rgba(0,0,0,0.6);
+  border: 1px solid #F0F0F0;
+}
+
+
+/* Feed styling */
+.feed-wrapper .title {
+  font-size: 24px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: capitalize;
+}

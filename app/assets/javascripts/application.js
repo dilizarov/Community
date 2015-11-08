@@ -16,11 +16,11 @@
 //= require turbolinks
 //= require react
 //= require react_ujs
-//= require_tree ./site
 //= require components
 //= require cropper
 //= require spin
 //= require react-loader
 //= require_tree .
+//= require_tree ./site
 
 $(function(){ $(document).foundation(); });

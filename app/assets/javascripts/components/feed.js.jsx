@@ -1,21 +1,21 @@
 var Feed = React.createClass({
-  
+
   getInitialState: function() {
     return { loaded: false, posts: [], joined: null };
   },
-  
-  componentDidMount: function() {    
-    
+
+  componentDidMount: function() {
+
     if (this.props.forceReceiveProps === true) {
       this.componentWillReceiveProps(this.props);
     }
   },
-  
+
   componentWillReceiveProps: function(props) {
     this.setState({
       loaded: false
     })
-    
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts.json",
@@ -39,7 +39,7 @@ var Feed = React.createClass({
         }
       }.bind(this)
     })
-    
+
     $.ajax({
       method: "GET",
       url: '/api/v1/communities/show.json',
@@ -60,19 +60,19 @@ var Feed = React.createClass({
       }.bind(this)
     })
   },
-  
+
   submitPost: function() {
     var data = { auth_token: Session.authToken(), user_id: Session.userId() }
-  
+
     data.post = { body: $('#write-post').val(), community: this.props.communityNameNormalized }
-  
+
     $.ajax({
       method: "POST",
       url: "/api/v1/posts.json",
       data: data,
       success: function(res) {
         if (this.isMounted()) {
-        
+
           this.setState({
             posts: [res.post].concat(this.state.posts)
           });
@@ -86,41 +86,41 @@ var Feed = React.createClass({
       }.bind(this)
     })
   },
-  
+
   likePost: function(post) {
     var index = this.state.posts.indexOf(post);
     if (post.liked === true) {
       post.liked = false
       // Should always hold, but might as well check.
       if (post.likes > 0) {
-        post.likes -= 1        
+        post.likes -= 1
       }
     } else {
       post.liked = true
       post.likes += 1
     }
-    
+
     var posts = React.addons.update(this.state.posts, { $splice: [[index, 1, post]] });
-    
+
     this.setState({ posts: posts });
   },
-  
+
   updateRepliesCount: function(post, count) {
     var index = this.state.posts.indexOf(post);
-    
+
     post.replies_count = count
-    
+
     var posts = React.addons.update(this.state.posts, { $splice: [[index, 1, post]] });
-    
+
     this.setState({ posts: posts });
   },
-  
+
   showCommunitySettings: function() {
     console.log('settings')
   },
-  
+
   joinCommunity: function() {
-    
+
     $.ajax({
       method: "POST",
       url: "api/v1/communities.json",
@@ -129,15 +129,15 @@ var Feed = React.createClass({
         this.setState({
           joined: true
         })
-        
+
         this.props.handleAddCommunityToList(res.community)
-      }.bind(this), 
+      }.bind(this),
       error: function(err) {
         alert('fuckkkk')
       }.bind(this)
     })
   },
-  
+
   renderNoCommunity: function() {
     return (
       <div className='feed'>
@@ -147,9 +147,9 @@ var Feed = React.createClass({
       </div>
     )
   },
-  
+
   renderLoading: function() {
-    
+
     var opts = {
       lines: 13,
       length: 20,
@@ -161,25 +161,25 @@ var Feed = React.createClass({
       top: '50%',
       left: '50%'
     }
-    
+
     return (
       <div className='feed'>
         <Loader loaded={false} className="spiner" options={opts} />
       </div>
     )
   },
-  
+
   renderEmpty: function() {
     var join;
-    
+
     if (this.state.joined === null) {
-      join = <a className='button tiny radius disabled'>Loading</a> 
+      join = <a className='button tiny radius disabled'>Loading</a>
     } else if (this.state.joined === true) {
       join = <a className='button tiny radius' onClick={this.showCommunitySettings}>Settings</a>
     } else {
       join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
     }
-    
+
     return (
       <div className='feed'>
         <h2 className='title'>
@@ -194,41 +194,41 @@ var Feed = React.createClass({
       </div>
     )
   },
-  
+
   renderFeed: function() {
     var join;
-    
+
     if (this.state.joined === null) {
-      join = <a className='button tiny radius disabled'>Loading</a> 
+      join = <a className='button tiny radius disabled'>Loading</a>
     } else if (this.state.joined === true) {
       join = <a className='button tiny radius' onClick={this.showCommunitySettings}>Settings</a>
     } else {
       join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
     }
-    
+
     return (
       <div className='feed'>
         <h2 className='title'>
           {this.props.communityName}
         </h2>
-        {join}            
+        {join}
         <div className="post-to-community" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id='write-post' placeholder="WRITE POST" />
+          <input type="text" id='write-post' placeholder="Write a new post" />
         <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
-            return <Post key={post.external_id} 
+            return <Post key={post.external_id}
                          post={post}
                          toggleLikePost={this.likePost}
                          handleUpdateRepliesCount={this.updateRepliesCount} />
-                        
+
           }.bind(this))}
         </ul>
       </div>
     )
   },
-  
+
   render: function() {
 
     if (this.props.communityNameNormalized === '') {
@@ -244,5 +244,5 @@ var Feed = React.createClass({
       return this.renderFeed();
     }
   }
-  
+
 });

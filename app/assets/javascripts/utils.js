@@ -1,4 +1,4 @@
-var getUrlParameter = function(sParam) {
+getUrlParameter = function(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
@@ -13,12 +13,12 @@ var getUrlParameter = function(sParam) {
     }
 }
 
-var normalizeCommunity = function(community) {
+normalizeCommunity = function(community) {
     return $.trim(community.toLowerCase()).split(' ').join('_')
 }
 
-var Session = {
-  
+Session = {
+
   keys: {
     metaUserId: "meta_user_id",
     metaAuthToken: "meta_auth_token",
@@ -32,7 +32,7 @@ var Session = {
     accountCreatedAt: "created_at",
     accountAvatarUrl: "avatar_url"
   },
-    
+
   authToken: function() {
     if (this.loggedIn()) {
       return localStorage.getItem(this.keys.accountAuthToken)
@@ -40,7 +40,7 @@ var Session = {
       return localStorage.getItem(this.keys.metaAuthToken)
     }
   },
-  
+
   userId: function() {
     if (this.loggedIn()) {
       return localStorage.getItem(this.keys.accountUserId)
@@ -48,7 +48,7 @@ var Session = {
       return localStorage.getItem(this.keys.metaUserId)
     }
   },
-    
+
   userInfo: function() {
     if (this.loggedIn()) {
       return {
@@ -69,42 +69,42 @@ var Session = {
       }
     }
   },
-  
+
   isMeta: function() {
     return !this.loggedIn()
   },
-  
+
   loggedIn: function() {
     return localStorage.getItem(this.keys.accountAuthToken) !== null;
   },
-  
+
   needsMetaAccount: function() {
     return localStorage.getItem(this.keys.metaAuthToken) === null;
   },
-  
+
   createMetaAccount: function(username, userId, createdAt, authToken) {
     localStorage.setItem(this.keys.metaUsername, username)
     localStorage.setItem(this.keys.metaUserId, userId)
     localStorage.setItem(this.keys.metaCreatedAt, createdAt)
     localStorage.setItem(this.keys.metaAuthToken, authToken)
   },
-  
+
   changeMetaUsername: function(username) {
     localStorage.setItem(this.keys.metaUsername, username)
   },
-  
+
   login: function(username, email, userId, authToken, createdAt, avatarUrl) {
     localStorage.setItem(this.keys.accountUsername, username)
     localStorage.setItem(this.keys.accountEmail, email)
     localStorage.setItem(this.keys.accountUserId, userId)
     localStorage.setItem(this.keys.accountAuthToken, authToken)
     localStorage.setItem(this.keys.accountCreatedAt, createdAt)
-    
+
     if (avatarUrl !== null) {
-      localStorage.setItem(this.keys.accountAvatarUrl, avatarUrl)      
+      localStorage.setItem(this.keys.accountAvatarUrl, avatarUrl)
     }
   },
-  
+
   logout: function() {
     localStorage.removeItem(this.keys.accountAuthToken)
     localStorage.removeItem(this.keys.accountUsername)
@@ -113,5 +113,5 @@ var Session = {
     localStorage.removeItem(this.keys.accountCreatedAt)
     localStorage.removeItem(this.keys.accountAvatarUrl)
   }
-  
+
 }
