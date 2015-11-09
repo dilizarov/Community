@@ -71,11 +71,11 @@
   margin-bottom: 5px;
 }
 
-.feed-wrapper .post-stats, .view-replies {
+.feed-wrapper .post-stats {
   margin-bottom: 5px;
 }
 
-.feed-wrapper .post-liked, .post-not-liked, .post-replies-count, .view-replies {
+.feed-wrapper .post-liked, .post-not-liked, .post-replies-count {
   font-size: 13px;
 }
 
@@ -84,10 +84,10 @@
   cursor: pointer;
 }
 
-.feed-wrapper .post-liked {
+.feed-wrapper .post-liked, .post-replies-count {
   cursor: pointer;
 }
 
-.feed-wrapper .view-replies {
-  display: block;
+.feed-wrapper .post-replies-count {
+  color: #60b0c6;
 }

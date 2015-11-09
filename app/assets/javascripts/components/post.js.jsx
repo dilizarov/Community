@@ -95,9 +95,8 @@ var Post = React.createClass({
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
           <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
-          <span className="post-replies-count">{this.props.post.replies_count} replies </span>
+          <span className="post-replies-count" onClick={this.showReplies}>{this.props.post.replies_count} replies </span>
         </div>
-        <a className="view-replies" onClick={this.showReplies}>View replies</a>
         <div className="reply-to-post">
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
         </div>
