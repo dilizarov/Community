@@ -58,6 +58,7 @@ var Post = React.createClass({
   },
 
   showReplies: function(e) {
+    //@TODO: indicate we are loading replies
 
     $.ajax({
       method: "GET",
@@ -65,7 +66,6 @@ var Post = React.createClass({
       data: { auth_token: Session.authToken(), user_id: Session.userId() },
       success: function(res) {
         if (this.isMounted()) {
-
           this.setState({
             replies: res.replies,
             repliesLoaded: true,
@@ -87,6 +87,19 @@ var Post = React.createClass({
     })
   },
 
+  hideReplies: function() {
+    this.setState({repliesLoaded: false});
+  },
+
+  toggleReplies: function() {
+    if(this.state.repliesLoaded === false) {
+      this.showReplies();
+    }
+    else {
+      this.hideReplies();
+    }
+  },
+
   renderPostInitial: function() {
     return(
       <li className="post">
@@ -95,7 +108,7 @@ var Post = React.createClass({
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
           <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
-          <span className="post-replies-count" onClick={this.showReplies}>{this.props.post.replies_count} replies </span>
+          <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         </div>
         <div className="reply-to-post">
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
@@ -106,12 +119,12 @@ var Post = React.createClass({
 
   renderPostNoReplies: function() {
     return(
-      <li>
+      <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
-        <span className="post-replies-count">{this.props.post.replies_count} replies </span>
+        <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         <div className="post-noreplies">No Replies</div>
       </li>
     );
@@ -120,12 +133,12 @@ var Post = React.createClass({
   renderPostReplies: function() {
 
     return(
-      <li>
+      <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost} >{this.props.post.likes} likes </span>
-        <span className="post-replies-count">{this.props.post.replies_count} replies </span>
+        <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
             return <Reply key={reply.external_id}

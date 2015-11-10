@@ -72,22 +72,43 @@
 }
 
 .feed-wrapper .post-stats {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .feed-wrapper .post-liked, .post-not-liked, .post-replies-count {
   font-size: 13px;
 }
 
-.feed-wrapper .post-not-liked {
-  color: #CCC;
+.feed-wrapper .post-liked, .post-not-liked {
   cursor: pointer;
+  margin-right: 10px;
 }
 
-.feed-wrapper .post-liked, .post-replies-count {
+.feed-wrapper .post-not-liked {
+  color: #CCC;
+}
+
+.feed-wrapper .post-replies-count {
   cursor: pointer;
 }
 
 .feed-wrapper .post-replies-count {
   color: #60b0c6;
+}
+
+.feed-wrapper .reply-to-post {
+  margin-top: 5px;
+}
+
+.feed-wrapper .reply:first-of-type {
+  margin-top: 5px;
+}
+
+.feed-wrapper .reply:last-of-type {
+  margin-bottom: 10px;
+}
+
+.feed-wrapper .reply {
+  margin-bottom: 5px;
+  font-size: 14px;
 }

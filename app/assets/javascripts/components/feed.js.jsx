@@ -213,7 +213,7 @@ var Feed = React.createClass({
         </h2>
         {join}
         <div className="post-to-community">
-          <input type="text" id='write-post' placeholder="Write a new post" />
+          <input type="text" id='write-post' placeholder="Write a new post here..." />
         <a className="button tiny radius" onClick={this.submitPost}>Post</a>
         </div>
         <ul className="no-bullet">
