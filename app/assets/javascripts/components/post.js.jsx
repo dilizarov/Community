@@ -100,6 +100,24 @@ var Post = React.createClass({
     }
   },
 
+  likeReply: function(reply) {
+    var index = this.state.replies.indexOf(reply);
+    if (reply.liked === true) {
+      reply.liked = false
+      // Should always hold, but might as well check.
+      if (reply.likes > 0) {
+        reply.likes -= 1
+      }
+    } else {
+      reply.liked = true
+      reply.likes += 1
+    }
+
+    var replies = React.addons.update(this.state.replies, { $splice: [[index, 1, reply]] });
+
+    this.setState({ replies: replies });
+  },
+
   renderPostInitial: function() {
     return(
       <li className="post">
@@ -142,7 +160,8 @@ var Post = React.createClass({
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
             return <Reply key={reply.external_id}
-                          reply={reply} />
+                          reply={reply}
+                          toggleLikeReply={this.likeReply} />
 
           }.bind(this))}
         </ul>
