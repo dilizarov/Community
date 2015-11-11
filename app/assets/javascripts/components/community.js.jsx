@@ -21,8 +21,6 @@ var Community = React.createClass({
         // so that I can animate error.
         this.props.handleAddCommunity(this.props.community);
 
-        console.log(err)
-
         try {
           var errorJson = $.parseJSON(err.responseText);
         } catch (e) {

@@ -2,13 +2,13 @@ var Reply = React.createClass({
 
   likeReply: function() {
 
-    var data = { auth_token: Session.authToken(), user_id: Session.userId() }
+    var data = { auth_token: Session.authToken(), user_id: Session.userId() };
 
     if (this.props.reply.liked === true) {
-      data.dislike = true
+      data.dislike = true;
     }
 
-    this.props.toggleLikeReply(this.props.reply)
+    this.props.toggleLikeReply(this.props.reply);
 
     $.ajax({
       method: "GET",
@@ -16,15 +16,15 @@ var Reply = React.createClass({
       data: data,
       error: function(err) {
         if (this.isMounted()) {
-           this.props.toggleLikeReply(this.props.reply)
+           this.props.toggleLikeReply(this.props.reply);
         }
       }.bind(this)
-    })
+    });
   },
 
   render: function() {
 
-    return(
+    return (
       <li className="reply">
         <div className="reply-username">{this.props.reply.user.username}</div>
         <div className="reply-body">{this.props.reply.body}</div>
@@ -34,4 +34,4 @@ var Reply = React.createClass({
     );
   }
 
-})
+});

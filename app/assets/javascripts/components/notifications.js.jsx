@@ -1,23 +1,23 @@
 var Notifications = React.createClass({
-  
+
   getInitialState: function() {
     return {
       notificationsCount: 0,
       notifications: []
     };
   },
-  
+
   componentDidMount: function() {
     this.startPolling();
   },
-  
+
   componentWillUnmount: function() {
     if (this._timer) {
       clearInterval(this._timer);
       this._timer = null;
     }
   },
-  
+
   startPolling: function() {
     if (this.isMounted()) {
       this.poll()
@@ -25,9 +25,9 @@ var Notifications = React.createClass({
       this._timer = setInterval(this.poll, 5 * 60 * 1000)
     }
   },
-  
+
   poll: function() {
-    
+
     var data = { auth_token: Session.authToken() }
 
     $.ajax({
@@ -37,7 +37,7 @@ var Notifications = React.createClass({
       timeout: 4 * 60 * 1000, // request has 4 minutes... ensures this is within 5 minute poll.
       success: function(res) {
         if (this.isMounted()) {
-        
+
           this.setState({
             notificationsCount: res.notifications_count
           });
@@ -51,18 +51,18 @@ var Notifications = React.createClass({
       }.bind(this)
     })
   },
-  
+
   getNotifications: function() {
-    
+
     var data = { auth_token: Session.authToken() }
-        
+
     $.ajax({
       method: "GET",
       url: "/api/v1/users/" + Session.userId() + "/notifications.json",
       data: data,
       success: function(res) {
         if (this.isMounted()) {
-        
+
           this.setState({
             notifications: res.notifications,
             notificationsCount: 0
@@ -77,9 +77,9 @@ var Notifications = React.createClass({
       }.bind(this)
     })
   },
-  
+
   render: function() {
-      
+
     return (
       <div className="notifications">
         <div className="notifications-count" onClick={this.getNotifications}>
@@ -87,13 +87,13 @@ var Notifications = React.createClass({
         </div>
         <ul className="no-bullet notifications-list">
           {this.state.notifications.map(function(notification) {
-            return <Notification notification={notification}
-                                 handleNotificationPressed={this.props.handleNotificationPressed} />
-                        
+            return (<Motification notification={notification}
+                                  handleNotificationPressed={this.props.handleNotificationPressed} />)
+
           }.bind(this))}
         </ul>
       </div>
     )
   }
-  
+
 })

@@ -126,10 +126,10 @@ var App = React.createClass({
       if (this.state.notificationPresent === true) {
         mainContent = <NotificationPost postId={this.state.notification.post_id} />
       } else {
-        mainContent = <Feed communityName={this.state.communitySelected ? this.state.communityName : ''}
+        mainContent = (<Feed communityName={this.state.communitySelected ? this.state.communityName : ''}
                     communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : ''}
                     forceReceiveProps={this.state.forceReceiveProps}
-                    handleAddCommunityToList={this.addCommunityToList} />
+                    handleAddCommunityToList={this.addCommunityToList} />)
       }
 
       return (

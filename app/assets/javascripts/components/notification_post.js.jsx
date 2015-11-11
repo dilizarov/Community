@@ -1,25 +1,25 @@
 var NotificationPost = React.createClass({
-  
+
   getInitialState: function() {
     return { replies: [], post: null, loaded: false};
   },
-  
+
   componentDidMount: function() {
-    
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + this.props.postId + "/replies.json",
       data: { auth_token: Session.authToken(), user_id: Session.userId(), include_post: true },
       success: function(res) {
         if (this.isMounted()) {
-      
+
           this.setState({
             replies: res.replies,
             post: res.meta.post,
             loaded: true,
             error: false
           });
-          
+
           this.setupWriteReplyHandler();
         }
       }.bind(this),
@@ -33,9 +33,9 @@ var NotificationPost = React.createClass({
         }
       }.bind(this)
     })
-    
+
   },
-  
+
   setupWriteReplyHandler: function() {
     $('#write-reply-' + this.props.postId).keyup(function (e) {
        if (e.keyCode === 13) {
@@ -52,7 +52,7 @@ var NotificationPost = React.createClass({
              if (this.isMounted()) {
 
                var post = this.state.post
-               
+
                post.replies_count += 1
 
                this.setState({
@@ -71,17 +71,17 @@ var NotificationPost = React.createClass({
        }
      }.bind(this));
   },
-  
-  likePost: function() {    
-    
+
+  likePost: function() {
+
     var data = { auth_token: Session.authToken(), user_id: Session.userId() }
-    
+
     if (this.state.post.liked === true) {
       data.dislike = true
     }
-    
+
     this.toggleLike()
-    
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + this.props.postId + "/like.json",
@@ -93,13 +93,13 @@ var NotificationPost = React.createClass({
       }.bind(this)
     })
   },
-  
+
   toggleLike: function() {
     var post = this.state.post;
-    
+
     if (post.liked === true) {
       post.liked = false
-      
+
       if (post.likes > 0) {
         post.likes -= 1
       }
@@ -107,12 +107,12 @@ var NotificationPost = React.createClass({
       post.liked = true
       post.likes += 1
     }
-    
+
     this.setState({
       post: post
     })
   },
-  
+
   renderLoading: function() {
     return(
       <div className='post-loading'>
@@ -120,7 +120,7 @@ var NotificationPost = React.createClass({
       </div>
     )
   },
-  
+
   renderPostInitial: function() {
     return(
       <div className="notification-post">
@@ -139,7 +139,7 @@ var NotificationPost = React.createClass({
       </div>
     );
   },
-  
+
   renderPostNoReplies: function() {
     return(
       <div className="notification-post">
@@ -153,9 +153,9 @@ var NotificationPost = React.createClass({
       </div>
     );
   },
-  
+
   renderPost: function() {
-    
+
     return(
       <div className="notification-post">
         <div className="post-username">{this.state.post.user.username}</div>
@@ -166,9 +166,9 @@ var NotificationPost = React.createClass({
         <div className="post-like" onClick={this.likePost} >{this.state.post.liked.toString()}</div>
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
-            return <Reply key={reply.external_id}
-                          reply={reply} />
-          
+            return (<Reply key={reply.external_id}
+                          reply={reply} />)
+
           }.bind(this))}
         </ul>
         <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
@@ -177,7 +177,7 @@ var NotificationPost = React.createClass({
       </div>
     );
   },
-      
+
   render: function() {
     if (this.state.loaded === false) {
       return this.renderLoading();
@@ -189,5 +189,5 @@ var NotificationPost = React.createClass({
       return this.renderPost();
     }
   }
-  
+
 });

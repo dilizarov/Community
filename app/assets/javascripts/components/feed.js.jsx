@@ -116,7 +116,6 @@ var Feed = React.createClass({
   },
 
   showCommunitySettings: function() {
-    console.log('settings')
   },
 
   joinCommunity: function() {
@@ -218,10 +217,10 @@ var Feed = React.createClass({
         </div>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
-            return <Post key={post.external_id}
+            return (<Post key={post.external_id}
                          post={post}
                          toggleLikePost={this.likePost}
-                         handleUpdateRepliesCount={this.updateRepliesCount} />
+                         handleUpdateRepliesCount={this.updateRepliesCount} />)
 
           }.bind(this))}
         </ul>

@@ -1,9 +1,9 @@
 var Communities = React.createClass({
-  
+
   getInitialState: function() {
     return { loaded: false };
   },
-  
+
   componentDidMount: function() {
     $.ajax({
       method: "GET",
@@ -29,25 +29,25 @@ var Communities = React.createClass({
       }.bind(this)
     })
   },
-  
+
   addCommunity: function(community) {
     var communities = React.addons.update(this.state.communities, { $push: [community] })
-    
+
     communities.sort( function(a, b) {
       return a.normalized_name.localeCompare(b.normalized_name)
     });
-    
+
     this.setState({ communities: communities });
   },
-  
-  
+
+
   removeCommunity: function(community) {
     var index = this.state.communities.indexOf(community);
     var communities = React.addons.update(this.state.communities, { $splice: [[index, 1]] });
-    
+
     this.setState({ communities: communities });
   },
-  
+
   renderLoading: function() {
     return (
       <div className='communities'>
@@ -57,7 +57,7 @@ var Communities = React.createClass({
       </div>
     )
   },
-  
+
   renderList: function() {
     return (
       <div className='communities'>
@@ -66,18 +66,18 @@ var Communities = React.createClass({
         </h2>
         <ul className="no-bullet">
           {this.state.communities.map(function(community) {
-            return <Community key={community.normalized_name} 
+            return (<Community key={community.normalized_name}
                               community={community}
                               handleSelectCommunity={this.props.handleSelectCommunity}
                               handleAddCommunity={this.addCommunity}
-                              handleRemoveCommunity={this.removeCommunity} />
-                        
+                              handleRemoveCommunity={this.removeCommunity} />)
+
           }.bind(this))}
         </ul>
       </div>
     )
   },
-  
+
   renderEmpty: function() {
     return (
       <div className='communities'>
@@ -88,7 +88,7 @@ var Communities = React.createClass({
       </div>
     )
   },
-  
+
   render: function() {
     if (this.state.loaded === false) {
       return this.renderLoading();
@@ -101,5 +101,5 @@ var Communities = React.createClass({
       return this.renderList();
     }
   }
-  
+
 });

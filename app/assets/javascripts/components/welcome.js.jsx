@@ -1,18 +1,18 @@
 var Welcome = React.createClass({
-  
+
   getInitialState: function() {
     return {
       loaded: false
     }
   },
-  
+
   componentDidMount: function() {
     $.ajax({
       method: "POST",
       url: "api/v1/sessions/meta_account.json",
       success: function(res) {
         Session.createMetaAccount(res.user.username, res.user.external_id, res.user.created_at, res.user.auth_token)
-        
+
         this.setState({
           loaded: true
         })
@@ -22,7 +22,7 @@ var Welcome = React.createClass({
       }.bind(this)
     })
   },
-    
+
   changeUsername: function() {
     $.ajax({
       method: "POST",
@@ -30,17 +30,17 @@ var Welcome = React.createClass({
       data: { auth_token: localStorage.getItem("meta_auth_token") },
       success: function(res) {
         Session.changeMetaUsername(res.user.username)
-        
+
         this.setState({
           loaded: true
         })
       }.bind(this),
       error: function(err) {
-        
+
       }.bind(this)
     })
   },
-  
+
   render: function() {
     return(
       <div className="generated_username">
@@ -50,5 +50,5 @@ var Welcome = React.createClass({
       </div>
     )
   }
-  
+
 })
