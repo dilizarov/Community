@@ -129,7 +129,7 @@ var Post = React.createClass({
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         </div>
         <div className="reply-to-post">
-          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
+          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
         </div>
       </li>
     );
@@ -166,7 +166,7 @@ var Post = React.createClass({
           }.bind(this))}
         </ul>
         <div className="reply-to-post">
-          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a Reply" />
+          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
         </div>
       </li>
     );

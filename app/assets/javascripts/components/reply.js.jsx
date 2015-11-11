@@ -26,10 +26,9 @@ var Reply = React.createClass({
 
     return (
       <li className="reply">
-        <div className="reply-username">{this.props.reply.user.username}</div>
+        <span className="reply-username">{this.props.reply.user.username}</span>
         <div className="reply-body">{this.props.reply.body}</div>
-        <div className="reply-liked" onClick={this.likeReply}>{this.props.reply.liked.toString()}: liked?</div>
-        <div className="reply-likes">{this.props.reply.likes} likes</div>
+        <span className={this.props.reply.liked === true ? 'reply-liked' : 'reply-not-liked'} onClick={this.likeReply}>{this.props.reply.likes} likes</span>
       </li>
     );
   }
