@@ -137,6 +137,10 @@ var Feed = React.createClass({
     })
   },
 
+  alertMe: function() {
+    alert('waypoint reached!')
+  },
+
   renderNoCommunity: function() {
     return (
       <div className='feed'>
@@ -224,6 +228,10 @@ var Feed = React.createClass({
 
           }.bind(this))}
         </ul>
+        <Waypoint
+          onEnter={this.alertMe}
+          threshold={2.0}
+        />
       </div>
     )
   },

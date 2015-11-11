@@ -39,7 +39,7 @@ gem "mini_magick", '4.2.10'
 # Zurb Foundation to style website
 gem 'foundation-rails', '5.5.3.2'
 
-# React to help modularize and build front-end 
+# React to help modularize and build front-end
 gem 'react-rails', '1.4.0'
 
 # Use Uglifier as compressor for JavaScript assets
@@ -50,7 +50,7 @@ gem 'jquery-rails'
 
 # Front-end Javascript libraries not including Foundation & React
 source 'https://rails-assets.org' do
-  gem 'rails-assets-cropper', '1.0.0' 
+  gem 'rails-assets-cropper', '1.0.0'
   gem 'rails-assets-react-loader', '2.0.0'
 end
 
@@ -79,5 +79,3 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'rails_12factor', group: :production
-
-

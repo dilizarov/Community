@@ -70,7 +70,7 @@ var App = React.createClass({
     })
   },
 
-  sessionChanged: function() {
+  reloadWindow: function() {
     window.location.reload()
   },
 
@@ -135,7 +135,7 @@ var App = React.createClass({
       return (
         <div className='app'>
           <div className='row'>
-            <SessionHandler handleSessionChange={this.sessionChanged} />
+            <SessionHandler handleSessionChange={this.reloadWindow} />
             <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
             <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
             <img id="profile-pic" />
