@@ -10,6 +10,7 @@
 .communities-wrapper {
   background-color: #FAFAFA;
   color: #333;
+  border-radius: 3px;
 }
 
 .communities-wrapper .title {
@@ -41,8 +42,10 @@
 
 /* Feed styling */
 .feed-wrapper .post {
-    border-bottom: 1px solid rgba(0,0,0,0.1);
     margin-bottom: 20px;
+    padding: 20px;
+    background-color: #FAFAFA;
+    border-radius: 3px;
 }
 
 .feed-wrapper .title {
@@ -122,8 +125,13 @@
 
 .feed-wrapper .reply-username {
   font-size: 12px;
+  color: #60b0c6;
 }
 
 .feed-wrapper .reply-liked, .reply-not-liked {
   font-size: 12px;
+}
+
+.feed-wrapper .reply-not-liked {
+  color: #CCC;
 }
