@@ -1,7 +1,7 @@
 var Feed = React.createClass({
 
   getInitialState: function() {
-    return { loaded: false, posts: [], joined: null };
+    return { loaded: false, posts: [], joined: null, loadingMorePosts: false, allPostsLoaded: false };
   },
 
   componentDidMount: function() {
@@ -13,7 +13,9 @@ var Feed = React.createClass({
 
   componentWillReceiveProps: function(props) {
     this.setState({
-      loaded: false
+      loaded: false,
+      loadingMorePosts: false,
+      allPostsLoaded: false
     })
 
     $.ajax({
@@ -22,6 +24,7 @@ var Feed = React.createClass({
       data: { auth_token: Session.authToken(), user_id: Session.userId(), community: props.communityNameNormalized},
       success: function(res) {
         if (this.isMounted()) {
+
           this.setState({
             posts: res.posts,
             loaded: true,
@@ -88,6 +91,7 @@ var Feed = React.createClass({
   },
 
   likePost: function(post) {
+
     var index = this.state.posts.indexOf(post);
     if (post.liked === true) {
       post.liked = false
@@ -123,7 +127,7 @@ var Feed = React.createClass({
     $.ajax({
       method: "POST",
       url: "api/v1/communities.json",
-      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityNameNormalized },
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityName },
       success: function(res) {
         this.setState({
           joined: true
@@ -137,8 +141,56 @@ var Feed = React.createClass({
     })
   },
 
-  alertMe: function() {
-    alert('waypoint reached!')
+  loadMorePosts: function() {
+    if (this.state.posts.length === 0) { return }
+
+    this.setState({
+      loadingMorePosts: true
+    })
+
+    /*
+      Pages are 15 posts each
+
+      Infinite Scroll Time Buffer is used to mitigate the fact that
+      new posts would push down pages, and you'd see duplicate posts
+    */
+    var data = {
+      auth_token: Session.authToken(),
+      user_id: Session.userId(),
+      community: this.props.communityNameNormalized,
+      page: Math.ceil(this.state.posts.length / 15) + 1,
+      infinite_scroll_time_buffer: this.state.posts[0].created_at
+    }
+
+    $.ajax({
+      method: "GET",
+      url: "/api/v1/posts.json",
+      data: data,
+      success: function(res) {
+        if (this.isMounted()) {
+
+          var allPostsLoaded = res.posts.length < 15;
+
+          this.setState({
+            posts: this.state.posts.concat(res.posts),
+            loaded: true,
+            error: false,
+            loadingMorePosts: false,
+            allPostsLoaded: allPostsLoaded
+          });
+        }
+      }.bind(this),
+      error: function(err) {
+        if (this.isMounted()) {
+          this.setState({
+            loaded: true,
+            error: true,
+            loadingMorePosts: false
+            //Do some error data stuff as well.
+          });
+        }
+      }.bind(this)
+    })
   },
 
   renderNoCommunity: function() {
@@ -209,6 +261,17 @@ var Feed = React.createClass({
       join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
     }
 
+    var waypoint;
+
+    if (this.state.allPostsLoaded === false && this.state.loadingMorePosts === false) {
+      waypoint = (<Waypoint
+                    onEnter={this.loadMorePosts}
+                    threshold={2.0}
+                 />)
+    } else if (this.state.loadingMorePosts === true) {
+      waypoint = <div className="loading-more-posts">Fetching more posts...</div>
+    }
+
     return (
       <div className='feed'>
         <h2 className='title'>
@@ -228,10 +291,7 @@ var Feed = React.createClass({
 
           }.bind(this))}
         </ul>
-        <Waypoint
-          onEnter={this.alertMe}
-          threshold={2.0}
-        />
+        {waypoint}
       </div>
     )
   },
