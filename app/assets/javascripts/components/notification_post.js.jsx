@@ -164,6 +164,7 @@ var NotificationPost = React.createClass({
         <div className="post-likes">likes {this.state.post.likes}</div>
         <div className="post-replies-count">replies {this.state.post.replies_count}</div>
         <div className="post-like" onClick={this.likePost} >{this.state.post.liked.toString()}</div>
+        <div className="post-timestamp">{timestamp(this.state.post.created_at)}</div>
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
             return (<Reply key={reply.external_id}

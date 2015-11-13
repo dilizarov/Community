@@ -128,6 +128,7 @@ var Post = React.createClass({
           <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         </div>
+        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <div className="reply-to-post">
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
         </div>
@@ -157,11 +158,12 @@ var Post = React.createClass({
         <div className="post-body">{this.props.post.body}</div>
         <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost} >{this.props.post.likes} likes </span>
         <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
+        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
-            return <Reply key={reply.external_id}
+            return (<Reply key={reply.external_id}
                           reply={reply}
-                          toggleLikeReply={this.likeReply} />
+                          toggleLikeReply={this.likeReply} />)
 
           }.bind(this))}
         </ul>

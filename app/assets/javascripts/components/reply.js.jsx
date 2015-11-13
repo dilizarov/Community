@@ -29,6 +29,7 @@ var Reply = React.createClass({
         <span className="reply-username">{this.props.reply.user.username}</span>
         <div className="reply-body">{this.props.reply.body}</div>
         <span className={this.props.reply.liked === true ? 'reply-liked' : 'reply-not-liked'} onClick={this.likeReply}>{this.props.reply.likes} likes</span>
+        <div className="post-timestamp">{timestamp(this.props.reply.created_at)}</div>
       </li>
     );
   }

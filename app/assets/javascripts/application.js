@@ -20,7 +20,9 @@
 //= require cropper
 //= require spin
 //= require react-loader
+//= require moment
 //= require_tree .
+//= require_tree ./utils
 //= require_tree ./site
 
 $(function(){ $(document).foundation(); });

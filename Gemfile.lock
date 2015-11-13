@@ -238,6 +238,7 @@ GEM
     rails-assets-cropper (1.0.0)
       rails-assets-jquery (>= 1.9.1)
     rails-assets-jquery (2.1.4)
+    rails-assets-moment (2.10.6)
     rails-assets-react-loader (2.0.0)
       rails-assets-spin.js (~> 2.0)
     rails-assets-spin.js (2.3.2)
@@ -323,6 +324,7 @@ DEPENDENCIES
   pushmeup (~> 0.3.0)
   rails (= 4.1.4)
   rails-assets-cropper (= 1.0.0)!
+  rails-assets-moment (= 2.10.6)!
   rails-assets-react-loader (= 2.0.0)!
   rails_12factor
   react-rails (= 1.4.0)
