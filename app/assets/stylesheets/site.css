@@ -61,7 +61,12 @@ body {
 .feed-wrapper .post-username {
   color: #60b0c6;
   font-size: 14px;
+}
+
+.feed-wrapper .post-timestamp {
+  font-size: 12px;
   margin-bottom: 15px;
+  color: #CCC;
 }
 
 .feed-wrapper .post-title {
@@ -137,4 +142,16 @@ body {
 
 .feed-wrapper .reply-not-liked {
   color: #CCC;
+}
+
+.feed-wrapper .reply-timestamp {
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.feed-wrapper .reply-timestamp:before {
+  content: "●";
+  padding-right: 5px;
+  font-size: 9px;
+  color: #333;
 }

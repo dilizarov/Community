@@ -122,13 +122,13 @@ var Post = React.createClass({
     return(
       <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
+        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
           <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         </div>
-        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <div className="reply-to-post">
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
         </div>
@@ -154,11 +154,11 @@ var Post = React.createClass({
     return(
       <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
+        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost} >{this.props.post.likes} likes </span>
         <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
-        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <ul className="post-replies no-bullet">
           {this.state.replies.map(function(reply) {
             return (<Reply key={reply.external_id}
