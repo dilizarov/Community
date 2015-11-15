@@ -5,10 +5,13 @@
 
 /* #056a85 #36879d #69a5b5 */
 
+body {
+  background-color: #FAFAFA;
+}
 
 /* Communities List styling */
 .communities-wrapper {
-  background-color: #FAFAFA;
+  background-color: white;
   color: #333;
   border-radius: 3px;
 }
@@ -44,7 +47,7 @@
 .feed-wrapper .post {
     margin-bottom: 20px;
     padding: 20px;
-    background-color: #FAFAFA;
+    background-color: white;
     border-radius: 3px;
 }
 
