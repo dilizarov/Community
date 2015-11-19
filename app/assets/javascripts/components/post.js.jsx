@@ -5,8 +5,10 @@ var Post = React.createClass({
   },
 
   componentDidMount: function() {
-    $('#write-reply-' + this.props.post.external_id).keyup(function (e) {
-      if (e.keyCode === 13) {
+    $('#write-reply-' + this.props.post.external_id).keypress(function (e) {
+
+      if (e.keyCode === 13 && !e.shiftKey) {
+        e.preventDefault();
 
         var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
@@ -130,7 +132,7 @@ var Post = React.createClass({
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         </div>
         <div className="reply-to-post">
-          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
+          <GrowingTextarea placeholder="Write a reply..." minRows={1} textId={'write-reply-' + this.props.post.external_id} />
         </div>
       </li>
     );
@@ -168,6 +170,7 @@ var Post = React.createClass({
           }.bind(this))}
         </ul>
         <div className="reply-to-post">
+          {/*<textarea id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." className="js-auto-size"></textarea>*/}
           <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
         </div>
       </li>

@@ -52,6 +52,8 @@ var Feed = React.createClass({
           this.setState({
             joined: true
           })
+
+          //Verify Communities List shows it
         }
       }.bind(this),
       error: function(err) {
@@ -59,6 +61,8 @@ var Feed = React.createClass({
           this.setState({
             joined: false
           })
+
+          //Verify Communities List doesn't show it
         }
       }.bind(this)
     })
