@@ -1,7 +1,13 @@
 var Feed = React.createClass({
 
   getInitialState: function() {
-    return { loaded: false, posts: [], joined: null, loadingMorePosts: false, allPostsLoaded: false };
+    return {
+      loaded: false,
+      posts: [],
+      joined: null,
+      loadingMorePosts: false,
+      allPostsLoaded: false
+    };
   },
 
   componentDidMount: function() {
@@ -21,14 +27,15 @@ var Feed = React.createClass({
     $.ajax({
       method: "GET",
       url: "/api/v1/posts.json",
-      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: props.communityNameNormalized},
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: props.communityNameNormalized, verify_membership: true},
       success: function(res) {
         if (this.isMounted()) {
 
           this.setState({
             posts: res.posts,
             loaded: true,
-            error: false
+            error: false,
+            joined: !!res.membership
           });
         }
       }.bind(this),
@@ -39,30 +46,6 @@ var Feed = React.createClass({
             error: true
             //Do some error data stuff as well.
           });
-        }
-      }.bind(this)
-    })
-
-    $.ajax({
-      method: "GET",
-      url: '/api/v1/communities/show.json',
-      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: props.communityNameNormalized },
-      success: function(res) {
-        if (this.isMounted()) {
-          this.setState({
-            joined: true
-          })
-
-          //Verify Communities List shows it
-        }
-      }.bind(this),
-      error: function(err) {
-        if (this.isMounted()) {
-          this.setState({
-            joined: false
-          })
-
-          //Verify Communities List doesn't show it
         }
       }.bind(this)
     })

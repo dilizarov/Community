@@ -21,7 +21,7 @@ var NotificationPost = React.createClass({
 
           this.setState({
             replies: res.replies,
-            post: res.meta.post,
+            post: res.post,
             loaded: true,
             error: false
           });
