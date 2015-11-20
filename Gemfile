@@ -42,6 +42,9 @@ gem 'foundation-rails', '5.5.3.2'
 # React to help modularize and build front-end
 gem 'react-rails', '1.4.0'
 
+# Font Awesome for Icons
+gem 'font-awesome-rails', '4.4.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

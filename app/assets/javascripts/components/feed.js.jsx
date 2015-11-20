@@ -35,7 +35,7 @@ var Feed = React.createClass({
             posts: res.posts,
             loaded: true,
             error: false,
-            joined: !!res.membership
+            joined: res.membership
           });
         }
       }.bind(this),
