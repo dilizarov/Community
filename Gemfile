@@ -53,6 +53,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-cropper', '1.0.0'
   gem 'rails-assets-react-loader', '2.0.0'
   gem 'rails-assets-moment', '2.10.6'
+  gem 'rails-assets-classnames', '2.2.0'
 end
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

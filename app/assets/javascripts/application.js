@@ -21,6 +21,7 @@
 //= require spin
 //= require react-loader
 //= require moment
+//= require classnames
 //= require_tree .
 //= require_tree ./utils
 //= require_tree ./site

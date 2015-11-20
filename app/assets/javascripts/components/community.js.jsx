@@ -1,5 +1,12 @@
 var Community = React.createClass({
 
+  getInitialState: function() {
+    return {
+      settingsHighlighted: false,
+      settingsCogShown: false
+    }
+  },
+
   bringUpSettings: function(e) {
     e.stopPropagation();
   },
@@ -35,26 +42,42 @@ var Community = React.createClass({
   },
 
   showCommunitySettings: function(e) {
-    $(e.target).find('.fa-cog').addClass('opaque');
+    this.setState({
+      settingsCogShown: true
+    })
   },
 
   hideCommunitySettings: function(e) {
-    $(e.target).find('.fa-cog').removeClass('opaque');
+    this.setState({
+      settingsCogShown: false
+    })
   },
 
   highlightSettings: function(e) {
-    $(e.target).addClass('solid');
+    this.setState({
+      settingsHighlighted: true
+    })
   },
 
   unHighlightSettings: function(e) {
-    $(e.target).removeClass('solid');
+    this.setState({
+      settingsHighlighted: false
+    })
   },
 
   render: function() {
+
+    var cogClass = classNames(
+      "fa",
+      "fa-cog",
+      { solid: this.state.settingsHighlighted },
+      { opaque: this.state.settingsCogShown }
+    )
+
     return(
       <li onClick={this.goToCommunity}>
         <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
-          <i className="fa fa-cog" onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
+          <i className={cogClass} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
           <span className='community-name'>{this.props.community.name}</span>
         </div>
         <a className='button tiny radius' onClick={this.bringUpSettings}>
