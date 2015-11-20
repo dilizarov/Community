@@ -34,10 +34,29 @@ var Community = React.createClass({
     this.props.handleSelectCommunity(this.props.community.name)
   },
 
+  showCommunitySettings: function(e) {
+    $(e.target).find('.fa-cog').addClass('opaque');
+  },
+
+  hideCommunitySettings: function(e) {
+    $(e.target).find('.fa-cog').removeClass('opaque');
+  },
+
+  highlightSettings: function(e) {
+    $(e.target).addClass('solid');
+  },
+
+  unHighlightSettings: function(e) {
+    $(e.target).removeClass('solid');
+  },
+
   render: function() {
     return(
       <li onClick={this.goToCommunity}>
-        <span className='community-name'>{this.props.community.name}</span>
+        <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
+          <i className="fa fa-cog" onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
+          <span className='community-name'>{this.props.community.name}</span>
+        </div>
         <a className='button tiny radius' onClick={this.bringUpSettings}>
           Settings
         </a>
