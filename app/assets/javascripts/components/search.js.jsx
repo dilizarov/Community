@@ -1,20 +1,23 @@
 var Search = React.createClass({
-  
-  componentDidMount: function() {
-    $('#search').keyup(function (e) {
-      if (e.keyCode === 13) {
-        this.props.handleSelectCommunity($('#search').val())
-      }
-    }.bind(this));
+
+  goToCommunity: function(e) {
+    if (e.keyCode === 13) {
+      this.props.handleSelectCommunity(
+        this.refs.searchInput.value
+      )
+    }
   },
-  
+
   render: function() {
     return (
       <div className="search">
-        SEARCH
-        <input type="text" id="search" />
+        <input type="text"
+               id="search"
+               placeholder="Visit a community"
+               ref="searchInput"
+               onKeyUp={this.goToCommunity} />
       </div>
     )
   }
-  
+
 })
