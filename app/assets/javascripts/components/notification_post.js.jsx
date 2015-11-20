@@ -1,7 +1,13 @@
+// The Post component relies on Feed to update look of liked state.
+// This is self contained
 var NotificationPost = React.createClass({
 
   getInitialState: function() {
-    return { replies: [], post: null, loaded: false};
+    return {
+      replies: [],
+      post: null,
+      loaded: false
+    };
   },
 
   componentDidMount: function() {
@@ -121,25 +127,6 @@ var NotificationPost = React.createClass({
     )
   },
 
-  renderPostInitial: function() {
-    return(
-      <div className="notification-post">
-        <div className="post-username">{this.state.post.user.username}</div>
-        <div className="post-title">{this.state.post.title}</div>
-        <div className="post-body">{this.state.post.body}</div>
-        <div className="post-likes">likes {this.state.post.likes}</div>
-        <div className="post-replies-count">replies {this.state.post.replies_count}</div>
-        <div className="post-like" onClick={this.likePost} >{this.state.post.liked.toString()}</div>
-        <a className="button tiny radius" onClick={this.showReplies}>
-          Replies
-        </a>
-        <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id={'write-reply-' + this.props.postId} placeholder="Write a Reply" />
-        </div>
-      </div>
-    );
-  },
-
   renderPostNoReplies: function() {
     return(
       <div className="notification-post">
@@ -156,24 +143,37 @@ var NotificationPost = React.createClass({
 
   renderPost: function() {
 
+    var repliesContent;
+
+    if (this.state.replies.length === 0) {
+      repliesContent = 'No replies'
+    } else {
+      repliesContent = (<ul className="post-replies no-bullet">
+        {this.state.replies.map(function(reply) {
+          return (<Reply key={reply.external_id}
+                        reply={reply} />)
+
+        }.bind(this))}
+      </ul>)
+    }
+
     return(
       <div className="notification-post">
         <div className="post-username">{this.state.post.user.username}</div>
+        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <div className="post-title">{this.state.post.title}</div>
         <div className="post-body">{this.state.post.body}</div>
-        <div className="post-likes">likes {this.state.post.likes}</div>
-        <div className="post-replies-count">replies {this.state.post.replies_count}</div>
-        <div className="post-like" onClick={this.likePost} >{this.state.post.liked.toString()}</div>
-        <div className="post-timestamp">{timestamp(this.state.post.created_at)}</div>
-        <ul className="post-replies no-bullet">
-          {this.state.replies.map(function(reply) {
-            return (<Reply key={reply.external_id}
-                          reply={reply} />)
-
-          }.bind(this))}
-        </ul>
-        <div className="reply-to-post" style={{maxWidth: 600 + 'px'}}>
-          <input type="text" id={'write-reply-' + this.props.postId} placeholder="Write a Reply" />
+        <div className="post-stats">
+          <span className={this.state.post.liked === true ? 'post-liked' : 'post-not-liked'}
+                onClick={this.likePost}>{this.props.post.likes} likes </span>
+          <span className="post-replies-count">{this.props.post.replies_count} replies </span>
+        </div>
+        {repliesContent}
+        <div className="reply-to-post">
+          <GrowingTextarea placeholder="Write a reply..."
+                          minRows={1}
+                          keyDownEnterHalt={true}
+                          handleKeyUp={this.maybeCreateReply} />
         </div>
       </div>
     );
@@ -183,9 +183,8 @@ var NotificationPost = React.createClass({
     if (this.state.loaded === false) {
       return this.renderLoading();
     } else if (this.state.error === true) {
+      //TODO: Need to render an error screen. Probably a retry to fetching
       return this.renderPostInitial();
-    } else if (this.state.replies.length === 0) {
-      return this.renderPostNoReplies();
     } else {
       return this.renderPost();
     }
