@@ -48,58 +48,39 @@ var Communities = React.createClass({
     this.setState({ communities: communities });
   },
 
-  renderLoading: function() {
-    return (
-      <div className='communities'>
-        <h2 className='title'>
-          LOADING
-        </h2>
-      </div>
-    )
-  },
-
-  renderList: function() {
-    return (
-      <div className='communities'>
-        <h2 className='title'>
-          Communities
-        </h2>
-        <ul className="no-bullet">
-          {this.state.communities.map(function(community) {
-            return (<Community key={community.normalized_name}
-                              community={community}
-                              handleSelectCommunity={this.props.handleSelectCommunity}
-                              handleAddCommunity={this.addCommunity}
-                              handleRemoveCommunity={this.removeCommunity} />)
-
-          }.bind(this))}
-        </ul>
-      </div>
-    )
-  },
-
-  renderEmpty: function() {
-    return (
-      <div className='communities'>
-        <h2 className='title'>
-          Communities
-        </h2>
-        You haven not joined any communities
-      </div>
-    )
-  },
-
+  //TODO: Error handling/displaying.
   render: function() {
+
+    var mainContent;
+
     if (this.state.loaded === false) {
-      return this.renderLoading();
+      mainContent = "Loading"
     } else if (this.state.error === true) {
-      // I need a renderError(), but for now this suffices.
-      return this.renderEmpty();
+      //TODO: Error handling/displaying is in here.
+      mainContent = "Whoops, we errored :c"
     } else if (this.state.communities.length === 0) {
-      return this.renderEmpty();
+      mainContent = "You have not joined any communities"
     } else {
-      return this.renderList();
+      mainContent = (<ul className="no-bullet">
+        {this.state.communities.map(function(community) {
+          return (<Community key={community.normalized_name}
+                            community={community}
+                            handleSelectCommunity={this.props.handleSelectCommunity}
+                            handleAddCommunity={this.addCommunity}
+                            handleRemoveCommunity={this.removeCommunity} />)
+
+        }.bind(this))}
+      </ul>)
     }
+
+    return (
+      <div className="communities">
+        <h2 className="title">
+          Communities
+        </h2>
+        {mainContent}
+      </div>
+    )
   }
 
 });
