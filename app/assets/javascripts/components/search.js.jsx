@@ -1,9 +1,9 @@
 var Search = React.createClass({
 
-  goToCommunity: function(e) {
+  maybeGoToCommunity: function(e) {
     if (e.keyCode === 13) {
       this.props.handleSelectCommunity(
-        this.refs.searchInput.value
+        e.target.value
       )
     }
   },
@@ -14,8 +14,7 @@ var Search = React.createClass({
         <input type="text"
                id="search"
                placeholder="Visit a community"
-               ref="searchInput"
-               onKeyUp={this.goToCommunity} />
+               onKeyUp={this.maybeGoToCommunity} />
       </div>
     )
   }

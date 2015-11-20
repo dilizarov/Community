@@ -1,40 +1,39 @@
 var Post = React.createClass({
 
   getInitialState: function() {
-    return { repliesLoaded: false, replies: [] };
+    return {
+      repliesLoaded: false,
+      replies: []
+    };
   },
 
-  componentDidMount: function() {
-    $('#write-reply-' + this.props.post.external_id).keypress(function (e) {
+  maybeCreateReply: function(e) {
+    if (e.keyCode === 13 && !e.shiftKey && $.trim(e.target.value) !== '') {
 
-      if (e.keyCode === 13 && !e.shiftKey) {
-        e.preventDefault();
+      var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
-        var data = { auth_token: Session.authToken(), user_id: Session.userId() }
+      data.reply = { body: $.trim(e.target.value) }
 
-        data.reply = { body: $('#write-reply-' + this.props.post.external_id).val() }
+      $.ajax({
+        method: "POST",
+        url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
+        data: data,
+        success: function(res) {
+          if (this.isMounted()) {
 
-        $.ajax({
-          method: "POST",
-          url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
-          data: data,
-          success: function(res) {
-            if (this.isMounted()) {
+            this.setState({
+              replies: this.state.replies.concat([res.reply])
+            });
 
-              this.setState({
-                replies: this.state.replies.concat([res.reply])
-              });
-
-            }
-          }.bind(this),
-          error: function(err) {
-            if (this.isMounted()) {
-              alert('blergh that failed.')
-            }
-          }.bind(this)
-        })
-      }
-    }.bind(this));
+          }
+        }.bind(this),
+        error: function(err) {
+          if (this.isMounted()) {
+            alert('blergh that failed.')
+          }
+        }.bind(this)
+      })
+    }
   },
 
   likePost: function() {
@@ -90,7 +89,9 @@ var Post = React.createClass({
   },
 
   hideReplies: function() {
-    this.setState({repliesLoaded: false});
+    this.setState({
+      repliesLoaded: false
+    });
   },
 
   toggleReplies: function() {
@@ -120,73 +121,48 @@ var Post = React.createClass({
     this.setState({ replies: replies });
   },
 
-  renderPostInitial: function() {
-    return(
+  //TODO: Handle error handling/display
+  render: function() {
+
+    var repliesContent;
+
+    if (this.state.repliesLoaded === false) {
+      repliesContent = ''
+    } else if (this.state.error === true) {
+      //TODO: Located here
+      repliesContent = 'Error loading replies'
+    } else if (this.state.replies.length === 0) {
+      repliesContent = 'No replies'
+    } else {
+      repliesContent = (<ul className="post-replies no-bullet">
+        {this.state.replies.map(function(reply) {
+          return (<Reply key={reply.external_id}
+                         reply={reply}
+                         toggleLikeReply={this.likeReply} />)
+        }.bind(this))}
+      </ul>)
+    }
+
+    return (
       <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
         <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
-          <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
+          <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'}
+                onClick={this.likePost}>{this.props.post.likes} likes </span>
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
         </div>
+        {repliesContent}
         <div className="reply-to-post">
-          <GrowingTextarea placeholder="Write a reply..." minRows={1} textId={'write-reply-' + this.props.post.external_id} />
+          <GrowingTextarea placeholder="Write a reply..."
+                           minRows={1}
+                           keyDownEnterHalt={true}
+                           handleKeyUp={this.maybeCreateReply} />
         </div>
       </li>
-    );
-  },
-
-  renderPostNoReplies: function() {
-    return(
-      <li className="post">
-        <div className="post-username">{this.props.post.user.username}</div>
-        <div className="post-title">{this.props.post.title}</div>
-        <div className="post-body">{this.props.post.body}</div>
-        <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost}>{this.props.post.likes} likes </span>
-        <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
-        <div className="post-noreplies">No Replies</div>
-      </li>
-    );
-  },
-
-  renderPostReplies: function() {
-
-    return(
-      <li className="post">
-        <div className="post-username">{this.props.post.user.username}</div>
-        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
-        <div className="post-title">{this.props.post.title}</div>
-        <div className="post-body">{this.props.post.body}</div>
-        <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'} onClick={this.likePost} >{this.props.post.likes} likes </span>
-        <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
-        <ul className="post-replies no-bullet">
-          {this.state.replies.map(function(reply) {
-            return (<Reply key={reply.external_id}
-                          reply={reply}
-                          toggleLikeReply={this.likeReply} />)
-
-          }.bind(this))}
-        </ul>
-        <div className="reply-to-post">
-          {/*<textarea id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." className="js-auto-size"></textarea>*/}
-          <input type="text" id={'write-reply-' + this.props.post.external_id} placeholder="Write a reply here..." />
-        </div>
-      </li>
-    );
-  },
-
-  render: function() {
-    if (this.state.repliesLoaded === false) {
-      return this.renderPostInitial();
-    } else if (this.state.error === true) {
-      return this.renderPostInitial();
-    } else if (this.state.replies.length === 0) {
-      return this.renderPostNoReplies();
-    } else {
-      return this.renderPostReplies();
-    }
+    )
   }
 
 });

@@ -34,7 +34,7 @@ var Notifications = React.createClass({
       method: "GET",
       url: "/api/v1/users/" + Session.userId() + "/notifications_count.json",
       data: data,
-      timeout: 4 * 60 * 1000, // request has 4 minutes... ensures this is within 5 minute poll.
+      timeout: 1 * 60 * 1000, // request has 1 minute max... ensures this is within 5 minute poll.
       success: function(res) {
         if (this.isMounted()) {
 

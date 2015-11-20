@@ -7,8 +7,21 @@ var GrowingTextarea = React.createClass({
     };
   },
 
+  haltEnter: function(e) {
+    if (e.keyCode === 13 && !e.shiftKey && $.trim(e.target.value) !== '') {
+      e.preventDefault()
+    }
+  },
+
   render: function() {
-    return (<textarea id={this.props.textId} rows={this.state.rows} onFocus={this.onFocus} onChange={this.onChange}></textarea>)
+
+    var emptyFunction = function(){}
+
+    return (<textarea rows={this.state.rows}
+                      onFocus={this.onFocus}
+                      onChange={this.onChange}
+                      onKeyDown={this.props.keyDownEnterHalt ? this.haltEnter : emptyFunction}
+                      onKeyUp={this.props.handleKeyUp}></textarea>)
   },
 
   onChange: function() {
