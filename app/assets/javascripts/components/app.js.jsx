@@ -43,6 +43,8 @@ var App = React.createClass({
         }
     }
 
+    document.title = community
+
     this.setState({
       communitySelected: true,
       communityName: community,
