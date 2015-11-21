@@ -21,6 +21,8 @@ var Post = React.createClass({
         success: function(res) {
           if (this.isMounted()) {
 
+            this.refs.writeReply.clearTextarea()
+
             this.setState({
               replies: this.state.replies.concat([res.reply])
             });
@@ -158,6 +160,7 @@ var Post = React.createClass({
         <div className="reply-to-post">
           <GrowingTextarea placeholder="Write a reply..."
                            minRows={1}
+                           ref="writeReply"
                            keyDownEnterHalt={true}
                            handleKeyUp={this.maybeCreateReply} />
         </div>
