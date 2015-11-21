@@ -38,10 +38,21 @@ var Notifications = React.createClass({
       success: function(res) {
         if (this.isMounted()) {
 
+          // If they're the same, we assume no notification count prepends it.
+          // If they're not, we assume there is a notification count prepending
+          // and we replace it.
+          if (document.title === this.props.currentCommunity) {
+            document.title = "(" + res.notifications_count + ") " + document.title
+          } else {
+            var str = document.title
+            var closeParenOnwards = str.substring(str.indexOf(")"))
+
+            document.title = "(" + res.notifications_count + closeParenOnwards
+          }
+
           this.setState({
             notificationsCount: res.notifications_count
           });
-
         }
       }.bind(this),
       error: function(err) {

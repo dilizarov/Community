@@ -150,8 +150,10 @@ var App = React.createClass({
               <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
             </div>
 
+            {/* document.title === this.state.communityName at this stage */}
             {/*<div className='small-1 column'>
-              <Notifications handleNotificationPressed={this.notificationPressed} />
+              <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
+                             handleNotificationPressed={this.notificationPressed} />
             </div>*/}
           </div>
         </div>
