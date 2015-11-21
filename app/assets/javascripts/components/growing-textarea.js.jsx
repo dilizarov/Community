@@ -25,7 +25,8 @@ var GrowingTextarea = React.createClass({
                       onFocus={this.onFocus}
                       onChange={this.onChange}
                       onKeyDown={this.props.keyDownEnterHalt ? this.haltEnter : emptyFunction}
-                      onKeyUp={this.props.handleKeyUp}></textarea>)
+                      onKeyUp={this.props.handleKeyUp}
+                      placeholder={this.props.placeholder}></textarea>)
   },
 
   onChange: function() {

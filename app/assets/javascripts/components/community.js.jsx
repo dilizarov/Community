@@ -75,10 +75,10 @@ var Community = React.createClass({
     )
 
     return(
-      <li onClick={this.goToCommunity}>
+      <li>
         <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
           <i className={cogClass} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
-          <span className='community-name'>{this.props.community.name}</span>
+          <span className='community-name' onClick={this.goToCommunity}>{this.props.community.name}</span>
         </div>
         <a className='button tiny radius' onClick={this.bringUpSettings}>
           Settings
