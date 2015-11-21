@@ -36,8 +36,20 @@ class Api::V1::RepliesController < ApiController
 
       @reply.notifications << Notification.new(user_id: current_user.id, kind: "reply_created")
 
-      render status: :ok,
-      json: @reply
+      if params[:include_replies]
+        @replies = @post.replies.includes(user: [:communities]).to_a
+        current_user.mark_liked_replies!(@replies)
+
+        render status: :ok,
+        json: {
+          replies: ActiveModel::ArraySerializer.new(@replies, each_serializer: ReplySerializer, root: false),
+          reply: ReplySerializer.new(@reply, root: false) 
+        }
+      else
+        render status: :ok,
+        json: @reply
+      end
+
     else
       render status: :unprocessable_entity,
       json: { errors: @reply.errors.full_messages }

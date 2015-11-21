@@ -14,6 +14,10 @@ var Post = React.createClass({
 
       data.reply = { body: $.trim(e.target.value) }
 
+      if (this.state.repliesLoaded === false) {
+        data.include_replies = true
+      }
+
       $.ajax({
         method: "POST",
         url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
@@ -23,10 +27,16 @@ var Post = React.createClass({
 
             this.refs.writeReply.clearTextarea()
 
+            var replies = data.include_replies === true
+                          ? res.replies
+                          : React.addons.update(this.state.replies, { $push: [res.reply]})
+
             this.setState({
-              replies: this.state.replies.concat([res.reply])
+              repliesLoaded: true,
+              replies: replies
             });
 
+            this.props.handleUpdateRepliesCount(this.props.post, replies.length);
           }
         }.bind(this),
         error: function(err) {
