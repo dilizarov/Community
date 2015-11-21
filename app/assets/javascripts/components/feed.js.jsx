@@ -51,30 +51,12 @@ var Feed = React.createClass({
     })
   },
 
-  submitPost: function() {
-    var data = { auth_token: Session.authToken(), user_id: Session.userId() }
-
-    data.post = { body: $('#write-post').val(), community: this.props.communityNameNormalized }
-
-    $.ajax({
-      method: "POST",
-      url: "/api/v1/posts.json",
-      data: data,
-      success: function(res) {
-        if (this.isMounted()) {
-
-          this.setState({
-            posts: [res.post].concat(this.state.posts)
-          });
-
-        }
-      }.bind(this),
-      error: function(err) {
-        if (this.isMounted()) {
-          alert('blergh that failed.')
-        }
-      }.bind(this)
-    })
+  addPostToFeed: function(post) {
+    if (this.isMounted()) {
+      this.setState({
+        posts: [post].concat(this.state.posts)
+      });
+    }
   },
 
   likePost: function(post) {
@@ -228,10 +210,8 @@ var Feed = React.createClass({
           {this.props.communityName}
         </h2>
         {join}
-        <div className="post-to-community">
-          <input type="text" id='write-post' placeholder="Write a Post"/>
-          <a className="button tiny radius" onClick={this.submitPost}>Post</a>
-        </div>
+        <WritePost communityNameNormalized={this.props.communityNameNormalized}
+                   handleAddPostToFeed={this.addPostToFeed}/>
         You have not joined any communities
       </div>
     )
@@ -265,10 +245,8 @@ var Feed = React.createClass({
           {this.props.communityName}
         </h2>
         {join}
-        <div className="post-to-community">
-          <input type="text" id='write-post' placeholder="Write a new post here..." />
-        <a className="button tiny radius" onClick={this.submitPost}>Post</a>
-        </div>
+        <WritePost communityNameNormalized={this.props.communityNameNormalized}
+                   handleAddPostToFeed={this.addPostToFeed}/>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
             return (<Post key={post.external_id}

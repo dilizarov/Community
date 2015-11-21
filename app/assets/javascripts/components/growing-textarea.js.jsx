@@ -13,6 +13,10 @@ var GrowingTextarea = React.createClass({
     }
   },
 
+  clearTextarea: function() {
+    ReactDOM.findDOMNode(this).value = ''
+  },
+
   render: function() {
 
     var emptyFunction = function(){}
