@@ -267,6 +267,7 @@ var calculateNodeHeight = function(uiTextNode,
       height = Math.min(maxHeight, height);
     }
   }
+
   return {height, minHeight, maxHeight};
 }
 

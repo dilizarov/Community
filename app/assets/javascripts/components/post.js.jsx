@@ -175,6 +175,7 @@ var Post = React.createClass({
         {repliesContent}
         <div className="reply-to-post">
           <TextareaAutosize placeholder="Write a reply..."
+                            rows={1}
                             minRows={1}
                             ref="writeReply"
                             onKeyDown={this.haltEnter}
