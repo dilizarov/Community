@@ -105,7 +105,7 @@ var Community = React.createClass({
     }
 
     return(
-      <li>
+      <li className="community-item">
         <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
           <DropdownMenu {...menuOptions}>
             <li><a onClick={this.settingsClicked}>Settings</a></li>
@@ -113,12 +113,6 @@ var Community = React.createClass({
           </DropdownMenu>
           <span className='community-name' onClick={this.goToCommunity}>{this.props.community.name}</span>
         </div>
-        <a className='button tiny radius' onClick={this.bringUpSettings}>
-          Settings
-        </a>
-        <a className='button tiny radius' onClick={this.leaveCommunity}>
-          Leave
-        </a>
       </li>
     );
   }

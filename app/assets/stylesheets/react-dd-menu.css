@@ -227,7 +227,7 @@
 }
 
 .dd-menu.dd-menu-sm .dd-menu-items {
-  width: 150px;
+  width: 80px;
 }
 
 .dd-menu.dd-menu-md .dd-menu-items {
@@ -259,7 +259,8 @@
   margin: 0;
   color: #000;
   background-color: #fefefe;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.29);
+  border: 1px solid #EEE;
+  border-bottom: 1px solid #DDD;
 }
 
 .dd-menu .dd-menu-items ul.dd-items-right li > *, .dd-menu .dd-menu-items ol.dd-items-right li > * {
@@ -286,12 +287,12 @@
   display: block;
   width: auto;
   min-width: 100%;
-  padding: 1em 1.5em;
-  font-family: Roboto, sans-serif;
+  padding: 5px;
   white-space: pre;
-  color: inherit;
+  color: #444;
   text-decoration: none;
-  font-size: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
 }
 
 .dd-menu .dd-menu-items ul li > button, .dd-menu .dd-menu-items ol li > button {

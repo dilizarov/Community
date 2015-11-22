@@ -62,14 +62,15 @@ var WritePost = React.createClass({
       'button',
       'tiny',
       'radius',
-      { disabled: this.state.buttonDisabled}
+      'post-btn',
+      {disabled: this.state.buttonDisabled}
     )
 
     return (
       <div className="post-to-community">
-        <input type="text" id="write-post" ref="titleInput" placeholder="Title - Optional" />
-        <GrowingTextarea placeholder="Body"
-                         minRows={1}
+        <input type="text" id="write-post" ref="titleInput" placeholder="Title (optional)" />
+        <GrowingTextarea placeholder="Write post here..."
+                         minRows={4}
                          ref="growingTextarea"
                          handleKeyUp={this.toggleButtonEnabled} />
         <a className={btnClass} onClick={this.submitPost}>Post</a>
