@@ -3,7 +3,8 @@ var Community = React.createClass({
   getInitialState: function() {
     return {
       settingsHighlighted: false,
-      settingsCogShown: false
+      settingsCogShown: false,
+      isMenuOpen: false
     }
   },
 
@@ -65,6 +66,26 @@ var Community = React.createClass({
     })
   },
 
+  toggleMenu: function() {
+    this.setState({
+      isMenuOpen: !this.state.isMenuOpen
+    })
+  },
+
+  closeMenu: function() {
+    this.setState({
+      isMenuOpen: false
+    })
+  },
+
+  settingsClicked: function() {
+    console.log("settings")
+  },
+
+  leaveClicked: function() {
+    console.log("leave")
+  },
+
   render: function() {
 
     var cogClass = classNames(
@@ -74,10 +95,22 @@ var Community = React.createClass({
       { opaque: this.state.settingsCogShown }
     )
 
+    var menuOptions = {
+      isOpen: this.state.isMenuOpen,
+      close: this.closeMenu,
+      toggle: <i className={cogClass} onClick={this.toggleMenu} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>,
+      align: 'left',
+      size: 'sm',
+      inverse: false
+    }
+
     return(
       <li>
         <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
-          <i className={cogClass} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
+          <DropdownMenu {...menuOptions}>
+            <li><a onClick={this.settingsClicked}>Settings</a></li>
+            <li><a onClick={this.leaveClicked}>Leave</a></li>
+          </DropdownMenu>
           <span className='community-name' onClick={this.goToCommunity}>{this.props.community.name}</span>
         </div>
         <a className='button tiny radius' onClick={this.bringUpSettings}>
