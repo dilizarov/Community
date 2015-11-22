@@ -7,23 +7,19 @@ var WritePost = React.createClass({
   },
 
   toggleButtonEnabled: function(e) {
-
-    var body = $.trim(e.target.value)
-
     this.setState({
-      body: body,
-      buttonDisabled: body === ''
+      buttonDisabled: $.trim(e.target.value) === ''
     })
   },
 
   submitPost: function(e) {
-    if ($(e.target).hasClass('disabled') || this.state.body === '') { return }
+    if ($(e.target).hasClass('disabled') || $.trim(this.refs.bodyInput.value) === '') { return }
 
     var data = {
       auth_token: Session.authToken(),
       user_id: Session.userId(),
       post: {
-        body: this.state.body,
+        body: this.refs.bodyInput.value,
         community: this.props.communityNameNormalized
       }
     }
@@ -40,6 +36,9 @@ var WritePost = React.createClass({
       data: data,
       success: function(res) {
         this.clearFields()
+        this.setState({
+          buttonDisabled: true
+        })
         this.props.handleAddPostToFeed(res.post)
       }.bind(this),
       error: function(err) {
@@ -53,7 +52,7 @@ var WritePost = React.createClass({
 
   clearFields: function() {
     this.refs.titleInput.value = ''
-    this.refs.growingTextarea.clearTextarea()
+    this.refs.bodyInput.value = ''
   },
 
   render: function() {
@@ -69,10 +68,10 @@ var WritePost = React.createClass({
     return (
       <div className="post-to-community">
         <input type="text" id="write-post" ref="titleInput" placeholder="Title (optional)" />
-        <GrowingTextarea placeholder="Write post here..."
-                         minRows={4}
-                         ref="growingTextarea"
-                         handleKeyUp={this.toggleButtonEnabled} />
+        <TextareaAutosize placeholder="Write post here..."
+                          minRows={4}
+                          ref="bodyInput"
+                          onKeyUp={this.toggleButtonEnabled} />
         <a className={btnClass} onClick={this.submitPost}>Post</a>
       </div>
     )

@@ -25,7 +25,7 @@ var Post = React.createClass({
         success: function(res) {
           if (this.isMounted()) {
 
-            this.refs.writeReply.clearTextarea()
+            this.refs.writeReply.value = ""
 
             var replies = data.include_replies === true
                           ? res.replies
@@ -133,6 +133,12 @@ var Post = React.createClass({
     this.setState({ replies: replies });
   },
 
+  haltEnter: function(e) {
+    if (e.keyCode === 13 && !e.shiftKey && $.trim(e.target.value) !== '') {
+      e.preventDefault()
+    }
+  },
+
   //TODO: Handle error handling/display
   render: function() {
 
@@ -168,11 +174,11 @@ var Post = React.createClass({
         </div>
         {repliesContent}
         <div className="reply-to-post">
-          <GrowingTextarea placeholder="Write a reply..."
-                           minRows={1}
-                           ref="writeReply"
-                           keyDownEnterHalt={true}
-                           handleKeyUp={this.maybeCreateReply} />
+          <TextareaAutosize placeholder="Write a reply..."
+                            minRows={1}
+                            ref="writeReply"
+                            onKeyDown={this.haltEnter}
+                            onKeyUp={this.maybeCreateReply} />
         </div>
       </li>
     )
