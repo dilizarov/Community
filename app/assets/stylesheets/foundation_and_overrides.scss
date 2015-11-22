@@ -1490,6 +1490,7 @@ $include-html-global-classes: $include-html-classes;
 
 @import 'foundation';
 
+// I do this because otherwise, seems to interfere with textarea rows=1
 textarea {
   min-height: 0px;
 }
