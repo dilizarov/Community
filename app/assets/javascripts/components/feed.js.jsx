@@ -188,7 +188,6 @@ var Feed = React.createClass({
 
     return (
       <div className='feed'>
-        //<Loader loaded={false} className="spiner" options={opts} />
       </div>
     )
   },
