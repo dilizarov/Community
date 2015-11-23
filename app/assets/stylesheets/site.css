@@ -79,7 +79,7 @@ body {
 /* Feed styling */
 .feed-wrapper .post {
     margin-bottom: 20px;
-    padding: 20px 20px 10px;
+    padding: 20px 20px 12px;
     background-color: white;
     border-radius: 3px;
     border: 1px solid #EEE;
@@ -198,6 +198,7 @@ body {
   box-shadow: none;
   border: none;
   border-bottom: 1px solid #DDD;
+  resize: none;
 }
 
 #write-post-title, #write-post-body {
