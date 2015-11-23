@@ -3,12 +3,17 @@ var Post = React.createClass({
   getInitialState: function() {
     return {
       repliesLoaded: false,
+      submittingReply: false,
       replies: []
     };
   },
 
   maybeCreateReply: function(e) {
     if (e.keyCode === 13 && !e.shiftKey && $.trim(e.target.value) !== '') {
+
+      this.setState({
+        submittingReply: true
+      })
 
       var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
@@ -33,6 +38,7 @@ var Post = React.createClass({
 
             this.setState({
               repliesLoaded: true,
+              submittingReply: false,
               replies: replies
             });
 
@@ -175,6 +181,7 @@ var Post = React.createClass({
         {repliesContent}
         <div className="reply-to-post">
           <TextareaAutosize placeholder="Write a reply..."
+                            disabled={this.state.submittingReply}
                             rows={1}
                             minRows={1}
                             ref="writeReply"
