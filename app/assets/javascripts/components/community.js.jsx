@@ -111,7 +111,7 @@ var Community = React.createClass({
             <li><a onClick={this.settingsClicked}>Settings</a></li>
             <li><a onClick={this.leaveClicked}>Leave</a></li>
           </DropdownMenu>
-          <span className='community-name' onClick={this.goToCommunity}>{this.props.community.name}</span>
+          <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
         </div>
       </li>
     );
