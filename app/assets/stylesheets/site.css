@@ -79,7 +79,7 @@ body {
 /* Feed styling */
 .feed-wrapper .post {
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 20px 20px 10px;
     background-color: white;
     border-radius: 3px;
     border: 1px solid #EEE;
@@ -193,9 +193,14 @@ body {
   top: -1px;
 }
 
-.feed-wrapper textarea, #write-post {
+.feed-wrapper textarea, #write-post-title, #write-post-body {
   outline: none;
   box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #DDD;
+}
+
+#write-post-title, #write-post-body {
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
 }

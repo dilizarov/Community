@@ -67,8 +67,9 @@ var WritePost = React.createClass({
 
     return (
       <div className="post-to-community">
-        <input type="text" id="write-post" ref="titleInput" placeholder="Title (optional)" />
-        <TextareaAutosize placeholder="Write post here..."
+        <input type="text" id="write-post-title" ref="titleInput" placeholder="Title (optional)" />
+        <TextareaAutosize id="write-post-body"
+                          placeholder="Write post here..."
                           minRows={4}
                           ref="bodyInput"
                           onKeyUp={this.toggleButtonEnabled} />
