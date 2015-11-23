@@ -2,7 +2,8 @@ var WritePost = React.createClass({
 
   getInitialState: function() {
     return {
-        buttonDisabled: true
+        buttonDisabled: true,
+        submitting: false
     }
   },
 
@@ -14,6 +15,11 @@ var WritePost = React.createClass({
 
   submitPost: function(e) {
     if ($(e.target).hasClass('disabled') || $.trim(this.refs.bodyInput.value) === '') { return }
+
+    this.setState({
+      buttonDisabled: true,
+      submitting: true
+    })
 
     var data = {
       auth_token: Session.authToken(),
@@ -37,7 +43,8 @@ var WritePost = React.createClass({
       success: function(res) {
         this.clearFields()
         this.setState({
-          buttonDisabled: true
+          buttonDisabled: true,
+          submitting: false
         })
         this.props.handleAddPostToFeed(res.post)
       }.bind(this),
@@ -65,15 +72,26 @@ var WritePost = React.createClass({
       {disabled: this.state.buttonDisabled}
     )
 
+    var button;
+
+    if (this.state.submitting === true) {
+      button = (<a className={btnClass} onClick={this.submitPost}>
+        <Spinner type="inverted" /> Posting
+      </a>)
+    } else {
+      button = <a className={btnClass} onClick={this.submitPost}>Post</a>
+    }
+
     return (
       <div className="post-to-community">
-        <input type="text" id="write-post-title" ref="titleInput" placeholder="Title (optional)" />
+        <input type="text" disabled={this.state.submitting} id="write-post-title" ref="titleInput" placeholder="Title (optional)" />
         <TextareaAutosize id="write-post-body"
+                          disabled={this.state.submitting}
                           placeholder="Write post here..."
                           minRows={4}
                           ref="bodyInput"
                           onChange={this.toggleButtonEnabled} />
-        <a className={btnClass} onClick={this.submitPost}>Post</a>
+        {button}
       </div>
     )
 
