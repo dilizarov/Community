@@ -72,7 +72,7 @@ var WritePost = React.createClass({
                           placeholder="Write post here..."
                           minRows={4}
                           ref="bodyInput"
-                          onKeyUp={this.toggleButtonEnabled} />
+                          onChange={this.toggleButtonEnabled} />
         <a className={btnClass} onClick={this.submitPost}>Post</a>
       </div>
     )
