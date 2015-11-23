@@ -48,13 +48,14 @@ var Communities = React.createClass({
     this.setState({ communities: communities });
   },
 
-  //TODO: Error handling/displaying.
+  //@TODO: Error handling/displaying.
   render: function() {
 
     var mainContent;
+    var loader;
 
     if (this.state.loaded === false) {
-      mainContent = <Spinner size="md" />
+      loader = <Spinner />
     } else if (this.state.error === true) {
       //TODO: Error handling/displaying is in here.
       mainContent = "Whoops, we errored :c"
@@ -76,7 +77,7 @@ var Communities = React.createClass({
     return (
       <div className="communities">
         <h2 className="title">
-          Communities
+          Communities {loader}
         </h2>
         {mainContent}
       </div>

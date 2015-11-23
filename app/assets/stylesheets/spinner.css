@@ -74,11 +74,13 @@
   font-size: 16px;
   height: 16px;
 }
+
 a.button > .Spinner {
   font-size: 4px;
   height: 4px;
   margin-right: 2em;
 }
+
 a.button > .Spinner:only-child {
   margin-right: 0;
 }

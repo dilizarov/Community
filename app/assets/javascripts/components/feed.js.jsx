@@ -174,20 +174,11 @@ var Feed = React.createClass({
 
   renderLoading: function() {
 
-    var opts = {
-      lines: 13,
-      length: 20,
-      radius: 15,
-      width: 5,
-      color: '#056A85',
-      trail: 60,
-      scale: 1.00,
-      top: '50%',
-      left: '50%'
-    }
-
     return (
       <div className='feed'>
+        <h2 className='title'>
+          {this.props.communityName} <Spinner />
+        </h2>
       </div>
     )
   },
