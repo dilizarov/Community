@@ -38,6 +38,7 @@ body {
   margin-right: 4px;
   opacity: 0;
   cursor: pointer;
+  color: #333;
 }
 
 .communities-wrapper .opaque {
@@ -48,11 +49,18 @@ body {
   opacity: 0.75;
 }
 
+.communities-wrapper .community-line {
+  color: #60b0c6;
+  text-transform: capitalize;
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .communities-wrapper .community-name {
   font-size: 13px;
-  color: #60b0c6;
   cursor: pointer;
-  text-transform: capitalize;
 }
 
 .communities-wrapper a.button.tiny {
