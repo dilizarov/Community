@@ -54,7 +54,7 @@ var Communities = React.createClass({
     var mainContent;
 
     if (this.state.loaded === false) {
-      mainContent = "Loading"
+      mainContent = <Spinner size="md" />
     } else if (this.state.error === true) {
       //TODO: Error handling/displaying is in here.
       mainContent = "Whoops, we errored :c"

@@ -19,8 +19,6 @@
 //= require classnames
 //= require components
 //= require cropper
-//= require spin
-//= require react-loader
 //= require moment
 //= require_tree .
 //= require_tree ./utils

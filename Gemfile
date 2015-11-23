@@ -54,7 +54,6 @@ gem 'jquery-rails'
 # Front-end Javascript libraries not including Foundation & React
 source 'https://rails-assets.org' do
   gem 'rails-assets-cropper', '1.0.0'
-  gem 'rails-assets-react-loader', '2.0.0'
   gem 'rails-assets-moment', '2.10.6'
   gem 'rails-assets-classnames', '2.2.0'
 end
