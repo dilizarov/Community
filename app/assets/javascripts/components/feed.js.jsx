@@ -211,6 +211,12 @@ var Feed = React.createClass({
 
     if (this.state.joined === false) {
       join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
+    } else {
+//TODO: Due to feed and communities both being async, there is no guarantee they are linked.
+// Avoid hassles by just having a settings button. I think it should be a cog.
+// Just leaving this commented out for now due to no settings functionality in app yet.
+// Last thing being worked on.
+//      join = <a className='button tiny radius' onClick={this.goToSettings}>Settings</a>
     }
 
     var waypoint;
