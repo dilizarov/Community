@@ -11,10 +11,6 @@ var Post = React.createClass({
   maybeCreateReply: function(e) {
     if (e.keyCode === 13 && !e.shiftKey && $.trim(e.target.value) !== '') {
 
-      this.setState({
-        submittingReply: true
-      })
-
       var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
       data.reply = { body: $.trim(e.target.value) }
@@ -22,6 +18,11 @@ var Post = React.createClass({
       if (this.state.repliesLoaded === false) {
         data.include_replies = true
       }
+
+      this.setState({
+        submittingReply: true,
+        repliesLoading: true
+      })
 
       $.ajax({
         method: "POST",
@@ -39,6 +40,7 @@ var Post = React.createClass({
             this.setState({
               repliesLoaded: true,
               submittingReply: false,
+              repliesLoading: false,
               replies: replies
             });
 
@@ -79,6 +81,10 @@ var Post = React.createClass({
   showReplies: function(e) {
     //@TODO: indicate we are loading replies
 
+    this.setState({
+      repliesLoading: true
+    })
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + this.props.post.external_id + "/replies.json",
@@ -88,6 +94,7 @@ var Post = React.createClass({
           this.setState({
             replies: res.replies,
             repliesLoaded: true,
+            repliesLoading: false,
             error: false
           });
 
@@ -155,9 +162,7 @@ var Post = React.createClass({
     } else if (this.state.error === true) {
       //TODO: Located here
       repliesContent = 'Error loading replies'
-    } else if (this.state.replies.length === 0) {
-      repliesContent = 'No replies'
-    } else {
+    } else if (this.state.replies.length !== 0) {
       repliesContent = (<ul className="post-replies no-bullet">
         {this.state.replies.map(function(reply) {
           return (<Reply key={reply.external_id}
@@ -165,6 +170,12 @@ var Post = React.createClass({
                          toggleLikeReply={this.likeReply} />)
         }.bind(this))}
       </ul>)
+    }
+
+    var repliesLoader;
+
+    if (this.state.repliesLoading === true) {
+      repliesLoader = <Spinner />
     }
 
     return (
@@ -177,6 +188,7 @@ var Post = React.createClass({
           <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'}
                 onClick={this.likePost}>{this.props.post.likes} likes </span>
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
+          {repliesLoader}
         </div>
         {repliesContent}
         <div className="reply-to-post">
