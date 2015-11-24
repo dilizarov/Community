@@ -137,6 +137,7 @@ body {
 /* Replies styling*/
 .feed-wrapper .post-replies-count {
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .feed-wrapper .post-replies-count {
