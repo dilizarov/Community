@@ -76,7 +76,7 @@ var WritePost = React.createClass({
 
     if (this.state.submitting === true) {
       button = (<a className={btnClass} onClick={this.submitPost}>
-        <Spinner type="inverted" /> Posting
+        <Spinner type="inverted" />
       </a>)
     } else {
       button = <a className={btnClass} onClick={this.submitPost}>Post</a>

@@ -4,7 +4,6 @@ var Feed = React.createClass({
     return {
       loaded: false,
       posts: [],
-      joined: null,
       loadingMorePosts: false,
       allPostsLoaded: false
     };
@@ -210,11 +209,7 @@ var Feed = React.createClass({
   renderFeed: function() {
     var join;
 
-    if (this.state.joined === null) {
-      join = <a className='button tiny radius disabled'>Loading</a>
-    } else if (this.state.joined === true) {
-      join = <a className='button tiny radius' onClick={this.showCommunitySettings}>Settings</a>
-    } else {
+    if (this.state.joined === false) {
       join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
     }
 
@@ -226,7 +221,7 @@ var Feed = React.createClass({
                     threshold={2.0}
                  />)
     } else if (this.state.loadingMorePosts === true) {
-      waypoint = <div className="loading-more-posts">Fetching more posts...</div>
+      waypoint = <Spinner size="md" />
     }
 
     return (
