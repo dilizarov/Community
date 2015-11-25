@@ -178,6 +178,8 @@ var Post = React.createClass({
       repliesLoader = <Spinner />
     }
 
+    var heartLikesClass = classNames('fa', {'fa-heart': this.props.post.liked, 'fa-heart-o': !this.props.post.liked});
+
     return (
       <li className="post">
         <div className="post-username">{this.props.post.user.username}</div>
@@ -185,14 +187,14 @@ var Post = React.createClass({
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
-          <span className={this.props.post.liked === true ? 'post-liked' : 'post-not-liked'}
-                onClick={this.likePost}>{this.props.post.likes} likes </span>
+          <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i> {this.props.post.likes}</span>
           <span className="post-replies-count" onClick={this.toggleReplies}>{this.props.post.replies_count} replies </span>
           {repliesLoader}
         </div>
         {repliesContent}
         <div className="reply-to-post">
           <TextareaAutosize placeholder="Write a reply..."
+                            className="write-reply"
                             disabled={this.state.submittingReply}
                             rows={1}
                             minRows={1}

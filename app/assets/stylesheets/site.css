@@ -118,30 +118,27 @@ body {
 }
 
 .feed-wrapper .post-stats {
-  margin-bottom: 10px;
-}
-
-.feed-wrapper .post-liked, .post-not-liked, .post-replies-count {
+  margin: 10px 0;
   font-size: 13px;
 }
 
-.feed-wrapper .post-liked, .post-not-liked {
+.feed-wrapper .post-likes {
   cursor: pointer;
+  color: #999;
   margin-right: 10px;
+  float: right;
 }
 
-.feed-wrapper .post-not-liked {
-  color: #CCC;
+.feed-wrapper .fa-heart, .feed-wrapper .fa-heart-o {
+  color: #60b0c6;
+  margin-right: 3px;
 }
 
 /* Replies styling*/
 .feed-wrapper .post-replies-count {
+  color: #60b0c6;
   cursor: pointer;
   margin-right: 5px;
-}
-
-.feed-wrapper .post-replies-count {
-  color: #60b0c6;
 }
 
 .feed-wrapper .reply-to-post {
@@ -194,7 +191,7 @@ body {
   top: -1px;
 }
 
-.feed-wrapper textarea, #write-post-title, #write-post-body {
+.feed-wrapper .write-reply, #write-post-title, #write-post-body {
   outline: none;
   box-shadow: none;
   border: none;
@@ -205,6 +202,10 @@ body {
 #write-post-title, #write-post-body {
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
+}
+
+.feed-wrapper .write-reply {
+  padding-left: 3px;
 }
 
 .feed-wrapper .post-btn {
