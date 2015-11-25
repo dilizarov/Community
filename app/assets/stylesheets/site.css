@@ -135,10 +135,19 @@ body {
 }
 
 /* Replies styling*/
-.feed-wrapper .post-replies-count {
-  color: #60b0c6;
+.feed-wrapper .post-replies {
   cursor: pointer;
-  margin-right: 5px;
+}
+
+.feed-wrapper .post-replies-count {
+  color: #999;
+}
+
+.feed-wrapper .fa-comment-o {
+  color: #60b0c6;
+  margin-left: 3px;
+  position: relative;
+  top: -1px;
 }
 
 .feed-wrapper .reply-to-post {
