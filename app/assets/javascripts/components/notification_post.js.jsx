@@ -11,10 +11,20 @@ var NotificationPost = React.createClass({
   },
 
   componentDidMount: function() {
+    this.componentWillReceiveProps(this.props)
+  },
+
+  componentWillReceiveProps: function(props) {
+
+    this.setState({
+        replies: [],
+        post: null,
+        loaded: false
+    })
 
     $.ajax({
       method: "GET",
-      url: "/api/v1/posts/" + this.props.postId + "/replies.json",
+      url: "/api/v1/posts/" + props.postId + "/replies.json",
       data: { auth_token: Session.authToken(), user_id: Session.userId(), include_post: true },
       success: function(res) {
         if (this.isMounted()) {
@@ -39,7 +49,6 @@ var NotificationPost = React.createClass({
         }
       }.bind(this)
     })
-
   },
 
   setupWriteReplyHandler: function() {

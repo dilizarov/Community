@@ -3,7 +3,8 @@ var Notifications = React.createClass({
   getInitialState: function() {
     return {
       notificationsCount: 0,
-      notifications: []
+      notifications: [],
+      opened: false
     };
   },
 
@@ -12,9 +13,19 @@ var Notifications = React.createClass({
   },
 
   componentWillUnmount: function() {
+    $(document).unbind('click', this.hideNotifications)
+
     if (this._timer) {
       clearInterval(this._timer);
       this._timer = null;
+    }
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.state.opened && !prevState.opened) {
+      $(document).bind('click', this.hideNotifications);
+    } else if (!this.state.opened && prevState.opened) {
+      $(document).unbind('click', this.hideNotifications);
     }
   },
 
@@ -76,7 +87,8 @@ var Notifications = React.createClass({
 
           this.setState({
             notifications: res.notifications,
-            notificationsCount: 0
+            notificationsCount: 0,
+            opened: true
           });
 
         }
@@ -89,29 +101,56 @@ var Notifications = React.createClass({
     })
   },
 
-  clickedNotif: function() {
+  hideNotifications: function(e) {
+
+    var node = ReactDOM.findDOMNode(this);
+    var target = e.target;
+
+    while (target.parentNode) {
+      if (target === node) {
+        return;
+      }
+
+      target = target.parentNode;
+    }
+
     this.setState({
-      notificationsCount: this.state.notificationsCount + 1
+      opened: false
+    })
+  },
+
+  notificationPressed: function(notification) {
+    this.props.handleNotificationPressed(notification)
+    this.setState({
+      opened: false
     })
   },
 
   render: function() {
 
+    var content;
+
+    if (this.state.opened === true) {
+      content = (<div className="arrow_box">
+      <ul className="no-bullet notifications-list">
+        {this.state.notifications.map(function(notification) {
+          return (<Motification notification={notification}
+                                handleNotificationPressed={this.notificationPressed} />)
+
+        }.bind(this))}
+      </ul>
+      </div>)
+    }
+
     return (
       <span className="notifications">
-        <i className="fa fa-bell fa-2x" onClick={this.clickedNotif}>
+        <i className="fa fa-bell fa-2x" onClick={this.getNotifications}>
           <NotificationBadge count={this.state.notificationsCount} duration={100} className='notification-counter' />
         </i>
+        {content}
         {/*<span className="notifications-count" onClick={this.getNotifications}>
           {'COUNT: ' + this.state.notificationsCount}
         </span>*/}
-        <ul className="no-bullet notifications-list">
-          {this.state.notifications.map(function(notification) {
-            return (<Motification notification={notification}
-                                  handleNotificationPressed={this.props.handleNotificationPressed} />)
-
-          }.bind(this))}
-        </ul>
       </span>
     )
   }
