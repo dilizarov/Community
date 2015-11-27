@@ -160,20 +160,24 @@ var NotificationPost = React.createClass({
     return(
       <div className="notification-post">
         <div className="post-username">{this.state.post.user.username}</div>
-        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
+        <div className="post-timestamp">{timestamp(this.state.post.created_at)}</div>
         <div className="post-title">{this.state.post.title}</div>
         <div className="post-body">{this.state.post.body}</div>
         <div className="post-stats">
           <span className={this.state.post.liked === true ? 'post-liked' : 'post-not-liked'}
-                onClick={this.likePost}>{this.props.post.likes} likes </span>
-          <span className="post-replies-count">{this.props.post.replies_count} replies </span>
+                onClick={this.likePost}>{this.state.post.likes} likes </span>
+              <span className="post-replies-count">{this.state.post.replies_count} replies </span>
         </div>
         {repliesContent}
         <div className="reply-to-post">
-          <GrowingTextarea placeholder="Write a reply..."
-                          minRows={1}
-                          keyDownEnterHalt={true}
-                          handleKeyUp={this.maybeCreateReply} />
+          {/*<TextareaAutosize placeholder="Write a reply..."
+                            className="write-reply"
+                            disabled={this.state.submittingReply}
+                            rows={1}
+                            minRows={1}
+                            ref="writeReply"
+                            onKeyDown={this.haltEnter}
+                            onKeyUp={this.maybeCreateReply} />*/}
         </div>
       </div>
     );

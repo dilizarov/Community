@@ -92,10 +92,10 @@ var Notifications = React.createClass({
   render: function() {
 
     return (
-      <div className="notifications">
-        <div className="notifications-count" onClick={this.getNotifications}>
+      <span className="notifications">
+        <span className="notifications-count" onClick={this.getNotifications}>
           {'COUNT: ' + this.state.notificationsCount}
-        </div>
+        </span>
         <ul className="no-bullet notifications-list">
           {this.state.notifications.map(function(notification) {
             return (<Motification notification={notification}
@@ -103,7 +103,7 @@ var Notifications = React.createClass({
 
           }.bind(this))}
         </ul>
-      </div>
+      </span>
     )
   }
 
