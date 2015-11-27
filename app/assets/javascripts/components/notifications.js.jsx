@@ -89,13 +89,22 @@ var Notifications = React.createClass({
     })
   },
 
+  clickedNotif: function() {
+    this.setState({
+      notificationsCount: this.state.notificationsCount + 1
+    })
+  },
+
   render: function() {
 
     return (
       <span className="notifications">
-        <span className="notifications-count" onClick={this.getNotifications}>
+        <i className="fa fa-bell fa-2x" onClick={this.clickedNotif}>
+          <NotificationBadge count={this.state.notificationsCount} duration={100} />
+        </i>
+        {/*<span className="notifications-count" onClick={this.getNotifications}>
           {'COUNT: ' + this.state.notificationsCount}
-        </span>
+        </span>*/}
         <ul className="no-bullet notifications-list">
           {this.state.notifications.map(function(notification) {
             return (<Motification notification={notification}

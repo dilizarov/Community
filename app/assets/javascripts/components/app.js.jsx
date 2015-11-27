@@ -134,8 +134,7 @@ var App = React.createClass({
       return (
         <div className='app'>
           <div className='row'>
-            <div className='small-11 column' style={{float: 'right'}}>
-              {Session.userInfo().username}
+            <div className='small-11 column'>
               <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
                              handleNotificationPressed={this.notificationPressed}/>
               <SessionBox handleSessionChange={this.reloadWindow} />
