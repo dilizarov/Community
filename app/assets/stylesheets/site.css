@@ -220,3 +220,16 @@ body {
 .feed-wrapper .post-btn {
   text-align: right;
 }
+
+.top-details {
+  top: 20px;
+}
+
+i, .button, .post-stats {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

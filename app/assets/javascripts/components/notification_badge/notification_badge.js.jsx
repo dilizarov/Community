@@ -24,8 +24,8 @@ const styles = {
     verticalAlign: 'baseline',
     backgroundColor: 'rgba(212, 19, 13, 1)',
     borderRadius: '10px',
-    top : '-2px',
-    right: '-2px'
+    top : '-40px',
+    right: '-12px'
   }
 };
 

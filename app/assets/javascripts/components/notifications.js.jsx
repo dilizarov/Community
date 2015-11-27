@@ -100,7 +100,7 @@ var Notifications = React.createClass({
     return (
       <span className="notifications">
         <i className="fa fa-bell fa-2x" onClick={this.clickedNotif}>
-          <NotificationBadge count={this.state.notificationsCount} duration={100} />
+          <NotificationBadge count={this.state.notificationsCount} duration={100} className='notification-counter' />
         </i>
         {/*<span className="notifications-count" onClick={this.getNotifications}>
           {'COUNT: ' + this.state.notificationsCount}
