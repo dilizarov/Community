@@ -183,12 +183,10 @@ body {
   color: #60b0c6;
 }
 
-.feed-wrapper .reply-liked, .reply-not-liked {
+.feed-wrapper .reply-likes {
   font-size: 12px;
-}
-
-.feed-wrapper .reply-not-liked {
-  color: #CCC;
+  color: #555;
+  cursor: pointer;
 }
 
 .feed-wrapper .reply-body {
@@ -198,15 +196,15 @@ body {
 .feed-wrapper .reply-timestamp {
   font-size: 12px;
   margin-left: 5px;
+  color: #999;
 }
 
 .feed-wrapper .reply-timestamp:before {
   content: "●";
   padding-right: 5px;
-  font-size: 8px;
-  color: #333;
+  font-size: 6px;
   position: relative;
-  top: -1px;
+  top: -2px;
 }
 
 .feed-wrapper .write-reply, #write-post-title, #write-post-body {

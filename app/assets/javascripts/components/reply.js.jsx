@@ -24,11 +24,13 @@ var Reply = React.createClass({
 
   render: function() {
 
+    var heartLikesClass = classNames('fa', {'fa-heart': this.props.reply.liked, 'fa-heart-o': !this.props.reply.liked});
+
     return (
       <li className="reply">
         <span className="reply-username">{this.props.reply.user.username}</span>
         <div className="reply-body">{this.props.reply.body}</div>
-        <span className={this.props.reply.liked === true ? 'reply-liked' : 'reply-not-liked'} onClick={this.likeReply}>{this.props.reply.likes} likes</span>
+        <span className="reply-likes" onClick={this.likeReply}><i className={heartLikesClass}></i> {this.props.reply.likes}</span>
         <span className="reply-timestamp">{timestamp(this.props.reply.created_at)}</span>
       </li>
     );
