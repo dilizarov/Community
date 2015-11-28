@@ -93,15 +93,32 @@ body {
   text-transform: capitalize;
 }
 
+.feed-wrapper .post-heading {
+  margin-bottom: 20px;
+}
+
+.feed-wrapper .dummy-avatar {
+  background: url('/assets/tofu_avatar.png');
+  width: 60px;
+  height: 60px;
+  background-size: 60px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-right: 10px;
+  float: left;
+}
+
 .feed-wrapper .post-username {
   color: #60b0c6;
   font-size: 14px;
+  vertical-align: top;
 }
 
 .feed-wrapper .post-timestamp {
   font-size: 12px;
   margin-bottom: 15px;
   color: #CCC;
+  display: block;
 }
 
 .feed-wrapper .post-title {
@@ -110,6 +127,7 @@ body {
   font-weight: bold;
   color: #333;
   margin-bottom: 5px;
+  clear: both;
 }
 
 .feed-wrapper .post-body {

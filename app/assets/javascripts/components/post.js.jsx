@@ -182,8 +182,11 @@ var Post = React.createClass({
 
     return (
       <li className="post">
-        <div className="post-username">{this.props.post.user.username}</div>
-        <div className="post-timestamp">{timestamp(this.props.post.created_at)}</div>
+        <div className="post-heading clearfix">
+          <span className="dummy-avatar"></span>
+          <span className="post-username">{this.props.post.user.username}</span>
+          <span className="post-timestamp">{timestamp(this.props.post.created_at)}</span>
+        </div>
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
