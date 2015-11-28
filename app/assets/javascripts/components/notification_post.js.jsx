@@ -174,8 +174,8 @@ var NotificationPost = React.createClass({
         <div className="post-body">{this.state.post.body}</div>
         <div className="post-stats">
           <span className={this.state.post.liked === true ? 'post-liked' : 'post-not-liked'}
-                onClick={this.likePost}>{this.state.post.likes} likes </span>
-              <span className="post-replies-count">{this.state.post.replies_count} replies </span>
+                onClick={this.likePost}>{this.state.post.likes.toThousandsString()} likes </span>
+              <span className="post-replies-count">{this.state.post.replies_count.toThousandsString()} replies </span>
         </div>
         {repliesContent}
         <div className="reply-to-post">
