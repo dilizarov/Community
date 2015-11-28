@@ -113,7 +113,7 @@ body {
 }
 
 .feed-wrapper .post-body {
-  font-family: 'Lora', serif;
+  font-family: 'Roboto', sans-serif;
   margin-bottom: 5px;
 }
 
@@ -125,8 +125,7 @@ body {
 .feed-wrapper .post-likes {
   cursor: pointer;
   color: #999;
-  margin-right: 10px;
-  float: right;
+  margin-right: 20px;
 }
 
 .feed-wrapper .fa-heart, .feed-wrapper .fa-heart-o {
@@ -135,7 +134,7 @@ body {
 }
 
 /* Replies styling*/
-.feed-wrapper .post-replies {
+.feed-wrapper .post-replies-stats {
   cursor: pointer;
 }
 
@@ -145,7 +144,7 @@ body {
 
 .feed-wrapper .fa-comment-o {
   color: #60b0c6;
-  margin-left: 3px;
+  margin: 0 3px 0 0;
   position: relative;
   top: -1px;
 }
