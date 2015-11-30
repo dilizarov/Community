@@ -230,6 +230,10 @@ body {
 /* Write Post Styling */
 .feed-wrapper .post-to-community {
   margin-bottom: 20px;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #EEE;
+  border-bottom: 1px solid #DDD;
 }
 
 .feed-wrapper .write-reply, #write-post-title, #write-post-body {
@@ -238,17 +242,17 @@ body {
   border: none;
   border-bottom: 1px solid #DDD;
   resize: none;
-  width: 89.4%;
 }
 
 #write-post-title, #write-post-body {
-  border: 1px solid #EEE;
+  border: none;
   border-bottom: 1px solid #DDD;
   margin-bottom: 0;
+  width: 88.7%;
 }
 
 #write-post-body {
-  border-top: none;
+  border-bottom: none;
 }
 
 .feed-wrapper .post-btn {
