@@ -99,7 +99,7 @@ body {
 }
 
 .feed-wrapper .dummy-avatar {
-  background: url('http://lorempixel.com/50/50/');
+  background: url('http://lorempixel.com/500/500/');
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -163,7 +163,7 @@ body {
 
 .feed-wrapper .fa-comment-o {
   color: #60b0c6;
-  margin: 0 3px 0 0;
+  margin: 0 6px 0 0;
   position: relative;
   top: -1px;
 }
