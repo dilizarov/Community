@@ -16,6 +16,7 @@ body {
   border-radius: 3px;
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
+  margin-top: 50px;
 }
 
 .communities-wrapper .title {
@@ -105,7 +106,7 @@ body {
   background-size: 50px;
   background-repeat: no-repeat;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 15px;
   float: left;
 }
 
@@ -225,25 +226,39 @@ body {
   top: -2px;
 }
 
+
+/* Write Post Styling */
+.feed-wrapper .post-to-community {
+  margin-bottom: 20px;
+}
+
 .feed-wrapper .write-reply, #write-post-title, #write-post-body {
   outline: none;
   box-shadow: none;
   border: none;
   border-bottom: 1px solid #DDD;
   resize: none;
+  width: 89.4%;
 }
 
 #write-post-title, #write-post-body {
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
+  margin-bottom: 0;
+}
+
+#write-post-body {
+  border-top: none;
+}
+
+.feed-wrapper .post-btn {
+  margin-top: 20px;
+  margin-bottom: 0;
+  float: right;
 }
 
 .feed-wrapper .write-reply {
   padding-left: 3px;
-}
-
-.feed-wrapper .post-btn {
-  text-align: right;
 }
 
 .top-details {

@@ -83,7 +83,8 @@ var WritePost = React.createClass({
     }
 
     return (
-      <div className="post-to-community">
+      <div className="post-to-community clearfix">
+        <span className="dummy-avatar"></span>
         <input type="text" disabled={this.state.submitting} id="write-post-title" ref="titleInput" placeholder="Title (optional)" />
         <TextareaAutosize id="write-post-body"
                           disabled={this.state.submitting}

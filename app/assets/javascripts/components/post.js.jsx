@@ -191,7 +191,10 @@ var Post = React.createClass({
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
           <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i> {this.props.post.likes.toThousandsString()}</span>
-          <span className="post-replies-stats" onClick={this.toggleReplies}><i className="fa fa-comment-o"></i> <span className="post-replies-count">{this.props.post.replies_count.toThousandsString()}</span></span>
+          <span className="post-replies-stats" onClick={this.toggleReplies}>
+            <i className="fa fa-comment-o"></i>
+            <span className="post-replies-count">{this.props.post.replies_count.toThousandsString()}</span>
+          </span>
           {repliesLoader}
         </div>
         {repliesContent}
