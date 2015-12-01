@@ -84,3 +84,8 @@ a.button > .Spinner {
 a.button > .Spinner:only-child {
   margin-right: 0;
 }
+
+img > .Spinner {
+  font-size: 4px;
+  height: 4px;
+}

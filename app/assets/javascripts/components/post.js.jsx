@@ -152,6 +152,18 @@ var Post = React.createClass({
     }
   },
 
+  makeVisible: function() {
+    this.setState({
+      avatarLoaded: true
+    })
+  },
+
+  usePlaceholder: function() {
+    this.setState({
+      avatarLoadFailed: true
+    })
+  },
+
   //TODO: Handle error handling/display
   render: function() {
 
@@ -165,6 +177,10 @@ var Post = React.createClass({
     } else if (this.state.replies.length !== 0) {
       repliesContent = (<ul className="post-replies no-bullet">
         {this.state.replies.map(function(reply) {
+          var avatar_url = "http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)
+          if (Math.ceil(Math.random() * 2) === 1) {
+            reply.user.avatar_url = avatar_url
+          }
           return (<Reply key={reply.external_id}
                          reply={reply}
                          toggleLikeReply={this.likeReply} />)
@@ -183,7 +199,7 @@ var Post = React.createClass({
     return (
       <li className="post">
         <div className="post-heading clearfix">
-          <span className="dummy-avatar"></span>
+          <Avatar source={this.props.post.user.avatar_url} />
           <span className="post-username">{this.props.post.user.username}</span>
           <span className="post-timestamp">{timestamp(this.props.post.created_at)}</span>
         </div>

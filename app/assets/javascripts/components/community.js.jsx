@@ -92,7 +92,8 @@ var Community = React.createClass({
       "fa",
       "fa-cog",
       { solid: this.state.settingsHighlighted },
-      { opaque: this.state.settingsCogShown }
+      { opaque: this.state.settingsCogShown },
+      { 'fa-spin': this.state.settingsHighlighted }
     )
 
     var menuOptions = {

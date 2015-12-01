@@ -1,0 +1,49 @@
+.avatar, .avatar-loading {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-right: 15px;
+  float: left;
+}
+
+@-webkit-keyframes avatar-pulse-out
+  {
+    0% {-webkit-transform: scale(0); opacity: 0;}
+    8% {-webkit-transform: scale(0); opacity: 0;}
+    15% {-webkit-transform: scale(0.1); opacity: 1;}
+    30% {-webkit-transform: scale(0.5); opacity: 1;}
+    100% {opacity: 0; -webkit-transform: scale(1);}
+  }
+
+  @-moz-keyframes avatar-pulse-out
+  {
+    0% {-moz-transform: scale(0); opacity: 0;}
+    8% {-moz-transform: scale(0); opacity: 0;}
+    15% {-moz-transform: scale(0.1); opacity: 1;}
+    30% {-moz-transform: scale(0.5); opacity: 1;}
+    100% {opacity: 0; -moz-transform: scale(1);}
+  }
+
+.avatar-loading {
+  background-color: #F6F7F8;
+}
+
+.avatar-loading .avatar-loading-rays {
+  position: absolute;
+  z-index: 10;
+  background-color: transparent;
+  width: inherit;
+  height: inherit;
+  border: 4px solid #EDEDED;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  /* Giving Animation Function */
+  -webkit-animation: avatar-pulse-out 2s linear infinite;
+  -moz-animation: avatar-pulse-out 2s linear infinite;
+  border-image: initial;
+}

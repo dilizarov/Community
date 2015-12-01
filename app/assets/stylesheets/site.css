@@ -98,18 +98,6 @@ body {
   margin-bottom: 20px;
 }
 
-.feed-wrapper .dummy-avatar {
-  background: url('http://lorempixel.com/500/500/');
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-size: 50px;
-  background-repeat: no-repeat;
-  display: inline-block;
-  margin-right: 15px;
-  float: left;
-}
-
 .feed-wrapper .post-username {
   color: #60b0c6;
   font-size: 14px;
@@ -225,7 +213,6 @@ body {
   position: relative;
   top: -2px;
 }
-
 
 /* Write Post Styling */
 .feed-wrapper .post-to-community {

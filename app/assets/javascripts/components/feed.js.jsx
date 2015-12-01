@@ -240,6 +240,10 @@ var Feed = React.createClass({
                    handleAddPostToFeed={this.addPostToFeed}/>
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
+            var avatar_url = "http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)
+            if (Math.ceil(Math.random() * 2) === 1) {
+              post.user.avatar_url = avatar_url
+            }
             return (<Post key={post.external_id}
                          post={post}
                          toggleLikePost={this.likePost}
