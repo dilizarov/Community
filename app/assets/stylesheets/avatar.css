@@ -1,4 +1,4 @@
-.avatar, .avatar-loading {
+.avatar, .avatar-loading, .avatar-sm, .avatar-loading-sm {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -6,6 +6,11 @@
   position: relative;
   margin-right: 15px;
   float: left;
+}
+
+.avatar-sm, .avatar-loading-sm {
+  width: 40px;
+  height: 40px;
 }
 
 @-webkit-keyframes avatar-pulse-out
@@ -26,11 +31,11 @@
     100% {opacity: 0; -moz-transform: scale(1);}
   }
 
-.avatar-loading {
+.avatar-loading, .avatar-loading-sm {
   background-color: #F6F7F8;
 }
 
-.avatar-loading .avatar-loading-rays {
+.avatar-loading .avatar-loading-rays, .avatar-loading-sm .avatar-loading-rays {
   position: absolute;
   z-index: 10;
   background-color: transparent;
