@@ -253,7 +253,7 @@ body {
 }
 
 .top-details {
-  top: 20px;
+  margin-top: 20px;
 }
 
 i, .button, .post-stats {

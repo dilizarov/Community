@@ -114,53 +114,60 @@ var SessionBox = React.createClass({
     })
   },
 
+  openSessionBox: function() {
+    console.log("yippie!")
+  },
+
   render: function() {
-    if (Session.loggedIn() === true) {
-      return(
-        <span className="logged-in-session">
-          LOGGED IN, HELL YEAH!
-          <a className="button tiny radius" onClick={this.logout}>LOG OUT PLS</a>
-        </span>
-      )
-    } else {
 
-      var accessAccount;
-
-      if (this.state.forgotPassword === true) {
-        accessAccount = (<div className="forgot-password">
-                   <input type="text" placeholder="EMAIL" id="session-email" />
-                    <a className="button tiny radius success" onClick={this.processForgotPassword}>Send Email</a>
-                    <br />
-                    <a className="button tiny radius" onClick={this.toggleForgotPassword}>Whoops</a>
-                 </div>)
-      } else if (this.state.login === true) {
-        accessAccount = (<div className="login">
-                   <input type="text" placeholder="EMAIL" id="session-email" />
-                   <input type="text" placeholder="PASSWORDO" id="session-password" />
-                   <a className="button tiny radius success" onClick={this.processLogin}>Log In</a>
-                   <br />
-                   <a className="button tiny radius" onClick={this.togglePrimaryState}>Create Account</a>
-                   <a className="button tiny radius" onClick={this.toggleForgotPassword}>Forgot Password</a>
-                 </div>)
-      } else {
-        accessAccount = (<div className="create-account">
-                   <input type="text" placeholder="USERNAME" id="session-username" />
-                   <input type="text" placeholder="EMAIL" id="session-email" />
-                   <input type="text" placeholder="PASSWORDOOOO" id="session-password" />
-                   <input type="text" placeholder="CONFIRM ITTTT" id="session-confirm" />
-                   <a className="button tiny radius success" onClick={this.processRegistration}>Create Account</a>
-                   <br />
-                   <a className="button tiny radius" onClick={this.togglePrimaryState}>Log In</a>
-                 </div>)
-      }
-
-      return(
-        <span className="meta-session">
-          I AINT LOGGED IN YET, PAUL
-          {accessAccount}
-        </span>
-      )
-    }
+    return (
+      <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" onClick={this.openSessionBox}/>
+    )
+    // if (Session.loggedIn() === true) {
+    //   return(
+    //     <span className="logged-in-session">
+    //       LOGGED IN, HELL YEAH!
+    //       <a className="button tiny radius" onClick={this.logout}>LOG OUT PLS</a>
+    //     </span>
+    //   )
+    // } else {
+    //
+    //   var accessAccount;
+    //
+    //   if (this.state.forgotPassword === true) {
+    //     accessAccount = (<div className="forgot-password">
+    //                <input type="text" placeholder="EMAIL" id="session-email" />
+    //                 <a className="button tiny radius success" onClick={this.processForgotPassword}>Send Email</a>
+    //                 <br />
+    //                 <a className="button tiny radius" onClick={this.toggleForgotPassword}>Whoops</a>
+    //              </div>)
+    //   } else if (this.state.login === true) {
+    //     accessAccount = (<div className="login">
+    //                <input type="text" placeholder="EMAIL" id="session-email" />
+    //                <input type="text" placeholder="PASSWORDO" id="session-password" />
+    //                <a className="button tiny radius success" onClick={this.processLogin}>Log In</a>
+    //                <br />
+    //                <a className="button tiny radius" onClick={this.togglePrimaryState}>Create Account</a>
+    //                <a className="button tiny radius" onClick={this.toggleForgotPassword}>Forgot Password</a>
+    //              </div>)
+    //   } else {
+    //     accessAccount = (<div className="create-account">
+    //                <input type="text" placeholder="USERNAME" id="session-username" />
+    //                <input type="text" placeholder="EMAIL" id="session-email" />
+    //                <input type="text" placeholder="PASSWORDOOOO" id="session-password" />
+    //                <input type="text" placeholder="CONFIRM ITTTT" id="session-confirm" />
+    //                <a className="button tiny radius success" onClick={this.processRegistration}>Create Account</a>
+    //                <br />
+    //                <a className="button tiny radius" onClick={this.togglePrimaryState}>Log In</a>
+    //              </div>)
+    //   }
+    //
+    //   return(
+    //     <span className="meta-session">
+    //       I AINT LOGGED IN YET, PAUL
+    //       {accessAccount}
+    //     </span>
+    //   )
   }
 
 })

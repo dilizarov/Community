@@ -5,7 +5,6 @@
   display: inline-block;
   position: relative;
   margin-right: 15px;
-  float: left;
 }
 
 .avatar-sm, .avatar-loading-sm {
@@ -38,7 +37,7 @@
 .avatar-loading .avatar-loading-rays, .avatar-loading-sm .avatar-loading-rays {
   position: absolute;
   z-index: 10;
-  background-color: transparent;
+  background-color: white;
   width: inherit;
   height: inherit;
   border: 4px solid #EDEDED;

@@ -19,12 +19,10 @@ var Search = React.createClass({
 
   render: function() {
     return (
-      <div className="search">
         <input type="text"
-               id="search"
+               className="search"
                placeholder="Visit a community"
                onKeyUp={this.maybeGoToCommunity} />
-      </div>
     )
   }
 

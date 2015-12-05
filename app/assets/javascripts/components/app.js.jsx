@@ -133,20 +133,16 @@ var App = React.createClass({
 
       return (
         <div className='app'>
-          <div className='row'>
-            <div className='small-11 column top-details'>
+          <div className='top-details'>
+            <Search handleSelectCommunity={this.selectCommunity} />
+            <span style={{float: 'right'}}>
               <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
                              handleNotificationPressed={this.notificationPressed}/>
               <SessionBox handleSessionChange={this.reloadWindow} />
-            </div>
+            </span>
               {/* <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
               <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
               <img id="profile-pic" /> */}
-          </div>
-          <div className='row'>
-            <div className='small-12 column'>
-              <Search handleSelectCommunity={this.selectCommunity} />
-            </div>
           </div>
           <div className='row'>
             <div className='small-8 column feed-wrapper'>

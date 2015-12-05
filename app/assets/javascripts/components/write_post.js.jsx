@@ -84,7 +84,7 @@ var WritePost = React.createClass({
 
     return (
       <div className="post-to-community clearfix">
-        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} className="avatar" />
+        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} className="avatar" style={{float: 'left'}} />
         <input type="text" disabled={this.state.submitting} id="write-post-title" ref="titleInput" placeholder="Title (optional)" />
         <TextareaAutosize id="write-post-body"
                           disabled={this.state.submitting}

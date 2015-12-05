@@ -199,7 +199,7 @@ var Post = React.createClass({
     return (
       <li className="post">
         <div className="post-heading clearfix">
-          <Avatar source={this.props.post.user.avatar_url} />
+          <Avatar source={this.props.post.user.avatar_url} style={{float: 'left'}}/>
           <span className="post-username">{this.props.post.user.username}</span>
           <span className="post-timestamp">{timestamp(this.props.post.created_at)}</span>
         </div>
