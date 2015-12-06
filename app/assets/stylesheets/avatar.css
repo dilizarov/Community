@@ -1,10 +1,3 @@
-.top-notifications-wrapper .avatar-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-}
-
 .avatar, .avatar-loading, .avatar-sm, .avatar-loading-sm {
   width: 50px;
   height: 50px;
