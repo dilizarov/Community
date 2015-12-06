@@ -192,6 +192,11 @@ body {
   font-size: 14px;
 }
 
+.feed-wrapper .reply .avatar-sm {
+  position: relative;
+  top: 5px;
+}
+
 .feed-wrapper .reply-to-post input {
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.1);
