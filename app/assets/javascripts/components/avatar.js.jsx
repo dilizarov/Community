@@ -53,7 +53,7 @@ getInitialState: function() {
     }
 
     return (
-      <span>
+      <span className="avatar-wrapper">
         {avatar}
         {loader}
       </span>

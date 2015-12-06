@@ -9,6 +9,19 @@ body {
   background-color: #FAFAFA;
 }
 
+/* Top Notifications styling */
+.top-notifications-wrapper {
+  display: block;
+  float: right;
+  position: relative;
+  margin-right: 2%;
+}
+.top-notifications-wrapper .dd-menu {
+  position: absolute;
+  left: -30px;
+  top: 4px;
+}
+
 /* Communities List styling */
 .communities-wrapper {
   background-color: white;
@@ -243,13 +256,13 @@ body {
 }
 
 .feed-wrapper .post-btn {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 0;
   float: right;
 }
 
 .feed-wrapper .write-reply {
-  padding-left: 3px;
+  padding-left: 10px;
 }
 
 .top-details {
