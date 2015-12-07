@@ -262,10 +262,16 @@ body {
   border-bottom: none;
 }
 
+#write-post-title:focus, #write-post-body:focus {
+  background: transparent;
+}
+
 .feed-wrapper .post-btn {
   margin-top: 10px;
   margin-bottom: 0;
   float: right;
+  padding: 8px 20px;
+  cursor: pointer;
 }
 
 .feed-wrapper .write-reply {
