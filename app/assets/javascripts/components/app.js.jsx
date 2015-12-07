@@ -140,6 +140,7 @@ var App = React.createClass({
           <div className='top-details'>
             <Search handleSelectCommunity={this.selectCommunity} />
             <span className="top-notifications-wrapper">
+              {Session.userInfo().username}
               <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
                              handleNotificationPressed={this.notificationPressed}/>
               <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" onClick={this.openSessionBox} whiteRays />
