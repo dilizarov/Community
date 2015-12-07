@@ -114,15 +114,9 @@ var SessionBox = React.createClass({
     })
   },
 
-  openSessionBox: function() {
-    console.log("yippie!")
-  },
-
   render: function() {
 
-    return (
-      <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" onClick={this.openSessionBox} lala="welp" whiteRays />
-    )
+    return <span/>
     // if (Session.loggedIn() === true) {
     //   return(
     //     <span className="logged-in-session">

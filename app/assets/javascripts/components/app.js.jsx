@@ -111,6 +111,10 @@ var App = React.createClass({
     }
   },
 
+  openSessionBox: function() {
+    console.log("open session box")
+  },
+
   render: function() {
 
     if (this.state.triggerWelcome === true) {
@@ -138,7 +142,8 @@ var App = React.createClass({
             <span className="top-notifications-wrapper">
               <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
                              handleNotificationPressed={this.notificationPressed}/>
-              <SessionBox handleSessionChange={this.reloadWindow} />
+              <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" onClick={this.openSessionBox} whiteRays />
+            {/*<SessionBox handleSessionChange={this.reloadWindow} />*/}
             </span>
               {/* <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
               <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
