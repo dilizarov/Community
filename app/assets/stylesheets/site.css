@@ -15,6 +15,7 @@ body {
   float: right;
   position: relative;
   margin-right: 2%;
+  height: 30px;
 }
 .top-notifications-wrapper .dd-menu {
   position: absolute;

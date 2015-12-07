@@ -26,12 +26,18 @@ getInitialState: function() {
 
     var avatarClass = "avatar";
     var loaderClass = "avatar-loading";
+    var raysClass   = "avatar-loading-rays";
 
-    var { source, size, ...other } = this.props
+
+    var { source, size, whiteRays, ...other } = this.props
 
     if (size === "sm") {
       avatarClass += "-sm"
       loaderClass += "-sm"
+    }
+
+    if (whiteRays === true) {
+      raysClass += "-white"
     }
 
     if (source === null || this.state.loadFailed === true) {
@@ -47,7 +53,7 @@ getInitialState: function() {
 
         avatar = <img src={this.props.source} className={avatarClass} style={{display: 'none'}} onLoad={this.makeVisible} onError={this.usePlaceholder} />
         loader = (<span className={loaderClass} style={this.props.style}>
-                    <span className="avatar-loading-rays" style={this.props.style}></span>
+                    <span className={raysClass} style={this.props.style}></span>
                   </span>)
       }
     }
