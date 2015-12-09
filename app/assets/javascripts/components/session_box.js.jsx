@@ -123,6 +123,7 @@ var SessionBox = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState) {
+
     if (this.state.sessionBoxOpened === prevState.sessionBoxOpened) {
       return;
     }
@@ -139,11 +140,10 @@ var SessionBox = React.createClass({
 
   handleClickOutside: function(e) {
 
-    var node = ReactDOM.findDOMNode(this.refs.sessionBox)
     var target = e.target;
 
     while (target.parentNode) {
-      if (target === node) {
+      if (target === this.refs.sessionBox) {
         return;
       }
 
