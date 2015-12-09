@@ -3,7 +3,8 @@ var SessionBox = React.createClass({
   getInitialState: function() {
     return {
       login: true,
-      forgotPassword: false
+      forgotPassword: false,
+      sessionBoxOpened: false
     }
   },
 
@@ -114,54 +115,100 @@ var SessionBox = React.createClass({
     })
   },
 
+  toggleSessionBox: function() {
+
+    this.setState({
+      sessionBoxOpened: !this.state.sessionBoxOpened
+    })
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.state.sessionBoxOpened === prevState.sessionBoxOpened) {
+      return;
+    }
+
+    if (this.state.sessionBoxOpened === true && prevState.sessionBoxOpened === false) {
+      this.lastWindowClickEvent = this.handleClickOutside;
+      document.addEventListener('click', this.lastWindowClickEvent);
+    } else if (this.state.sessionBoxOpened === false && prevState.sessionBoxOpened === true) {
+      document.removeEventListener('click', this.lastWindowClickEvent);
+
+      this.lastWindowClickEvent = null;
+    }
+  },
+
+  handleClickOutside: function(e) {
+
+    var node = ReactDOM.findDOMNode(this.refs.sessionBox)
+    var target = e.target;
+
+    while (target.parentNode) {
+      if (target === node) {
+        return;
+      }
+
+      target = target.parentNode;
+    }
+
+    this.setState({
+      sessionBoxOpened: false
+    })
+  },
+
   render: function() {
 
-    return <span/>
-    // if (Session.loggedIn() === true) {
-    //   return(
-    //     <span className="logged-in-session">
-    //       LOGGED IN, HELL YEAH!
-    //       <a className="button tiny radius" onClick={this.logout}>LOG OUT PLS</a>
-    //     </span>
-    //   )
-    // } else {
-    //
-    //   var accessAccount;
-    //
-    //   if (this.state.forgotPassword === true) {
-    //     accessAccount = (<div className="forgot-password">
-    //                <input type="text" placeholder="EMAIL" id="session-email" />
-    //                 <a className="button tiny radius success" onClick={this.processForgotPassword}>Send Email</a>
-    //                 <br />
-    //                 <a className="button tiny radius" onClick={this.toggleForgotPassword}>Whoops</a>
-    //              </div>)
-    //   } else if (this.state.login === true) {
-    //     accessAccount = (<div className="login">
-    //                <input type="text" placeholder="EMAIL" id="session-email" />
-    //                <input type="text" placeholder="PASSWORDO" id="session-password" />
-    //                <a className="button tiny radius success" onClick={this.processLogin}>Log In</a>
-    //                <br />
-    //                <a className="button tiny radius" onClick={this.togglePrimaryState}>Create Account</a>
-    //                <a className="button tiny radius" onClick={this.toggleForgotPassword}>Forgot Password</a>
-    //              </div>)
-    //   } else {
-    //     accessAccount = (<div className="create-account">
-    //                <input type="text" placeholder="USERNAME" id="session-username" />
-    //                <input type="text" placeholder="EMAIL" id="session-email" />
-    //                <input type="text" placeholder="PASSWORDOOOO" id="session-password" />
-    //                <input type="text" placeholder="CONFIRM ITTTT" id="session-confirm" />
-    //                <a className="button tiny radius success" onClick={this.processRegistration}>Create Account</a>
-    //                <br />
-    //                <a className="button tiny radius" onClick={this.togglePrimaryState}>Log In</a>
-    //              </div>)
-    //   }
-    //
-    //   return(
-    //     <span className="meta-session">
-    //       I AINT LOGGED IN YET, PAUL
-    //       {accessAccount}
-    //     </span>
-    //   )
+    var userInfo = Session.userInfo();
+    var sessionContent;
+    var box;
+
+    if (this.state.sessionBoxOpened === true) {
+      if (Session.loggedIn() === true) {
+        sessionContent = <a className="button tiny radius" onClick={this.logout}>Log out</a>
+      } else {
+        if (this.state.forgotPassword === true) {
+          sessionContent = (<div className="forgot-password">
+                     <input type="text" placeholder="email" id="session-email" />
+                      <a className="button tiny radius success" onClick={this.processForgotPassword}>Send Email</a>
+                      <br />
+                      <a className="button tiny radius" onClick={this.toggleForgotPassword}>Whoops</a>
+                   </div>)
+        } else if (this.state.login === true) {
+          sessionContent = (<div className="login">
+                     <input type="text" placeholder="EMAIL" id="session-email" />
+                     <input type="text" placeholder="PASSWORDO" id="session-password" />
+                     <a className="button tiny radius success" onClick={this.processLogin}>Log In</a>
+                     <br />
+                     <a className="button tiny radius" onClick={this.togglePrimaryState}>Create Account</a>
+                     <a className="button tiny radius" onClick={this.toggleForgotPassword}>Forgot Password</a>
+                   </div>)
+        } else {
+          sessionContent = (<div className="create-account">
+                     <input type="text" placeholder="USERNAME" id="session-username" />
+                     <input type="text" placeholder="EMAIL" id="session-email" />
+                     <input type="text" placeholder="PASSWORDOOOO" id="session-password" />
+                     <input type="text" placeholder="CONFIRM ITTTT" id="session-confirm" />
+                     <a className="button tiny radius success" onClick={this.processRegistration}>Create Account</a>
+                     <br />
+                     <a className="button tiny radius" onClick={this.togglePrimaryState}>Log In</a>
+                   </div>)
+        }
+      }
+
+      box = <div className="session-box" ref="sessionBox">
+        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="lg" />
+        {userInfo.username}
+        {Session.loggedIn() === true ? userInfo.email : ''}
+        {sessionContent}
+      </div>
+
+    }
+
+    return (
+      <span className="session-handler">
+        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" onClick={this.toggleSessionBox} whiteRays />
+        {box}
+      </span>
+    )
   }
 
 })

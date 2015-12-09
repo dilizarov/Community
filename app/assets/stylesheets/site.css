@@ -283,6 +283,12 @@ body {
   margin-top: 20px;
 }
 
+.session-box {
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+}
+
 i, .button, .post-stats {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

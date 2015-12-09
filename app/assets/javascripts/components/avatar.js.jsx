@@ -28,12 +28,14 @@ getInitialState: function() {
     var loaderClass = "avatar-loading";
     var raysClass   = "avatar-loading-rays";
 
-
     var { source, size, whiteRays, ...other } = this.props
 
     if (size === "sm") {
       avatarClass += "-sm"
       loaderClass += "-sm"
+    } else if (size === "lg") {
+      avatarClass += "-lg"
+      loaderClass += "-lg"
     }
 
     if (whiteRays === true) {

@@ -1,10 +1,15 @@
-.avatar, .avatar-loading, .avatar-sm, .avatar-loading-sm {
+.avatar, .avatar-loading, .avatar-sm, .avatar-loading-sm, .avatar-lg, .avatar-loading-lg {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   display: inline-block;
   position: relative;
   margin-right: 15px;
+}
+
+.avatar-lg, .avatar-loading-lg {
+  width: 100px;
+  height: 100px;
 }
 
 .avatar-sm, .avatar-loading-sm {
@@ -30,11 +35,11 @@
     100% {opacity: 0; -moz-transform: scale(1);}
   }
 
-.avatar-loading, .avatar-loading-sm {
+.avatar-loading, .avatar-loading-sm, .avatar-loading-lg {
   background-color: #F6F7F8;
 }
 
-.avatar-loading .avatar-loading-rays, .avatar-loading-sm .avatar-loading-rays {
+.avatar-loading .avatar-loading-rays, .avatar-loading-sm .avatar-loading-rays, .avatar-loading-lg .avatar-loading-rays {
   position: absolute;
   z-index: 10;
   background-color: transparent;
@@ -52,7 +57,7 @@
   border-image: initial;
 }
 
-.avatar-loading .avatar-loading-rays-white, .avatar-loading-sm .avatar-loading-rays-white {
+.avatar-loading .avatar-loading-rays-white, .avatar-loading-sm .avatar-loading-rays-white, .avatar-loading-lg .avatar-loading-rays-white {
   position: absolute;
   z-index: 10;
   background-color: transparent;
