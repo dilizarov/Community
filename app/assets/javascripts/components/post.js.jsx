@@ -199,7 +199,7 @@ var Post = React.createClass({
         repliesCount = this.props.post.replies_count.toThousandsString();
 
     return (
-      <li className="post">
+      <li className="post clearfix">
         <div className="post-heading clearfix">
           <Avatar source={this.props.post.user.avatar_url} style={{float: 'left'}}/>
           <span className="post-username">{this.props.post.user.username}</span>
@@ -216,6 +216,8 @@ var Post = React.createClass({
           {repliesLoader}
         </div>
         {repliesContent}
+        {/* @TODO: avatar should be logged in user's avatar, not the post's */}
+        <Avatar className="replies-avatar avatar avatar-sm" source={this.props.post.user.avatar_url} style={{float: 'left'}}/>
         <div className="reply-to-post">
           <TextareaAutosize placeholder="Write a reply..."
                             className="write-reply"

@@ -93,8 +93,8 @@ body {
 
 /* Feed styling */
 .feed-wrapper .post {
-    margin-bottom: 20px;
-    padding: 20px 20px 12px;
+    margin-bottom: 3px;
+    padding: 20px 20px 10px;
     background-color: white;
     border-radius: 3px;
     border: 1px solid #EEE;
@@ -176,8 +176,15 @@ body {
   margin-left: 5px;
 }
 
+.feed-wrapper .replies-avatar {
+  margin-top: 7px;
+  margin-right: 0;
+}
+
 .feed-wrapper .reply-to-post {
-  margin-top: 5px;
+  margin: 5px 0 0 15px;
+  float: left;
+  width: 92%;
 }
 
 .feed-wrapper .reply:first-of-type {
@@ -277,6 +284,7 @@ body {
 
 .feed-wrapper .write-reply {
   padding-left: 10px;
+  background-color: #FAFAFA;
 }
 
 .top-details {
