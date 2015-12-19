@@ -194,7 +194,9 @@ var Post = React.createClass({
       repliesLoader = <Spinner />
     }
 
-    var heartLikesClass = classNames('fa', {'fa-heart': this.props.post.liked, 'fa-heart-o': !this.props.post.liked});
+    var heartLikesClass = classNames('fa', {'fa-heart': this.props.post.liked, 'fa-heart-o': !this.props.post.liked}),
+        likesCount = this.props.post.likes.toThousandsString(),
+        repliesCount = this.props.post.replies_count.toThousandsString();
 
     return (
       <li className="post">
@@ -206,10 +208,10 @@ var Post = React.createClass({
         <div className="post-title">{this.props.post.title}</div>
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
-          <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i>{this.props.post.likes.toThousandsString()}</span>
+          <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i>{likesCount} {likesCount === '1' ? 'like' : 'likes'}</span>
           <span className="post-replies-stats" onClick={this.toggleReplies}>
             <i className="fa fa-comment-o"></i>
-            <span className="post-replies-count">{this.props.post.replies_count.toThousandsString()}</span>
+            <span className="post-replies-count">{repliesCount} {repliesCount === '1' ? 'reply' : 'replies'}</span>
           </span>
           {repliesLoader}
         </div>
