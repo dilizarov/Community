@@ -176,6 +176,10 @@ body {
   margin-left: 5px;
 }
 
+.feed-wrapper .reply-to-post-wrapper {
+  clear: both;
+}
+
 .feed-wrapper .reply-to-post {
   margin: 5px 0 0 15px;
   float: left;
@@ -191,8 +195,10 @@ body {
 }
 
 .feed-wrapper .reply {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   font-size: 14px;
+  float: left;
+  clear: left;
 }
 
 .feed-wrapper .reply .avatar-sm {
@@ -209,18 +215,19 @@ body {
 .feed-wrapper .reply-username {
   font-size: 12px;
   color: #60b0c6;
+  float: left;
+  margin-top: 2px;
 }
 
 .feed-wrapper .reply-likes {
   font-size: 12px;
   color: #555;
   cursor: pointer;
-  margin-left: 45px;
 }
 
 .feed-wrapper .reply-body {
   overflow-wrap: break-word;
-  margin-left: 45px;
+  display: inline;
 }
 
 .feed-wrapper .reply-timestamp {

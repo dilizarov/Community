@@ -220,16 +220,18 @@ var Post = React.createClass({
         </div>
         {repliesContent}
         {/* @TODO: avatar should be logged in user's avatar, not the post's */}
-        <Avatar size="sm" source={this.props.post.user.avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
-        <div className="reply-to-post">
-          <TextareaAutosize placeholder="Write a reply..."
-                            className={writeReplyClass}
-                            disabled={this.state.submittingReply}
-                            rows={1}
-                            minRows={1}
-                            ref="writeReply"
-                            onKeyDown={this.haltEnter}
-                            onKeyUp={this.maybeCreateReply} />
+        <div className="reply-to-post-wrapper">
+          <Avatar size="sm" source={this.props.post.user.avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
+          <div className="reply-to-post">
+            <TextareaAutosize placeholder="Write a reply..."
+                              className={writeReplyClass}
+                              disabled={this.state.submittingReply}
+                              rows={1}
+                              minRows={1}
+                              ref="writeReply"
+                              onKeyDown={this.haltEnter}
+                              onKeyUp={this.maybeCreateReply} />
+          </div>
         </div>
       </li>
     )
