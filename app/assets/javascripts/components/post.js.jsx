@@ -196,7 +196,8 @@ var Post = React.createClass({
 
     var heartLikesClass = classNames('fa', {'fa-heart': this.props.post.liked, 'fa-heart-o': !this.props.post.liked}),
         likesCount = this.props.post.likes.toThousandsString(),
-        repliesCount = this.props.post.replies_count.toThousandsString();
+        repliesCount = this.props.post.replies_count.toThousandsString(),
+        postTitle = this.props.post.title ? this.props.post.title + ' ' : '';
 
     var writeReplyClass = classNames('write-reply', {'write-reply-disabled': this.state.submittingReply})
 
@@ -207,7 +208,7 @@ var Post = React.createClass({
           <span className="post-username">{this.props.post.user.username}</span>
           <span className="post-timestamp">{timestamp(this.props.post.created_at)}</span>
         </div>
-        <div className="post-title">{this.props.post.title}</div>
+        <div className="post-title">{postTitle}</div>
         <div className="post-body">{this.props.post.body}</div>
         <div className="post-stats">
           <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i>{likesCount} {likesCount === '1' ? 'like' : 'likes'}</span>
