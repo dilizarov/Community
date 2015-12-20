@@ -282,6 +282,10 @@ body {
   background-color: #FAFAFA;
 }
 
+.feed-wrapper .write-reply-disabled {
+  background-color: #DDDDDD;
+}
+
 .top-details {
   margin-top: 20px;
 }

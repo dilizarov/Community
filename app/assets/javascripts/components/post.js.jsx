@@ -198,6 +198,8 @@ var Post = React.createClass({
         likesCount = this.props.post.likes.toThousandsString(),
         repliesCount = this.props.post.replies_count.toThousandsString();
 
+    var writeReplyClass = classNames('write-reply', {'write-reply-disabled': this.state.submittingReply})
+
     return (
       <li className="post clearfix">
         <div className="post-heading clearfix">
@@ -217,10 +219,10 @@ var Post = React.createClass({
         </div>
         {repliesContent}
         {/* @TODO: avatar should be logged in user's avatar, not the post's */}
-        <Avatar size="sm" source={this.props.post.user.avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>          
+        <Avatar size="sm" source={this.props.post.user.avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
         <div className="reply-to-post">
           <TextareaAutosize placeholder="Write a reply..."
-                            className="write-reply"
+                            className={writeReplyClass}
                             disabled={this.state.submittingReply}
                             rows={1}
                             minRows={1}
