@@ -55,7 +55,7 @@ getInitialState: function() {
 
         avatar = <img src={this.props.source} className={avatarClass} style={{display: 'none'}} onLoad={this.makeVisible} onError={this.usePlaceholder} />
         loader = (<span className={loaderClass} style={this.props.style}>
-                    <span className={raysClass} style={this.props.style}></span>
+                    <span className={raysClass}></span>
                   </span>)
       }
     }

@@ -217,7 +217,7 @@ var Post = React.createClass({
         </div>
         {repliesContent}
         {/* @TODO: avatar should be logged in user's avatar, not the post's */}
-        <Avatar className="replies-avatar avatar avatar-sm" source={this.props.post.user.avatar_url} style={{float: 'left'}}/>
+        <Avatar size="sm" source={this.props.post.user.avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>          
         <div className="reply-to-post">
           <TextareaAutosize placeholder="Write a reply..."
                             className="write-reply"
