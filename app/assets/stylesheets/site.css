@@ -204,6 +204,7 @@ body {
 .feed-wrapper .reply .avatar-sm {
   position: relative;
   top: 5px;
+  margin-bottom: 15px;
 }
 
 .feed-wrapper .reply-to-post input {
