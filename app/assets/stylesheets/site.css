@@ -196,7 +196,7 @@ body {
 
 .feed-wrapper .reply {
   margin-bottom: 20px;
-  font-size: 14px;
+  font-size: 13px;
   float: left;
   clear: left;
 }
@@ -213,7 +213,7 @@ body {
 }
 
 .feed-wrapper .reply-username {
-  font-size: 12px;
+  font-size: 13px;
   color: #60b0c6;
   float: left;
   margin-top: 2px;
