@@ -201,10 +201,15 @@ body {
   clear: left;
 }
 
-.feed-wrapper .reply .avatar-sm {
+.feed-wrapper .reply .avatar-wrapper {
   position: relative;
   top: 5px;
   margin-bottom: 15px;
+  float:left;
+}
+
+.feed-wrapper .reply .reply-data {
+  overflow: hidden;
 }
 
 .feed-wrapper .reply-to-post input {
