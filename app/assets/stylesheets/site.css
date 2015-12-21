@@ -106,6 +106,15 @@ body {
   letter-spacing: 1px;
   font-weight: bold;
   text-transform: capitalize;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #CCC;
+}
+
+.feed-wrapper .join-link {
+  margin-left: 20px;
+  font-size: 13px;
+  letter-spacing: normal;
+  font-weight: normal;
 }
 
 .feed-wrapper .post-heading {

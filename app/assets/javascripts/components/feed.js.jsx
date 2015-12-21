@@ -186,19 +186,19 @@ var Feed = React.createClass({
     var join;
 
     if (this.state.joined === null) {
-      join = <a className='button tiny radius disabled'>Loading</a>
+      join = <a className='join-link disabled'>Loading</a>
     } else if (this.state.joined === true) {
-      join = <a className='button tiny radius' onClick={this.showCommunitySettings}>Settings</a>
+      join = <a className='join-link' onClick={this.showCommunitySettings}>Settings</a>
     } else {
-      join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
+      join = <a className='join-link' onClick={this.joinCommunity}>Join</a>
     }
 
     return (
       <div className='feed'>
         <h2 className='title'>
           {this.props.communityName}
+          {join}
         </h2>
-        {join}
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}/>
         You have not joined any communities
@@ -210,7 +210,7 @@ var Feed = React.createClass({
     var join;
 
     if (this.state.joined === false) {
-      join = <a className='button tiny radius' onClick={this.joinCommunity}>Join</a>
+      join = <a className='join-link' onClick={this.joinCommunity}>Join</a>
     } else {
 //TODO: Due to feed and communities both being async, there is no guarantee they are linked.
 // Avoid hassles by just having a settings button. I think it should be a cog.
