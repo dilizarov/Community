@@ -108,6 +108,8 @@ body {
   text-transform: capitalize;
   border-bottom: 1px solid #CCC;
   margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .feed-wrapper .join-link {
