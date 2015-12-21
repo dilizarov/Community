@@ -227,7 +227,7 @@ var Feed = React.createClass({
                     threshold={2.0}
                  />)
     } else if (this.state.loadingMorePosts === true) {
-      waypoint = <Spinner size="md" />
+      waypoint = <div style={{textAlign: 'center'}}><Spinner size="md" /></div>
     }
 
     return (
