@@ -197,8 +197,8 @@ var Feed = React.createClass({
       <div className='feed'>
         <h2 className='title'>
           {this.props.communityName}
-          {join}
         </h2>
+        {join}
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}/>
         You have not joined any communities

@@ -106,15 +106,16 @@ body {
   letter-spacing: 1px;
   font-weight: bold;
   text-transform: capitalize;
-  margin-bottom: 50px;
   border-bottom: 1px solid #CCC;
+  margin-bottom: 0;
 }
 
 .feed-wrapper .join-link {
-  margin-left: 20px;
   font-size: 13px;
   letter-spacing: normal;
   font-weight: normal;
+  margin: 5px 0 50px;
+  display: block;
 }
 
 .feed-wrapper .post-heading {
