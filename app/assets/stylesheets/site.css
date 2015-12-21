@@ -112,7 +112,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.feed-wrapper .join-link {
+.feed-wrapper .join-settings-link {
   font-size: 13px;
   letter-spacing: normal;
   font-weight: normal;
