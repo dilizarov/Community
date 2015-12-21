@@ -111,6 +111,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 99.5%;
 }
 
 .feed-wrapper .join-settings-link {
@@ -154,6 +155,8 @@ body {
 .feed-wrapper .post-stats {
   margin: 10px 0;
   font-size: 13px;
+  border-top: 1px solid #DDD;
+  padding-top: 10px;
 }
 
 .feed-wrapper .post-likes {
