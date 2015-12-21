@@ -186,11 +186,11 @@ var Feed = React.createClass({
     var join;
 
     if (this.state.joined === null) {
-      join = <a className='join-link disabled'>Loading</a>
+      join = <a className='join-settings-link disabled'>Loading</a>
     } else if (this.state.joined === true) {
-      join = <a className='join-link' onClick={this.showCommunitySettings}>Settings</a>
+      join = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
     } else {
-      join = <a className='join-link' onClick={this.joinCommunity}>Join</a>
+      join = <a className='join-settings-link' onClick={this.joinCommunity}>Join</a>
     }
 
     return (
