@@ -155,8 +155,6 @@ body {
 .feed-wrapper .post-stats {
   margin: 10px 0;
   font-size: 13px;
-  border-top: 1px solid #DDD;
-  padding-top: 10px;
 }
 
 .feed-wrapper .post-likes {
