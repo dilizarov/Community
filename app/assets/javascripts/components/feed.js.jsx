@@ -201,7 +201,7 @@ var Feed = React.createClass({
         {join}
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}/>
-        You have not joined any communities
+                 There are no posts!
       </div>
     )
   },
@@ -228,9 +228,11 @@ var Feed = React.createClass({
 
     return (
       <div className='feed'>
-        <h2 className='title'>
-          {this.props.communityName}
-        </h2>
+        <span title={this.props.communityName}>
+          <h2 className='title'>
+            {this.props.communityName}
+          </h2>
+        </span>
         {join}
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}/>
