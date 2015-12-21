@@ -110,6 +110,7 @@ body {
   margin-bottom: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .feed-wrapper .join-settings-link {
