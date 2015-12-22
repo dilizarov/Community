@@ -9,12 +9,25 @@ body {
   background-color: #FAFAFA;
 }
 
+/* Search */
+.search-wrapper {
+  padding-right: 0;
+  margin: 50px 0 30px;
+}
+
+.search-wrapper .search {
+  padding-left: 12px;
+}
+
 /* Top Notifications styling */
+.top-details {
+  padding-right: 0;
+}
+
 .top-notifications-wrapper {
   display: block;
   float: right;
   position: relative;
-  margin-right: 2%;
   height: 30px;
 }
 .top-notifications-wrapper .dd-menu {
