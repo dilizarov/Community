@@ -43,7 +43,16 @@ var App = React.createClass({
         }
     }
 
-    document.title = community
+    var str = document.title
+
+    // If they're the same, we assume no notification count prepends it.
+    // If they're not, we assume there is a notification count prepending
+    // and we replace it.
+    if (str === this.state.communityName || str === 'Community') {
+        document.title = community
+    } else {
+        document.title = str.substring(0, str.indexOf(")") + 2) + community
+    }
 
     this.setState({
       communitySelected: true,

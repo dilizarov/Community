@@ -83,6 +83,7 @@ var Community = React.createClass({
   },
 
   leaveClicked: function() {
+    //are you sure you want to leave -> leaveCommunity()
     console.log("leave")
   },
 
