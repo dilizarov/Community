@@ -16,9 +16,11 @@ var Search = React.createClass({
           communityName = communityName.substring(1)
         }
 
-        this.props.handleSelectCommunity(
-          communityName
-        )
+        //Clear search input and unfocus
+        e.target.value = '';
+        e.target.blur();
+
+        this.props.handleSelectCommunity(communityName);
       }
     }
   },
@@ -31,7 +33,6 @@ var Search = React.createClass({
     }
     else {
       this.setState({adjustedPlaceholder: false});
-      e.target.value = '';
     }
   },
 
