@@ -147,7 +147,7 @@ var App = React.createClass({
           {/* Top notifications and avatar */}
           <div className='header-row'>
             <div className='header-wrapper'>
-              <span className='community-logo'>Community</span>
+              <span className='community-logo'>&</span>
               <Search handleSelectCommunity={this.selectCommunity} />
               <span className="top-notifications-wrapper">
                 {Session.userInfo().username}
