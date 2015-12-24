@@ -49,7 +49,7 @@ body {
   padding-right: 0;
   background-color: white;
   height: 80px;
-  margin: 0 0 50px;
+  margin: 0 0 35px;
   border-bottom: 1px solid #CCC;
 }
 
@@ -92,7 +92,7 @@ body {
   border-radius: 3px;
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
-  margin-top: 117px;
+  margin-top: 92px;
 }
 
 .communities-wrapper .title {
@@ -180,7 +180,7 @@ body {
   font-size: 13px;
   letter-spacing: normal;
   font-weight: normal;
-  margin: 5px 0 50px;
+  margin: 5px 0 25px;
   display: block;
 }
 
