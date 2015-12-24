@@ -1,5 +1,11 @@
 var Search = React.createClass({
 
+  getInitialState: function() {
+    return {
+      adjustedPlaceholder: false
+    };
+  },
+
   maybeGoToCommunity: function(e) {
     if (e.keyCode === 13) {
 
@@ -17,12 +23,31 @@ var Search = React.createClass({
     }
   },
 
+  adjustPlaceholder: function(e) {
+    // Adjust placeholder text and search icon to make room for user's text input
+    // and readjust once search box is no longer being focused on
+    if(e.type === 'click') {
+      this.setState({adjustedPlaceholder: true});
+    }
+    else {
+      this.setState({adjustedPlaceholder: false});
+    }
+  },
+
   render: function() {
+    var searchClasses = classNames('search', {'adjust-placeholder': this.state.adjustedPlaceholder}),
+        searchIconClasses = classNames('fa', 'fa-search', {'adjust-placeholder': this.state.adjustedPlaceholder});
+
     return (
-        <input type="text"
-               className="search"
-               placeholder="Visit a community"
-               onKeyUp={this.maybeGoToCommunity} />
+        <span className="search-wrapper">
+          <i className={searchIconClasses}></i>
+          <input type="text"
+                 className={searchClasses}
+                 placeholder="Search communities"
+                 onKeyUp={this.maybeGoToCommunity}
+                 onClick={this.adjustPlaceholder}
+                 onBlur={this.adjustPlaceholder} />
+       </span>
     )
   }
 

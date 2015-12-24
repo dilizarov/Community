@@ -5,6 +5,7 @@ var Communities = React.createClass({
   },
 
   componentDidMount: function() {
+    //@TODO: listen to on scroll here
     $.ajax({
       method: "GET",
       url: "/api/v1/communities.json",

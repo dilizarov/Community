@@ -145,8 +145,10 @@ var App = React.createClass({
         <div className='app'>
 
           {/* Top notifications and avatar */}
-          <div className='row'>
-            <div className='small-12 column top-details'>
+          <div className='header-row'>
+            <div className='header-wrapper'>
+              <span className='community-logo'>Community</span>
+              <Search handleSelectCommunity={this.selectCommunity} />
               <span className="top-notifications-wrapper">
                 {Session.userInfo().username}
                 <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
@@ -156,13 +158,6 @@ var App = React.createClass({
                 {/* <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
                 <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
                 <img id="profile-pic" /> */}
-            </div>
-          </div>
-
-          {/* Search bar */}
-          <div className='row'>
-            <div className='small-12 column search-wrapper'>
-              <Search handleSelectCommunity={this.selectCommunity} />
             </div>
           </div>
 

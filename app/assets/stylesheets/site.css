@@ -10,21 +10,64 @@ body {
 }
 
 /* Search */
-.search-wrapper {
-  padding-right: 0;
-  margin: 50px 0 30px;
+.header-wrapper .search {
+  height: 32px;
+  box-shadow: none;
+  border-radius: 20px;
+  width: 300px;
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+  position: absolute;
+  left: 50%;
+  margin: 0 0 0 -150px;
+  background: #FAFAFA;
 }
 
-.search-wrapper .search {
-  padding-left: 12px;
+.search.adjust-placeholder {
+  text-align: left;
+  padding-left: 31px;
 }
 
-/* Top Notifications styling */
-.top-details {
+.search-wrapper .fa-search {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -73px;
+  margin-top: 10px;
+  z-index: 1;
+  font-size: 12px;
+  color: #666;
+}
+
+.search-wrapper .fa-search.adjust-placeholder {
+  margin-left: -135px;
+}
+
+/* Top Header styling */
+.header-row {
   padding-right: 0;
+  background-color: white;
+  height: 80px;
+  margin: 0 0 50px;
+  border-bottom: 1px solid #CCC;
+}
+
+.header-wrapper {
+  padding-top: 24px;
+  position: relative;
+}
+
+.header-wrapper .community-logo {
+  margin-left: 20px;
+  color: #60b0c6;
 }
 
 .top-notifications-wrapper {
+  float: right;
+}
+
+/*.top-notifications-wrapper {
   display: block;
   float: right;
   position: relative;
@@ -35,6 +78,12 @@ body {
   left: -30px;
   top: 4px;
 }
+
+.session-box {
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+}*/
 
 /* Communities List styling */
 .communities-wrapper {
@@ -284,6 +333,7 @@ body {
   padding: 20px;
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
+  border-radius: 3px;
 }
 
 .feed-wrapper .write-reply, #write-post-title, #write-post-body {
@@ -324,16 +374,6 @@ body {
 
 .feed-wrapper .write-reply-disabled {
   background-color: #DDDDDD;
-}
-
-.top-details {
-  margin-top: 20px;
-}
-
-.session-box {
-  position: absolute;
-  z-index: 10;
-  background-color: white;
 }
 
 i, .button, .post-stats {
