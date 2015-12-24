@@ -31,6 +31,7 @@ var Search = React.createClass({
     }
     else {
       this.setState({adjustedPlaceholder: false});
+      e.target.value = '';
     }
   },
 

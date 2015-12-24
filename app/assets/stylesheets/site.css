@@ -29,6 +29,24 @@ body {
   border-color: #CCC;
 }
 
+.header-wrapper .search::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #AAA;
+}
+
+.header-wrapper .search:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #AAA;
+   opacity: 1;
+}
+
+.header-wrapper .search::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #AAA;
+   opacity: 1;
+}
+
+.header-wrapper .search:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #AAA;
+}
+
 .search.adjust-placeholder {
   text-align: left;
   padding-left: 31px;
@@ -42,7 +60,7 @@ body {
   margin-top: 4px;
   z-index: 1;
   font-size: 12px;
-  color: #666;
+  color: #AAA;
 }
 
 .search-wrapper .fa-search.adjust-placeholder {
