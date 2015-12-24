@@ -22,6 +22,11 @@ body {
   left: 50%;
   margin: 0 0 0 -150px;
   background: #FAFAFA;
+  border-color: #EEE;
+}
+
+.header-wrapper .search:focus {
+  border-color: #CCC;
 }
 
 .search.adjust-placeholder {
@@ -50,7 +55,7 @@ body {
   background-color: white;
   height: 80px;
   margin: 0 0 35px;
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid #EEE;
 }
 
 .header-wrapper {
