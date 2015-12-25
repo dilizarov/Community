@@ -28,7 +28,10 @@ var Search = React.createClass({
   adjustPlaceholder: function(e) {
     // Adjust placeholder text and search icon to make room for user's text input
     // and readjust once search box is no longer being focused on
-    if(e.type === 'click') {
+
+      console.log(document.activeElement);
+
+    if(e.type === 'focus') {
       this.setState({adjustedPlaceholder: true});
     }
     else {
@@ -48,7 +51,7 @@ var Search = React.createClass({
                  className={searchClasses}
                  placeholder="Visit communities"
                  onKeyUp={this.maybeGoToCommunity}
-                 onClick={this.adjustPlaceholder}
+                 onFocus={this.adjustPlaceholder}
                  onBlur={this.adjustPlaceholder} />
        </span>
     )

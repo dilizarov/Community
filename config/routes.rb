@@ -51,4 +51,6 @@ Rails.application.routes.draw do
     end
   end
 
+  get ':community' => "site#root"
+
 end

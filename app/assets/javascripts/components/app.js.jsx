@@ -9,7 +9,11 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
-    var communityParam = getUrlParameter("c")
+    var communityParam;
+
+    if (window.location.pathname.length > 2 && window.location.pathname[1] === "&") {
+      communityParam = decodeURIComponent(window.location.pathname.substring(2));
+    }
 
     if (communityParam !== undefined && communityParam !== true) {
       this.selectCommunity(communityParam.replace(/_/g, " "))
@@ -25,7 +29,11 @@ var App = React.createClass({
       popped = true
       if (initialPop) return;
 
-      var communityParam = getUrlParameter("c")
+      var communityParam;
+
+      if (window.location.pathname.length > 2 && window.location.pathname[1] === "&") {
+        communityParam = decodeURIComponent(window.location.pathname.substring(2));
+      }
 
       if (communityParam !== undefined && communityParam !== true) {
         this.selectCommunity(communityParam.replace(/_/g, " "));
@@ -37,10 +45,12 @@ var App = React.createClass({
     var normalizedCommunity = normalizeCommunity(community)
 
     if (history.pushState) {
-        var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?c=' + encodeURIComponent(normalizedCommunity);
+      
+        var newUrl = window.location.protocol + "//" + window.location.host + '/&' + encodeURIComponent(normalizedCommunity);
         if (window.location.href !== newUrl) {
           window.history.pushState({ path: newUrl },'',newUrl);
         }
+
     }
 
     var str = document.title
