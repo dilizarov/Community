@@ -16,7 +16,7 @@ var App = React.createClass({
     }
 
     if (communityParam !== undefined && communityParam !== true) {
-      this.selectCommunity(communityParam.replace(/_/g, " "))
+      this.selectCommunity(communityParam)
     }
 
     // Used to detect initial (useless) popstate.
@@ -36,7 +36,7 @@ var App = React.createClass({
       }
 
       if (communityParam !== undefined && communityParam !== true) {
-        this.selectCommunity(communityParam.replace(/_/g, " "));
+        this.selectCommunity(communityParam);
       }
     }.bind(this));
   },

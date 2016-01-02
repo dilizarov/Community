@@ -2,9 +2,7 @@ class SiteController < ApplicationController
 
   def root
     if params[:community]
-      if params[:community][0] == "&"
-        @community = params[:community][1..-1]
-      else
+      unless params[:community][0] == "&"
         raise ActionController::RoutingError.new('Not Found')
       end
     end
