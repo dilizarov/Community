@@ -57,10 +57,11 @@ body {
   top: 50%;
   left: 50%;
   margin-left: -65px;
-  margin-top: 4px;
+  margin-top: 2px;
   z-index: 1;
   font-size: 12px;
   color: #AAA;
+  cursor: text;
 }
 
 .search-wrapper .fa-search.adjust-placeholder {
@@ -85,6 +86,11 @@ body {
   margin-left: 30px;
   color: #60b0c6;
   font-size: 22px;
+  width: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
 
 .top-notifications-wrapper {

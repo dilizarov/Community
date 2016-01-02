@@ -45,7 +45,7 @@ var App = React.createClass({
     var normalizedCommunity = normalizeCommunity(community)
 
     if (history.pushState) {
-      
+
         var newUrl = window.location.protocol + "//" + window.location.host + '/&' + encodeURIComponent(normalizedCommunity);
         if (window.location.href !== newUrl) {
           window.history.pushState({ path: newUrl },'',newUrl);
@@ -132,7 +132,7 @@ var App = React.createClass({
 
   render: function() {
 
-    var mainContent;
+    var mainContent, communityNameNormalized;
 
     if (this.state.triggerWelcome === true) {
       return (
@@ -142,11 +142,13 @@ var App = React.createClass({
       )
     } else {
 
+      communityNameNormalized = this.state.communitySelected ? this.state.communityNameNormalized : '';
+
       if (this.state.notificationPresent === true) {
         mainContent = <NotificationPost postId={this.state.notification.post_id} />
       } else {
         mainContent = (<Feed communityName={this.state.communitySelected ? this.state.communityName : ''}
-                    communityNameNormalized={this.state.communitySelected ? this.state.communityNameNormalized : ''}
+                    communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
                     handleAddCommunityToList={this.addCommunityToList} />)
       }
@@ -157,7 +159,7 @@ var App = React.createClass({
           {/* Top notifications and avatar */}
           <div className='header-row'>
             <div className='header-wrapper'>
-              <span className='community-logo'>&</span>
+              <span className='community-logo'>&{communityNameNormalized}</span>
               <Search handleSelectCommunity={this.selectCommunity} />
               <span className="top-notifications-wrapper">
                 {Session.userInfo().username}
