@@ -153,8 +153,6 @@ var App = React.createClass({
                     handleAddCommunityToList={this.addCommunityToList} />)
       }
 
-      console.log(communityNameNormalized)
-
       return (
         <div className='app'>
 
