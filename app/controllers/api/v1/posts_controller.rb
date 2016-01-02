@@ -5,7 +5,7 @@ class Api::V1::PostsController < ApiController
     # And from that association we'll derive the username and avatar image to use.
     # (Either default or community-specific one)
 
-    normalized_community = params[:community].strip.downcase.gsub(" ", "_")
+    normalized_community = params[:community].strip.downcase.gsub(" ", "")
     @posts = Post.where(community: normalized_community).includes(user: [:communities]).
     order(created_at: :desc).
     created_before(time_buffer).

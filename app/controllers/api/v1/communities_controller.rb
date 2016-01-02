@@ -85,7 +85,7 @@ class Api::V1::CommunitiesController < ApiController
   private
 
   def normalized_name
-    params[:community].strip.downcase.gsub(" ", "_")
+    params[:community].strip.downcase.gsub(" ", "")
   end
 
 end

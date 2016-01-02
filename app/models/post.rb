@@ -27,7 +27,7 @@ class Post < ActiveRecord::Base
   def normalize_data
     self.title = self.title.strip unless self.title.nil?
     self.body = self.body.strip
-    self.community = self.community.strip.downcase.gsub(" ", "_")
+    self.community = self.community.strip.downcase.gsub(" ", "")
   end
 
   def user_id_or_username_must_be_present
