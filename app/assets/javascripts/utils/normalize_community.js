@@ -1,3 +1,3 @@
 normalizeCommunity = function(community) {
-    return $.trim(community.toLowerCase()).split(' ').join('_')
+    return $.trim(community.toLowerCase()).split(' ').join('')
 }
