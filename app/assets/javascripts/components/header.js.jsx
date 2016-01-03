@@ -1,14 +1,26 @@
 var Header = React.createClass({
 
-  //@TODO: handle indeterminate state
   getInitialState: function() {
     return {
-      hasJoined: false
+      hasJoined: null
     };
   },
 
   setStatus: function(hasJoined) {
     this.setState({hasJoined: hasJoined});
+  },
+
+  //Displays membership status - when in the initial state, show nothing
+  //Else show 'Join' for non-member status, and 'Settings' for member status
+  handleMembershipStatus: function() {
+    var membershipStatus = '';
+    if(this.state.hasJoined) {
+      membershipStatus = 'Settings';
+    }
+    else if(this.state.hasJoined === false) {
+      membershipStatus = 'Join';
+    }
+    return membershipStatus;
   },
 
   //@TODO: reloadWindow in SessionBox
@@ -17,7 +29,7 @@ var Header = React.createClass({
   },
 
   render: function() {
-    var membershipStatus = this.state.hasJoined ? 'Settings' : 'Join';
+    var membershipStatus = this.handleMembershipStatus();
 
     return (
       <div className='header-wrapper'>
