@@ -86,7 +86,7 @@ var App = React.createClass({
   },
 
   setCommunityMembershipStatus: function(hasJoined) {
-    this.refs.header.setStatus(hasJoined);
+    this.refs.header.setHasJoinedStatus(hasJoined);
   },
 
   goToApp: function() {
@@ -148,10 +148,8 @@ var App = React.createClass({
       if (this.state.notificationPresent === true) {
         mainContent = <NotificationPost postId={this.state.notification.post_id} />
       } else {
-        mainContent = (<Feed communityName={currentCommunity}
-                    communityNameNormalized={communityNameNormalized}
+        mainContent = (<Feed communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
-                    handleAddCommunityToList={this.addCommunityToList}
                     handleCommunityStatus={this.setCommunityMembershipStatus} />)
       }
 
@@ -160,9 +158,11 @@ var App = React.createClass({
 
           {/* Top notifications and avatar */}
           <div className='header-row'>
-            <Header communityNameNormalized={communityNameNormalized}
+            <Header communityName={currentCommunity}
+                    communityNameNormalized={communityNameNormalized}
                     handleSelectCommunity={this.selectCommunity}
                     currentCommunity={currentCommunity}
+                    handleAddCommunityToList={this.addCommunityToList}
                     handleNotificationPressed={this.notificationPressed}
                     ref='header' />
           </div>

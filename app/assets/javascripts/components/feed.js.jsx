@@ -35,8 +35,7 @@ var Feed = React.createClass({
           this.setState({
             posts: res.posts,
             loaded: true,
-            error: false,
-            joined: res.membership
+            error: false
           });
         }
       }.bind(this),
@@ -87,28 +86,6 @@ var Feed = React.createClass({
     var posts = React.addons.update(this.state.posts, { $splice: [[index, 1, post]] });
 
     this.setState({ posts: posts });
-  },
-
-  showCommunitySettings: function() {
-  },
-
-  joinCommunity: function() {
-
-    $.ajax({
-      method: "POST",
-      url: "api/v1/communities.json",
-      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityName },
-      success: function(res) {
-        this.setState({
-          joined: true
-        })
-
-        this.props.handleAddCommunityToList(res.community)
-      }.bind(this),
-      error: function(err) {
-        alert('fuckkkk')
-      }.bind(this)
-    })
   },
 
   loadMorePosts: function() {
@@ -177,30 +154,13 @@ var Feed = React.createClass({
 
     return (
       <div className='feed'>
-        <h2 className='title'>
-          {this.props.communityName} <Spinner />
-        </h2>
       </div>
     )
   },
 
   renderEmpty: function() {
-    var join;
-
-    if (this.state.joined === null) {
-      join = <a className='join-settings-link disabled'>Loading</a>
-    } else if (this.state.joined === true) {
-      join = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
-    } else {
-      join = <a className='join-settings-link' onClick={this.joinCommunity}>Join</a>
-    }
-
     return (
       <div className='feed'>
-        <h2 className='title'>
-          {this.props.communityName}
-        </h2>
-        {join}
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}/>
                  There are no posts!
@@ -209,14 +169,6 @@ var Feed = React.createClass({
   },
 
   renderFeed: function() {
-    var join;
-
-    if (this.state.joined === false) {
-      join = <a className='join-settings-link' onClick={this.joinCommunity}>Join</a>
-    } else {
-      join = <a className='join-settings-link' onClick={this.goToSettings}>Settings</a>
-    }
-
     var waypoint;
 
     if (this.state.allPostsLoaded === false && this.state.loadingMorePosts === false) {
@@ -230,12 +182,6 @@ var Feed = React.createClass({
 
     return (
       <div className='feed'>
-        <span title={this.props.communityName}>
-          <h2 className='title'>
-            {this.props.communityName}
-          </h2>
-        </span>
-        {join}
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}/>
         <ul className="no-bullet">

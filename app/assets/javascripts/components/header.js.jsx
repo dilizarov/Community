@@ -6,21 +6,41 @@ var Header = React.createClass({
     };
   },
 
-  setStatus: function(hasJoined) {
+  setHasJoinedStatus: function(hasJoined) {
     this.setState({hasJoined: hasJoined});
   },
 
-  //Displays membership status - when in the initial state, show nothing
-  //Else show 'Join' for non-member status, and 'Settings' for member status
   handleMembershipStatus: function() {
-    var membershipStatus = '';
-    if(this.state.hasJoined) {
-      membershipStatus = 'Settings';
+    var membershipStatus;
+
+    if (this.state.hasJoined === null) {
+      membershipStatus = <a className='join-settings-link disabled'></a>
+    } else if (this.state.hasJoined === true) {
+      membershipStatus = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
+    } else {
+      membershipStatus = <a className='join-settings-link' onClick={this.joinCommunity}>Join</a>
     }
-    else if(this.state.hasJoined === false) {
-      membershipStatus = 'Join';
-    }
+
     return membershipStatus;
+  },
+
+  joinCommunity: function() {
+
+    $.ajax({
+      method: "POST",
+      url: "api/v1/communities.json",
+      data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityName },
+      success: function(res) {
+        this.setState({hasJoined: true});
+        this.props.handleAddCommunityToList(res.community);
+      }.bind(this),
+      error: function(err) {
+        alert('fuckkkk')
+      }.bind(this)
+    })
+  },
+
+  showCommunitySettings: function() {
   },
 
   //@TODO: reloadWindow in SessionBox
@@ -34,7 +54,7 @@ var Header = React.createClass({
     return (
       <div className='header-wrapper'>
         <span className='community-logo'>&{this.props.communityNameNormalized}</span>
-        <span className='community-status'>{membershipStatus}</span>
+        {membershipStatus}
         <Search handleSelectCommunity={this.props.handleSelectCommunity} />
         <span className="top-notifications-wrapper">
           {Session.userInfo().username}
