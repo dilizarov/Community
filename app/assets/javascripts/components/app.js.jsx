@@ -85,14 +85,14 @@ var App = React.createClass({
     this.refs.communitiesList.addCommunity(community)
   },
 
+  setCommunityMembershipStatus: function(hasJoined) {
+    this.refs.header.setStatus(hasJoined);
+  },
+
   goToApp: function() {
     this.setState({
       triggerWelcome: false
     })
-  },
-
-  reloadWindow: function() {
-    window.location.reload()
   },
 
   changeProfilePic: function() {
@@ -132,7 +132,7 @@ var App = React.createClass({
 
   render: function() {
 
-    var mainContent, communityNameNormalized;
+    var mainContent, communityNameNormalized, currentCommunity;
 
     if (this.state.triggerWelcome === true) {
       return (
@@ -143,14 +143,16 @@ var App = React.createClass({
     } else {
 
       communityNameNormalized = this.state.communitySelected ? this.state.communityNameNormalized : '';
+      currentCommunity = this.state.communitySelected ? this.state.communityName : '';
 
       if (this.state.notificationPresent === true) {
         mainContent = <NotificationPost postId={this.state.notification.post_id} />
       } else {
-        mainContent = (<Feed communityName={this.state.communitySelected ? this.state.communityName : ''}
+        mainContent = (<Feed communityName={currentCommunity}
                     communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
-                    handleAddCommunityToList={this.addCommunityToList} />)
+                    handleAddCommunityToList={this.addCommunityToList}
+                    handleCommunityStatus={this.setCommunityMembershipStatus} />)
       }
 
       return (
@@ -158,19 +160,11 @@ var App = React.createClass({
 
           {/* Top notifications and avatar */}
           <div className='header-row'>
-            <div className='header-wrapper'>
-              <span className='community-logo'>&{communityNameNormalized}</span>
-              <Search handleSelectCommunity={this.selectCommunity} />
-              <span className="top-notifications-wrapper">
-                {Session.userInfo().username}
-                <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
-                               handleNotificationPressed={this.notificationPressed}/>
-                <SessionBox handleSessionChange={this.reloadWindow} />
-              </span>
-                {/* <a className="button tiny radius" href="#" onClick={this.changeProfilePic} >Browse</a>
-                <input type="file" id="profile-pic-picker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
-                <img id="profile-pic" /> */}
-            </div>
+            <Header communityNameNormalized={communityNameNormalized}
+                    handleSelectCommunity={this.selectCommunity}
+                    currentCommunity={currentCommunity}
+                    handleNotificationPressed={this.notificationPressed}
+                    ref='header' />
           </div>
 
           {/* Feed and Communities */}
