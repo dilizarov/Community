@@ -19,6 +19,8 @@ var Search = React.createClass({
         //Clear search input and unfocus
         e.target.value = '';
         e.target.blur();
+        //Re-adjust search box icon and placeholder text once search is complete
+        this.setState({adjustedPlaceholder: false});
 
         this.props.handleSelectCommunity(communityName);
       }
@@ -27,16 +29,8 @@ var Search = React.createClass({
 
   adjustPlaceholder: function(e) {
     // Adjust placeholder text and search icon to make room for user's text input
-    // and readjust once search box is no longer being focused on
-
-      console.log(document.activeElement);
-
     if(e.type === 'focus') {
       this.setState({adjustedPlaceholder: true});
-    }
-    else {
-      this.setState({adjustedPlaceholder: false});
-      e.target.value = '';
     }
   },
 
@@ -51,8 +45,7 @@ var Search = React.createClass({
                  className={searchClasses}
                  placeholder="Visit communities"
                  onKeyUp={this.maybeGoToCommunity}
-                 onFocus={this.adjustPlaceholder}
-                 onBlur={this.adjustPlaceholder} />
+                 onFocus={this.adjustPlaceholder} />
        </span>
     )
   }
