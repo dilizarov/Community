@@ -27,10 +27,18 @@ var Search = React.createClass({
     }
   },
 
+  focusSearchBox: function() {
+    this.refs.searchBox.focus();
+  },
+
   adjustPlaceholder: function(e) {
     // Adjust placeholder text and search icon to make room for user's text input
+    // and re-adjust placeholder text and search icon if search box input is empty
     if(e.type === 'focus') {
       this.setState({adjustedPlaceholder: true});
+    }
+    else if(this.refs.searchBox.value === '') {
+      this.setState({adjustedPlaceholder: false});
     }
   },
 
@@ -40,12 +48,15 @@ var Search = React.createClass({
 
     return (
         <span className="search-wrapper">
-          <i className={searchIconClasses}></i>
+          <i className={searchIconClasses}
+             onClick={this.focusSearchBox}></i>
           <input type="text"
                  className={searchClasses}
                  placeholder="Visit communities"
                  onKeyUp={this.maybeGoToCommunity}
-                 onFocus={this.adjustPlaceholder} />
+                 onFocus={this.adjustPlaceholder}
+                 onBlur={this.adjustPlaceholder}
+                 ref="searchBox" />
        </span>
     )
   }

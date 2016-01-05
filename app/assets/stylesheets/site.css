@@ -50,6 +50,11 @@ body {
 .search.adjust-placeholder {
   text-align: left;
   padding-left: 31px;
+  background-color: white;
+}
+
+.search.adjust-placeholder:focus {
+  background-color: white;
 }
 
 .search-wrapper .fa-search {
