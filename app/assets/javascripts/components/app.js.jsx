@@ -169,10 +169,10 @@ var App = React.createClass({
 
           {/* Feed and Communities */}
           <div className='row'>
-            <div className='small-8 column feed-wrapper'>
+            <div className='small-9 column feed-wrapper'>
               {mainContent}
             </div>
-            <div className='small-4 column communities-wrapper'>
+            <div className='small-3 column communities-wrapper'>
               <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
             </div>
 
