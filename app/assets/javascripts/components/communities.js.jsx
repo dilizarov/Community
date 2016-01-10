@@ -6,7 +6,10 @@ var Communities = React.createClass({
 
   componentDidMount: function() {
     //@TODO: listen to on scroll here
-    this.scrollContainer();
+
+    $('.communities-wrapper').stick_in_parent({
+      offset_top: 15
+    });
 
     $.ajax({
       method: "GET",
@@ -31,24 +34,6 @@ var Communities = React.createClass({
         }
       }.bind(this)
     })
-  },
-
-  scrollContainer: function() {
-    var element = $('.communities-wrapper'),
-        originalY = element.offset().top;
-
-    // Space between element and top of screen (when scrolling)
-    var topMargin = 5;
-
-    $(window).on('scroll', function(event) {
-        var scrollTop = $(window).scrollTop();
-
-        element.stop(false, false).animate({
-            top: scrollTop < originalY
-                    ? 0
-                    : scrollTop - originalY + topMargin
-        }, 300);
-    });
   },
 
   addCommunity: function(community) {

@@ -17,6 +17,7 @@
 //= require react
 //= require react_ujs
 //= require classnames
+//= require sticky-kit
 //= require components
 //= require cropper
 //= require moment
