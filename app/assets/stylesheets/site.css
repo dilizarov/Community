@@ -111,7 +111,7 @@ body {
   float: right;
 }
 
-/*.top-notifications-wrapper {
+.top-notifications-wrapper {
   display: block;
   float: right;
   position: relative;
@@ -119,7 +119,7 @@ body {
 }
 .top-notifications-wrapper .dd-menu {
   position: absolute;
-  left: -30px;
+  left: -40px;
   top: 4px;
 }
 
@@ -127,7 +127,7 @@ body {
   position: absolute;
   z-index: 10;
   background-color: white;
-}*/
+}
 
 /* Communities List styling */
 .communities-wrapper {

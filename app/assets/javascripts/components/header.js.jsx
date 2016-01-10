@@ -57,7 +57,6 @@ var Header = React.createClass({
         {membershipStatus}
         <Search handleSelectCommunity={this.props.handleSelectCommunity} />
         <span className="top-notifications-wrapper">
-          {Session.userInfo().username}
           <Notifications currentCommunity={this.props.currentCommunity}
                          handleNotificationPressed={this.props.handleNotificationPressed}/>
           <SessionBox handleSessionChange={this.reloadWindow} />

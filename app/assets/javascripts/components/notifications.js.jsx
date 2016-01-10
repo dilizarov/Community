@@ -113,7 +113,7 @@ var Notifications = React.createClass({
   render: function() {
 
     var toggle = (
-        <i className="fa fa-bell" onClick={this.toggleMenu}>
+        <i className="fa fa-bell-o" onClick={this.toggleMenu}>
           <NotificationBadge count={this.state.notificationsCount} duration={100} className='notification-counter' />
         </i>
     )
