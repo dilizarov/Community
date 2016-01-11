@@ -98,15 +98,6 @@ body {
   display: inline-block;
 }
 
-.header-wrapper .join-settings-link {
-  font-size: 11px;
-  margin-left: 20px;
-  position: relative;
-  top: -9px;
-  cursor: pointer;
-  color: #666;
-}
-
 .top-notifications-wrapper {
   float: right;
 }
