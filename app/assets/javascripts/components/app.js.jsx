@@ -167,27 +167,31 @@ var App = React.createClass({
           </div>
 
           {/* Feed and Communities */}
-          <div className='row'>
-            <div className='small-2 column'>
-              <Sidebar communityName={currentCommunity}
-                      communityNameNormalized={communityNameNormalized}
-                      handleAddCommunityToList={this.addCommunityToList}
-                      ref='sidebar' />
-            </div>
-            <div className='small-7 column feed-wrapper'>
-              {mainContent}
-            </div>
-            <div className='small-3 column communities-wrapper'>
-              <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
+            <div className='main-content'>
+              <div className='row'>
+                <div className='small-2 column'>
+                  <Sidebar communityName={currentCommunity}
+                          communityNameNormalized={communityNameNormalized}
+                          handleAddCommunityToList={this.addCommunityToList}
+                          ref='sidebar' />
+                </div>
+                <div className='small-7 column feed-wrapper'>
+                  {mainContent}
+                </div>
+                <div className='small-3 column communities-wrapper'>
+                  <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
+                </div>
+
+                {/* document.title === this.state.communityName at this stage */}
+                {/*<div className='small-1 column'>
+                  <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
+                                 handleNotificationPressed={this.notificationPressed} />
+                </div>*/}
+              </div>
             </div>
 
-            {/* document.title === this.state.communityName at this stage */}
-            {/*<div className='small-1 column'>
-              <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
-                             handleNotificationPressed={this.notificationPressed} />
-            </div>*/}
           </div>
-        </div>
+
       )
     }
   }

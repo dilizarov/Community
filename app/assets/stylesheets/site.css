@@ -5,8 +5,9 @@
 
 /* #056a85 #36879d #69a5b5 */
 
-body {
+.main-content {
   background-color: #FAFAFA;
+  padding-top: 35px;
 }
 
 /* Search */
@@ -78,7 +79,7 @@ body {
   padding-right: 0;
   background-color: white;
   height: 80px;
-  margin: 0 0 35px;
+  margin: 0;
   border-bottom: 1px solid #EEE;
 }
 
