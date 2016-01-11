@@ -86,7 +86,7 @@ var App = React.createClass({
   },
 
   setCommunityMembershipStatus: function(hasJoined) {
-    this.refs.header.setHasJoinedStatus(hasJoined);
+    this.refs.sidebar.setHasJoinedStatus(hasJoined);
   },
 
   goToApp: function() {
@@ -162,14 +162,19 @@ var App = React.createClass({
                     communityNameNormalized={communityNameNormalized}
                     handleSelectCommunity={this.selectCommunity}
                     currentCommunity={currentCommunity}
-                    handleAddCommunityToList={this.addCommunityToList}
                     handleNotificationPressed={this.notificationPressed}
                     ref='header' />
           </div>
 
           {/* Feed and Communities */}
           <div className='row'>
-            <div className='small-9 column feed-wrapper'>
+            <div className='small-2 column'>
+              <Sidebar communityName={currentCommunity}
+                      communityNameNormalized={communityNameNormalized}
+                      handleAddCommunityToList={this.addCommunityToList}
+                      ref='sidebar' />
+            </div>
+            <div className='small-7 column feed-wrapper'>
               {mainContent}
             </div>
             <div className='small-3 column communities-wrapper'>

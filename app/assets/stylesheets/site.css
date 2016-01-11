@@ -195,6 +195,20 @@ body {
   border: 1px solid #F0F0F0;
 }
 
+/* Test column */
+.side-wrapper {
+  border-bottom: 1px solid #DDD;
+  padding: 10px;
+  font-size: 15px;
+  color: #333;
+}
+
+.terms-fineprint {
+  margin-top: 10px;
+  color: #CCC;
+  font-size: 12px;
+}
+
 
 /* Feed styling */
 .feed-wrapper .post {
