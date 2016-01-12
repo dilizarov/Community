@@ -49,7 +49,7 @@ var Sidebar = React.createClass({
     return (
       <div className='sidebar-container'>
         <div className='side-wrapper'>
-          {this.props.communityNameNormalized}
+          <span style={{wordWrap: 'break-word'}}>{this.props.communityName}</span>
           <p></p>
           {membershipStatus}
         </div>
