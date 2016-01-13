@@ -79,7 +79,12 @@ var Community = React.createClass({
   },
 
   settingsClicked: function() {
-    console.log("settings")
+    this.setState({
+      settingsCogShown: false,
+      settingsHighlighted: false
+    })
+
+    this.props.handleOpenSettings(this.props.community)
   },
 
   leaveClicked: function() {
@@ -93,8 +98,7 @@ var Community = React.createClass({
       "fa",
       "fa-cog",
       { solid: this.state.settingsHighlighted },
-      { opaque: this.state.settingsCogShown },
-      { 'fa-spin': this.state.settingsHighlighted }
+      { opaque: this.state.settingsCogShown }
     )
 
     var menuOptions = {

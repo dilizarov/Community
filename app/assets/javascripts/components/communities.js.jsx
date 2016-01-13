@@ -72,6 +72,7 @@ var Communities = React.createClass({
         {this.state.communities.map(function(community) {
           return (<Community key={community.normalized_name}
                             community={community}
+                            handleOpenSettings={this.props.handleOpenSettings}
                             handleSelectCommunity={this.props.handleSelectCommunity}
                             handleAddCommunity={this.addCommunity}
                             handleRemoveCommunity={this.removeCommunity} />)

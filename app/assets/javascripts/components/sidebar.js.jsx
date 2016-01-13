@@ -6,8 +6,8 @@ var Sidebar = React.createClass({
     };
   },
 
-  setHasJoinedStatus: function(hasJoined) {
-    this.setState({hasJoined: hasJoined});
+  setHasJoinedStatus: function(hasJoined, relationship) {
+    this.setState({hasJoined: hasJoined, relationship: relationship});
   },
 
   handleMembershipStatus: function() {
@@ -31,7 +31,7 @@ var Sidebar = React.createClass({
       url: "api/v1/communities.json",
       data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityName },
       success: function(res) {
-        this.setState({hasJoined: true});
+        this.setState({hasJoined: true, relationship: res.community});
         this.props.handleAddCommunityToList(res.community);
       }.bind(this),
       error: function(err) {
@@ -41,6 +41,7 @@ var Sidebar = React.createClass({
   },
 
   showCommunitySettings: function() {
+    this.props.handleOpenSettings(this.state.relationship)
   },
 
   render: function() {

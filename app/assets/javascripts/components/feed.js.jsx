@@ -30,7 +30,7 @@ var Feed = React.createClass({
       success: function(res) {
         if (this.isMounted()) {
 
-          this.props.handleCommunityStatus(res.membership);
+          this.props.handleCommunityStatus(res.membership, res.relationship);
 
           this.setState({
             posts: res.posts,

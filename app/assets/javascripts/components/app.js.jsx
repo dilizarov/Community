@@ -85,8 +85,12 @@ var App = React.createClass({
     this.refs.communitiesList.addCommunity(community)
   },
 
-  setCommunityMembershipStatus: function(hasJoined) {
-    this.refs.sidebar.setHasJoinedStatus(hasJoined);
+  setCommunityMembershipStatus: function(hasJoined, relationship) {
+    this.refs.sidebar.setHasJoinedStatus(hasJoined, relationship);
+  },
+
+  openSettingsModal: function(relationship) {
+    this.refs.settingsModal.openWithCommunityRelationship(relationship);
   },
 
   goToApp: function() {
@@ -173,13 +177,16 @@ var App = React.createClass({
                   <Sidebar communityName={currentCommunity}
                           communityNameNormalized={communityNameNormalized}
                           handleAddCommunityToList={this.addCommunityToList}
+                          handleOpenSettings={this.openSettingsModal}
                           ref='sidebar' />
                 </div>
                 <div className='small-7 column feed-wrapper'>
                   {mainContent}
                 </div>
                 <div className='small-3 column communities-wrapper'>
-                  <Communities handleSelectCommunity={this.selectCommunity} ref='communitiesList' />
+                  <Communities handleSelectCommunity={this.selectCommunity}
+                              handleOpenSettings={this.openSettingsModal}
+                              ref='communitiesList' />
                 </div>
 
                 {/* document.title === this.state.communityName at this stage */}
@@ -189,7 +196,7 @@ var App = React.createClass({
                 </div>*/}
               </div>
             </div>
-
+            <SettingsModalHandler ref='settingsModal' />
           </div>
 
       )
