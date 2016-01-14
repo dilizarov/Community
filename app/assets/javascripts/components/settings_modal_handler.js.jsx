@@ -9,7 +9,7 @@ var SettingsModalHandler = React.createClass({
   openWithCommunityRelationship: function(relationship) {
 
     var revealContent = (<div>
-      <h1>&{relationship.normalized_name} settings</h1><br/>
+      <h2 style={{wordWrap: 'break-word'}}>&{relationship.normalized_name} settings</h2><br/>
       <b>The username is {relationship.user.username}</b><br/>
       <b>The avatar url is {relationship.user.avatar_url}</b>
     </div>)

@@ -16,7 +16,7 @@ var ConfirmLeaveCommunityModalHandler = React.createClass({
     }
 
     var revealContent = (<div>
-      <h2>Leave &{community.normalized_name}?</h2>
+      <h2 style={{wordWrap: 'break-word'}}>Leave &{community.normalized_name}?</h2>
       <a className="secondary button" onClick={this.refs.foundationReveal.closeModal}>Cancel</a> <a className="alert button" onClick={wrapperCallback}>Confirm</a>
     </div>)
 
