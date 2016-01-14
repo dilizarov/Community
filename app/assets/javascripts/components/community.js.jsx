@@ -8,13 +8,7 @@ var Community = React.createClass({
     }
   },
 
-  bringUpSettings: function(e) {
-    e.stopPropagation();
-  },
-
-  leaveCommunity: function(e) {
-    e.stopPropagation();
-
+  leaveCommunity: function() {
     this.props.handleRemoveCommunity(this.props.community);
 
     var data = { community: this.props.community.normalized_name, auth_token: Session.authToken(), user_id: Session.userId() };
@@ -87,9 +81,10 @@ var Community = React.createClass({
     this.props.handleOpenSettings(this.props.community)
   },
 
-  leaveClicked: function() {
-    //are you sure you want to leave -> leaveCommunity()
-    console.log("leave")
+  leaveClicked: function(e) {
+    e.stopPropagation();
+
+    this.refs.confirmLeaveModal.openForCommunity(this.props.community, this.leaveCommunity)
   },
 
   render: function() {
@@ -119,6 +114,8 @@ var Community = React.createClass({
           </DropdownMenu>
           <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
         </div>
+
+        <ConfirmLeaveCommunityModalHandler ref="confirmLeaveModal" />
       </li>
     );
   }

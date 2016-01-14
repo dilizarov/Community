@@ -19,6 +19,10 @@ var FoundationReveal = React.createClass({
 
   },
 
+  closeModal: function() {
+    $(".reveal-modal").foundation().foundation('reveal', 'close');
+  },
+
   render: function() {
     return (
       <div>
