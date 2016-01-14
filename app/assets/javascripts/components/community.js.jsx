@@ -72,7 +72,9 @@ var Community = React.createClass({
     })
   },
 
-  settingsClicked: function() {
+  settingsClicked: function(e) {
+    e.stopPropagation();
+
     this.setState({
       settingsCogShown: false,
       settingsHighlighted: false
@@ -83,6 +85,11 @@ var Community = React.createClass({
 
   leaveClicked: function(e) {
     e.stopPropagation();
+
+    this.setState({
+      settingsCogShown: false,
+      settingsHighlighted: false
+    })
 
     this.refs.confirmLeaveModal.openForCommunity(this.props.community, this.leaveCommunity)
   },
