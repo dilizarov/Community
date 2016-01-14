@@ -24,7 +24,7 @@ var SettingsModalHandler = React.createClass({
   render: function() {
     return (
       <div>
-        <FoundationReveal ref="foundationReveal" revealContent={this.state.revealContent} />
+        <FoundationReveal ref="foundationReveal" revealContent={this.state.revealContent} stack />
       </div>
     )
   }

@@ -5,10 +5,12 @@ var FoundationReveal = React.createClass({
       e.preventDefault();
     }
 
+    var multiple_opened = this.props.stack === true
+
     var contentDiv = $('<div>');
     var anchor = $('<a class="close-reveal-modal">&times;</a>');
     var reveal = $('<div class="reveal-modal medium" data-reveal>').append($(contentDiv)).append($(anchor));
-    $(reveal).foundation().foundation('reveal', 'open');
+    $(reveal).foundation({reveal: {multiple_opened: multiple_opened}}).foundation('reveal', 'open');
     $(reveal).bind('closed.fndtn.reveal', function (e) { ReactDOM.unmountComponentAtNode(this); });
 
     if (React.isValidElement(this.props.revealContent)) {
