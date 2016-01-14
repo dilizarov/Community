@@ -7,7 +7,7 @@ var FoundationReveal = React.createClass({
 
     var contentDiv = $('<div>');
     var anchor = $('<a class="close-reveal-modal">&times;</a>');
-    var reveal = $('<div class="reveal-modal" data-reveal>').append($(contentDiv)).append($(anchor));
+    var reveal = $('<div class="reveal-modal medium" data-reveal>').append($(contentDiv)).append($(anchor));
     $(reveal).foundation().foundation('reveal', 'open');
     $(reveal).bind('closed.fndtn.reveal', function (e) { ReactDOM.unmountComponentAtNode(this); });
 
