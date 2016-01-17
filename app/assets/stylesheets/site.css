@@ -217,6 +217,16 @@
   font-size: 12px;
 }
 
+.terms-fineprint a:not(:last-of-type):after {
+  content: " ● ";
+  color: #999;
+  cursor: default;
+  font-size: 6px;
+  position: relative;
+  top: -1px;
+  margin: 0 3px;
+}
+
 
 /* Feed styling */
 .feed-wrapper .post {

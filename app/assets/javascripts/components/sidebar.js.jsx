@@ -69,7 +69,9 @@ var Sidebar = React.createClass({
           {membershipStatus}
         </div>
         <div className='terms-fineprint'>
-          iOS App, <a href="https://www.iubenda.com/privacy-policy/908716" target="_blank">Privacy</a>, <a href="/terms-of-service" target="_blank">Terms</a>
+          <a href="#">iOS App</a>
+          <a href="https://www.iubenda.com/privacy-policy/908716" target="_blank">Privacy</a>
+          <a href="/terms-of-service" target="_blank">Terms</a>
         </div>
       </div>
     )
