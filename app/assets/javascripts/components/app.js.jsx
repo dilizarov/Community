@@ -188,12 +188,6 @@ var App = React.createClass({
                               handleOpenSettings={this.openSettingsModal}
                               ref='communitiesList' />
                 </div>
-
-                {/* document.title === this.state.communityName at this stage */}
-                {/*<div className='small-1 column'>
-                  <Notifications currentCommunity={this.state.communitySelected ? this.state.communityName : ''}
-                                 handleNotificationPressed={this.notificationPressed} />
-                </div>*/}
               </div>
             </div>
             <SettingsModalHandler ref='settingsModal' />

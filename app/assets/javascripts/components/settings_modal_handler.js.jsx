@@ -10,8 +10,8 @@ var SettingsModalHandler = React.createClass({
 
     var revealContent = (<div>
       <h2 style={{wordWrap: 'break-word'}}>&{relationship.normalized_name} settings</h2><br/>
-      <b>The username is {relationship.user.username}</b><br/>
-      <b>The avatar url is {relationship.user.avatar_url}</b>
+      <b>The username: {relationship.user.username === null ? Session.userInfo().username : relationship.user.username}</b><br/>
+      <Avatar source={relationship.user.avatar_url === null ? Session.userInfo().avatar_url : relationship.user.avatar_url} className="avatar" />
     </div>)
 
     this.setState({
