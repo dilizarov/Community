@@ -187,16 +187,32 @@
   border: 1px solid #F0F0F0;
 }
 
-/* Test column */
+/* Side bar column */
 .side-wrapper {
   border-bottom: 1px solid #DDD;
-  padding: 10px;
+  padding: 5px 0 15px;
   font-size: 15px;
   color: #333;
 }
 
+.side-wrapper .join-settings-link {
+  font-size: 13px;
+  display: inline-block;
+  border: 1px solid #EEE;
+  border-bottom: 1px solid #E8E8E8;
+  border-radius: 3px;
+  padding: 5px 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.side-wrapper .join-settings-link:hover {
+  border: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E2E2E2;
+}
+
 .terms-fineprint {
-  margin-top: 10px;
+  margin-top: 15px;
   color: #CCC;
   font-size: 12px;
 }
@@ -398,6 +414,7 @@
 .feed-wrapper .write-reply {
   padding-left: 10px;
   background-color: #FAFAFA;
+  border-radius: 3px;
 }
 
 .feed-wrapper .write-reply-disabled {
