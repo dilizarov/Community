@@ -6,15 +6,25 @@ var Sidebar = React.createClass({
     };
   },
 
-  setHasJoinedStatus: function(hasJoined, relationship) {
+  componentWillReceiveProps: function(props) {
+    this.setState({
+      hasJoined: null
+    })
+  },
+
+  setCommunityRelations: function(hasJoined, relationship) {
     this.setState({hasJoined: hasJoined, relationship: relationship});
   },
 
   handleMembershipStatus: function() {
     var membershipStatus;
 
-    if (this.state.hasJoined === null) {
-      membershipStatus = <a className='join-settings-link disabled'></a>
+    membershipStatus = <div style={{textAlign: 'center'}}><Spinner size="sm" /></div>
+
+    if (this.state.joining === true) {
+      membershipStatus = <a className="join-settings-link disabled"><Spinner /></a>
+    } else if (this.state.hasJoined === null) {
+      membershipStatus = <div style={{textAlign: 'center'}}><Spinner size="sm" /></div>
     } else if (this.state.hasJoined === true) {
       membershipStatus = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
     } else {
@@ -26,16 +36,20 @@ var Sidebar = React.createClass({
 
   joinCommunity: function() {
 
+    this.setState({
+      joining: true
+    })
+
     $.ajax({
       method: "POST",
       url: "api/v1/communities.json",
       data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityName },
       success: function(res) {
-        this.setState({hasJoined: true, relationship: res.community});
+        this.setState({hasJoined: true, relationship: res.community, joining: false});
         this.props.handleAddCommunityToList(res.community);
       }.bind(this),
       error: function(err) {
-        alert('fuckkkk')
+        this.setState({hasJoined: false, joining: false})
       }.bind(this)
     })
   },

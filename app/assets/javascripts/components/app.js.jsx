@@ -86,7 +86,7 @@ var App = React.createClass({
   },
 
   setCommunityMembershipStatus: function(hasJoined, relationship) {
-    this.refs.sidebar.setHasJoinedStatus(hasJoined, relationship);
+    this.refs.sidebar.setCommunityRelations(hasJoined, relationship);
   },
 
   openSettingsModal: function(relationship) {
