@@ -9,6 +9,7 @@ var Community = React.createClass({
   },
 
   leaveCommunity: function() {
+    this.refs.modal.hide();
     this.props.handleRemoveCommunity(this.props.community);
 
     var data = { community: this.props.community.normalized_name, auth_token: Session.authToken(), user_id: Session.userId() };
@@ -91,7 +92,11 @@ var Community = React.createClass({
       settingsHighlighted: false
     })
 
-    this.refs.confirmLeaveModal.openForCommunity(this.props.community, this.leaveCommunity)
+    this.refs.modal.show();
+  },
+
+  hideModal: function() {
+    this.refs.modal.hide();
   },
 
   render: function() {
@@ -122,7 +127,10 @@ var Community = React.createClass({
           <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
         </div>
 
-        <ConfirmLeaveCommunityModalHandler ref="confirmLeaveModal" />
+        <DropModal ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
+          <h3 style={{wordWrap: 'break-word'}}>Leave &{this.props.community.normalized_name}?</h3><br/>
+          <a className="secondary small button radius" onClick={this.hideModal} style={{marginRight: '20'}}>Cancel</a> <a className="alert small button radius" onClick={this.leaveCommunity}>Confirm</a>
+        </DropModal>
       </li>
     );
   }

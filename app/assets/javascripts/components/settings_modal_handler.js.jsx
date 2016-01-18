@@ -8,23 +8,42 @@ var SettingsModalHandler = React.createClass({
 
   openWithCommunityRelationship: function(relationship) {
 
-    var revealContent = (<div>
-      <h2 style={{wordWrap: 'break-word'}}>&{relationship.normalized_name} settings</h2><br/>
-      <b>The username: {relationship.user.username === null ? Session.userInfo().username : relationship.user.username}</b><br/>
-      <Avatar source={relationship.user.avatar_url === null ? Session.userInfo().avatar_url : relationship.user.avatar_url} className="avatar" />
-    </div>)
-
+    // var revealContent = (<div>
+    //   <h2 style={{wordWrap: 'break-word'}}>&{relationship.normalized_name} settings</h2><br/>
+    //   <b>The username: {relationship.user.username === null ? Session.userInfo().username : relationship.user.username}</b><br/>
+    //   <Avatar source={relationship.user.avatar_url === null ? Session.userInfo().avatar_url : relationship.user.avatar_url} className="avatar" />
+    // </div>)
+    //
     this.setState({
-      revealContent: revealContent
+      relationship: relationship
     }, function () {
-      this.refs.foundationReveal.handleClick();
+      this.refs.modal.show();
     })
+  },
+
+  closeModal: function() {
+    this.refs.modal.hide();
+  },
+
+  openNext: function() {
+    this.refs.modalll.show();
+  },
+
+  closeOtherModal: function() {
+    this.refs.modalll.hide();
   },
 
   render: function() {
     return (
       <div>
-        <FoundationReveal ref="foundationReveal" revealContent={this.state.revealContent} stack />
+        <DropModal ref="modal">
+
+          <a className="button" onClick={this.closeModal}>Hide</a>
+          <a className="button" onClick={this.openNext}>Open</a>
+        </DropModal>
+        <DropModal ref="modalll">
+          <a className="button" onClick={this.closeOtherModal}>Hide</a>
+        </DropModal>
       </div>
     )
   }
