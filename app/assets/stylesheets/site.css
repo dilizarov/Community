@@ -8,6 +8,8 @@
 .main-content {
   background-color: #FAFAFA;
   padding-top: 35px;
+  min-height: 100vh;
+  padding-bottom: 70px;
 }
 
 /* Search */
