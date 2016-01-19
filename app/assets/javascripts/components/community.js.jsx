@@ -129,7 +129,8 @@ var Community = React.createClass({
 
         <DropModal ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
           <h3 style={{wordWrap: 'break-word'}}>Leave &{this.props.community.normalized_name}?</h3><br/>
-          <a className="secondary small button radius" onClick={this.hideModal} style={{marginRight: '20'}}>Cancel</a> <a className="alert small button radius" onClick={this.leaveCommunity}>Confirm</a>
+          <a className="secondary small button radius" onClick={this.hideModal} style={{marginRight: '20'}}>Cancel</a>
+          <a className="alert small button radius" onClick={this.leaveCommunity}>Confirm</a>
         </DropModal>
       </li>
     );
