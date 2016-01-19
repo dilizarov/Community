@@ -163,7 +163,7 @@ var SessionBox = React.createClass({
 
     if (this.state.sessionBoxOpened === true) {
       if (Session.loggedIn() === true) {
-        sessionContent = <a className="button tiny radius" onClick={this.logout}>Log out</a>
+        sessionContent = <a className="button tiny radius logout-btn" onClick={this.logout}>Log out</a>
       } else {
         if (this.state.forgotPassword === true) {
           sessionContent = (<div className="forgot-password">
@@ -189,16 +189,18 @@ var SessionBox = React.createClass({
                      <input type="text" placeholder="CONFIRM ITTTT" id="session-confirm" />
                      <a className="button tiny radius success" onClick={this.processRegistration}>Create Account</a>
                      <br />
-                     <a className="button tiny radius" onClick={this.togglePrimaryState}>Log In</a>
+                     <a className="button tiny radius login-btn" onClick={this.togglePrimaryState}>Log In</a>
                    </div>)
         }
       }
 
       box = <div className="session-box" ref="sessionBox">
-        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="lg" />
-        {userInfo.username}
-        {Session.loggedIn() === true ? userInfo.email : ''}
-        {sessionContent}
+        <div className="user-email">{Session.loggedIn() === true ? userInfo.email : ''}</div>
+        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" />
+        <span className="username">{userInfo.username}</span>
+        <div className="session-box-bottom">
+          {sessionContent}
+        </div>
       </div>
 
     }

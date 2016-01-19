@@ -116,11 +116,52 @@
   left: -40px;
   top: 4px;
 }
+.top-notifications-wrapper .dd-menu.dd-menu-left .dd-menu-items {
+  right: 0;
+  left: auto;
+}
 
 .session-box {
   position: absolute;
   z-index: 10;
   background-color: white;
+  right: 15px;
+  margin-top: 15px;
+  border: 1px solid #EEE;
+}
+
+.session-box .avatar-wrapper {
+  margin-left: 8px;
+}
+
+.session-box .username {
+  font-size: 12px;
+}
+
+.session-box .user-email {
+  font-size: 12px;
+  background-color: #FAFAFA;
+  padding: 8px 15px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.session-box .logout-btn {
+  background-color: #F3F3F3;
+  color: #333;
+  border: 1px solid #EEE;
+  border-bottom: 1px solid #DDD;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 8px auto;
+  display: block;
+  width: 50%;
+  min-width: 70px;
+}
+
+.session-box .session-box-bottom {
+  margin-top: 10px;
+  border-top: 1px solid #EEE;
 }
 
 /* Communities List styling */
