@@ -40,10 +40,30 @@ var SettingsModalHandler = React.createClass({
     })
   },
 
+  updateInput: function(e) {
+    this.setState({
+      changedUsername: e.target.value
+    })
+  },
+
+  resetState: function() {
+    this.replaceState({
+      relationship: {
+        name: '',
+        normalized_name: '',
+        user: {
+          avatar_url: '',
+          username: ''
+        }
+      }
+    })
+  },
+
   render: function() {
 
     var relationship = this.state.relationship;
     var avatar_source;
+    var username;
 
     if (this.state.changedAvatar) {
       avatar_source = this.state.changedAvatar
@@ -51,19 +71,22 @@ var SettingsModalHandler = React.createClass({
       avatar_source = relationship.user.avatar_url === null ? Session.userInfo().avatar_url : relationship.user.avatar_url
     }
 
+    if (this.state.changedUsername) {
+      username = this.state.changedUsername;
+    } else {
+      username = relationship.user.username === null ? Session.userInfo().username : relationship.user.username
+    }
+
     return (
       <div>
-        <DropModal ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
+        <DropModal onHide={this.resetState} ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
           <h3 style={{wordWrap: 'break-word'}}>&{relationship.normalized_name} settings</h3>
             <Avatar source={avatar_source}
               size="lg" changeable handleChange={this.changeAvatar} /><br/>
-            <b>The username: {relationship.user.username === null ? Session.userInfo().username : relationship.user.username}</b><br/>
+            <input type="text" placeholder="Username" value={username} onChange={this.updateInput} /><br/>
 
           <a className="secondary small button radius" onClick={this.closeModal} style={{marginRight: '20'}}>Hide</a>
           <a className="small button radius" onClick={this.openNext}>Save</a>
-        </DropModal>
-        <DropModal ref="modalll">
-          <a className="button" onClick={this.closeOtherModal}>Hide</a>
         </DropModal>
       </div>
     )
