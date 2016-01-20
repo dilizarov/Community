@@ -9,7 +9,8 @@ var SettingsModalHandler = React.createClass({
           avatar_url: '',
           username: ''
         }
-      }
+      },
+      checked: true
     }
   },
 
@@ -59,6 +60,12 @@ var SettingsModalHandler = React.createClass({
     })
   },
 
+  changeState: function() {
+    this.setState({
+      checked: !this.state.checked
+    })
+  },
+
   render: function() {
 
     var relationship = this.state.relationship;
@@ -77,10 +84,20 @@ var SettingsModalHandler = React.createClass({
       username = relationship.user.username === null ? Session.userInfo().username : relationship.user.username
     }
 
+
+
     return (
       <div>
         <DropModal onHide={this.resetState} ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
           <h3 style={{wordWrap: 'break-word'}}>&{relationship.normalized_name} settings</h3>
+
+            <div className="switch">
+              <input onChange={this.changeState} className="switch-input" checked={this.state.checked} id="default" type="checkbox" name="default" />
+              <label className="switch-paddle" htmlFor="default">
+                <span className="show-for-sr">Default</span>
+              </label>
+            </div>
+
             <Avatar source={avatar_source}
               size="lg" changeable handleChange={this.changeAvatar} /><br/>
             <input type="text" placeholder="Username" value={username} onChange={this.updateInput} /><br/>

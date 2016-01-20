@@ -45,12 +45,6 @@ var Avatar = React.createClass({
     }
   },
 
-  crop: function() {
-    this.setState({
-      preview: this.refs.cropper.getCroppedCanvas().toDataURL("image/png")
-    })
-  },
-
   confirmChange: function() {
     this.props.handleChange(this.state.preview)
     this.refs.modal.hide();
@@ -91,13 +85,13 @@ var Avatar = React.createClass({
             <Cropper
               aspectRatio={1 / 1}
               guides={false}
+              preview='.img-preview'
               src={this.state.cropper_source}
               ref='cropper'
-              crop={this.crop}
                />
           </div>
           <div className="small-4 column">
-            <img className="avatar-lg" ref="preview_avatar" src={this.state.preview} style={{textAlign: 'center'}} />
+            <div className="img-preview" style={{width: 50, height: 50, borderRadius: '50%', overflow: 'hidden'}}/>
             <br/>
             <a className="secondary small button radius" onClick={this.confirmChange}>Confirm</a>
           </div>
