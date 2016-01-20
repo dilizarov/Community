@@ -484,3 +484,28 @@ i, .button, .post-stats {
     -ms-user-select: none;
     user-select: none;
 }
+
+/* personal changes to cropper library */
+
+.cropper-view-box {
+  border-radius: 50%;
+  outline: none;
+  outline-color: transparent;
+}
+
+.cropper-face {
+  background-color: transparent;
+}
+
+.cropper-center,
+.cropper-line,
+.cropper-point.point-ne,
+.cropper-point.point-nw,
+.cropper-point.point-sw,
+.cropper-point.point-se {
+  visibility: hidden;
+}
+
+.cropper-point {
+  background-color: #60b0c6;
+}

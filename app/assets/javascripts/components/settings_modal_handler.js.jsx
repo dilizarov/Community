@@ -84,8 +84,6 @@ var SettingsModalHandler = React.createClass({
       username = relationship.user.username === null ? Session.userInfo().username : relationship.user.username
     }
 
-
-
     return (
       <div>
         <DropModal onHide={this.resetState} ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
