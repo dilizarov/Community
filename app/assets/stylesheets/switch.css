@@ -1,0 +1,52 @@
+.u-switch {
+  display: inline-block;
+  position: relative;
+  width: 48px;
+  height: 28px;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.u-switch input {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.u-switch .track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 7px;
+  background-color: #cccccc;
+}
+.u-switch .switch-button {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  right: 21px;
+  left: 5px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: all 125ms ease;
+  -webkit-transition: all 125ms ease;
+}
+.u-switch.is-checked .track {
+  background-color: #5faee3;
+}
+
+.u-switch.is-checked .switch-button {
+  right: 5px;
+  left: 21px;
+}
+
+.u-switch.switch-disabled {
+  opacity: .5;
+  cursor: default;
+}

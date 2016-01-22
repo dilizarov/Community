@@ -485,6 +485,10 @@ i, .button, .post-stats {
     user-select: none;
 }
 
+.drop-modal-content {
+    outline: none;
+}
+
 /* personal changes to cropper library */
 
 .cropper-view-box {

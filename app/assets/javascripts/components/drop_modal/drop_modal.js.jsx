@@ -106,7 +106,7 @@ var DropModal = React.createClass({
     return (<span>
       <div ref="modal" style={modalStyle} className={this.props.className}>
       {sharp}
-      <div ref="content" tabIndex="-1" style={contentStyle}>
+      <div ref="content" className='drop-modal-content' tabIndex="-1" style={contentStyle}>
       {this.props.children}
       </div>
       </div>
