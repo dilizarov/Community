@@ -58,6 +58,16 @@ var Sidebar = React.createClass({
     this.props.handleOpenSettings(this.state.relationship)
   },
 
+  updateCommunitySettings: function (relationship) {
+    if (this.state.relationship && this.state.relationship.normalized_name) {
+      if (this.state.relationship.normalized_name === relationship.normalized_name) {
+        this.setState({
+          relationship: relationship
+        })
+      }
+    }
+  },
+
   render: function() {
     var membershipStatus = this.handleMembershipStatus();
 

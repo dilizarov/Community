@@ -54,6 +54,20 @@ var Communities = React.createClass({
     this.setState({ communities: communities });
   },
 
+  updateCommunitySettings: function (relationship) {
+    var updatedCommunities = this.state.communities.map( function (community) {
+      if (community.normalized_name === relationship.normalized_name) {
+        return React.addons.update(community, { $set: relationship });
+      } else {
+        return community;
+      }
+    })
+
+    this.setState({
+      communities: updatedCommunities
+    })
+  },
+
   //@TODO: Error handling/displaying.
   render: function() {
 

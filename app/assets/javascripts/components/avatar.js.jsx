@@ -50,6 +50,25 @@ var Avatar = React.createClass({
     this.refs.modal.hide();
   },
 
+  getImageDataURI: function(callback) {
+
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement("CANVAS");
+      var ctx = canvas.getContext('2d');
+        var dataURL;
+        canvas.height = this.height;
+        canvas.width = this.width;
+        ctx.drawImage(this, 0, 0);
+        dataURL = canvas.toDataURL();
+        callback(dataURL);
+        canvas = null;
+    }
+
+    img.crossOrigin = 'anonymous';
+    img.src = this.refs.avatar_image.src
+  },
+
   render: function() {
 
     var avatar;
@@ -61,7 +80,7 @@ var Avatar = React.createClass({
     var loaderClass = "avatar-loading";
     var raysClass   = "avatar-loading-rays";
 
-    var { source, size, whiteRays, changeable, ...other } = this.props
+    var { source, size, whiteRays, changeable, ref, ...other } = this.props
 
     if (size === "sm") {
       avatarClass += "-sm"
@@ -113,7 +132,7 @@ var Avatar = React.createClass({
           { ...other } />
       } else {
 
-        avatar = <img src={this.props.source} className={avatarClass} style={{display: 'none'}} onLoad={this.makeVisible} onError={this.usePlaceholder} />
+        avatar = <img src={this.props.source} crossOrigin="anonymous" className={avatarClass} style={{display: 'none'}} onLoad={this.makeVisible} onError={this.usePlaceholder} />
         loader = (<span className={loaderClass} style={this.props.style}>
           <span className={raysClass}></span>
         </span>)

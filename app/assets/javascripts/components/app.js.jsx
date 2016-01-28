@@ -134,6 +134,11 @@ var App = React.createClass({
     }
   },
 
+  propogateCommunitySettings: function (relationship) {
+    this.refs.sidebar.updateCommunitySettings(relationship);
+    this.refs.communitiesList.updateCommunitySettings(relationship);
+  },
+
   render: function() {
 
     var mainContent, communityNameNormalized, currentCommunity;
@@ -190,7 +195,7 @@ var App = React.createClass({
                 </div>
               </div>
             </div>
-            <SettingsModalHandler ref='settingsModal' />
+            <SettingsModalHandler ref='settingsModal' updateCommunitySettings={this.propogateCommunitySettings} />
           </div>
 
       )
