@@ -120,7 +120,7 @@ var Avatar = React.createClass({
     }
 
     if (source === null || this.state.loadFailed === true) {
-      avatar = <img src="/assets/avatar_placeholder.png"
+      avatar = <img src={"<%= asset_path('avatar_placeholder.png') %>"}
         ref="avatar_image"
         className={avatarClass}
         { ...other } />
