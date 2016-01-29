@@ -85,7 +85,7 @@ var Sidebar = React.createClass({
     var title;
 
     if (this.props.notificationPresent === true) {
-      title = <span style={{wordWrap: 'break-word'}}>Notification from <a onClick={this.goToCommunity}>&{this.props.notification.community_normalized}</a></span>
+      title = <span style={{wordWrap: 'break-word'}}>Notification from <a onClick={this.goToCommunity} style={{cursor: 'pointer'}}>{'&' + this.props.notification.community_normalized}</a></span>
     } else {
       title = <span style={{wordWrap: 'break-word'}}>{this.props.communityName}</span>;
     }

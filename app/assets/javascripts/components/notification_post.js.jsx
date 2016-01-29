@@ -270,37 +270,39 @@ var NotificationPost = React.createClass({
     }
 
     return (
-      <div className="post clearfix">
-        <div className="post-heading clearfix">
-          <Avatar source={this.state.post.user.avatar_url} style={{float: 'left'}}/>
-          <span className="post-username">{this.state.post.user.username}</span>
-          <span className="post-timestamp">{timestamp(this.state.post.created_at)}</span>
-        </div>
-        <div className="post-title">{postTitle}</div>
-        <div className="post-body">{this.state.post.body}</div>
-        <div className="post-stats">
-          <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i>{likesCount} {likesCount === '1' ? 'like' : 'likes'}</span>
-          <span className="post-replies-stats" onClick={this.toggleReplies}>
-            <i className="fa fa-comment-o"></i>
-            <span className="post-replies-count">{repliesCount} {repliesCount === '1' ? 'reply' : 'replies'}</span>
-          </span>
-          {repliesLoader}
-        </div>
-        {repliesContent}
-        <div className="reply-to-post-wrapper">
-          <Avatar size="sm" source={user_avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
-          <div className="reply-to-post">
-            <TextareaAutosize placeholder="Write a reply..."
-                              className={writeReplyClass}
-                              disabled={this.state.submittingReply}
-                              rows={1}
-                              minRows={1}
-                              ref="writeReply"
-                              onKeyDown={this.haltEnter}
-                              onKeyUp={this.maybeCreateReply} />
+      <ul className="no-bullet">        
+        <li className="post clearfix">
+          <div className="post-heading clearfix">
+            <Avatar source={this.state.post.user.avatar_url} style={{float: 'left'}}/>
+            <span className="post-username">{this.state.post.user.username}</span>
+            <span className="post-timestamp">{timestamp(this.state.post.created_at)}</span>
           </div>
-        </div>
-      </div>
+          <div className="post-title">{postTitle}</div>
+          <div className="post-body">{this.state.post.body}</div>
+          <div className="post-stats">
+            <span className="post-likes" onClick={this.likePost}><i className={heartLikesClass}></i>{likesCount} {likesCount === '1' ? 'like' : 'likes'}</span>
+            <span className="post-replies-stats" onClick={this.toggleReplies}>
+              <i className="fa fa-comment-o"></i>
+              <span className="post-replies-count">{repliesCount} {repliesCount === '1' ? 'reply' : 'replies'}</span>
+            </span>
+            {repliesLoader}
+          </div>
+          {repliesContent}
+          <div className="reply-to-post-wrapper">
+            <Avatar size="sm" source={user_avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
+            <div className="reply-to-post">
+              <TextareaAutosize placeholder="Write a reply..."
+                className={writeReplyClass}
+                disabled={this.state.submittingReply}
+                rows={1}
+                minRows={1}
+                ref="writeReply"
+                onKeyDown={this.haltEnter}
+                onKeyUp={this.maybeCreateReply} />
+            </div>
+          </div>
+        </li>
+      </ul>
     )
   },
 
