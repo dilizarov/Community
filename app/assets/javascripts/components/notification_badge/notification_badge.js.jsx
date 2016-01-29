@@ -15,7 +15,7 @@ const styles = {
     position: 'absolute',
     minWidth: '10px',
     padding: '3px 7px',
-    fontSize: '12px',
+    fontSize: '10px',
     fontWeight: '700',
     lineHeight: '1',
     color: '#fff',
@@ -24,7 +24,7 @@ const styles = {
     verticalAlign: 'baseline',
     backgroundColor: 'rgba(212, 19, 13, 1)',
     borderRadius: '10px',
-    top : '-40px',
+    top : '-25px',
     right: '-12px'
   }
 };

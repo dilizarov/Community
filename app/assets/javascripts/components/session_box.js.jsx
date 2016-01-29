@@ -194,20 +194,20 @@ var SessionBox = React.createClass({
         }
       }
 
-      box = <div className="session-box" ref="sessionBox">
+      box = (<div className="session-box" ref="sessionBox">
         <div className="user-email">{Session.loggedIn() === true ? userInfo.email : ''}</div>
-        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" />
+        <Avatar source={userInfo.avatar_url} size="sm" changeable />
         <span className="username">{userInfo.username}</span>
         <div className="session-box-bottom">
           {sessionContent}
         </div>
-      </div>
+      </div>)
 
     }
 
     return (
       <span className="session-handler">
-        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} size="sm" onClick={this.toggleSessionBox} whiteRays />
+        <Avatar source={userInfo.avatar_url} size="sm" onClick={this.toggleSessionBox} whiteRays />
         {box}
       </span>
     )

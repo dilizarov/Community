@@ -68,6 +68,18 @@ class Api::V1::UsersController < ApiController
 
     actual_notifications = relationships.map(&:notification)
 
+    comms_involved = actual_notifications.map do |notif|
+      notif.post.present? ? notif.post.community : notif.reply.post.community
+    end
+
+    recipient_relations = current_user.communities.where(normalized_name: comms_involved.uniq)
+    rel_hash = recipient_relations.inject({}) { |hash, rel| hash.merge(rel.normalized_name => rel)}
+
+    actual_notifications.each do |notif|
+      community = notif.post.present? ? notif.post.community : notif.reply.post.community
+      notif.recipient_relationship = rel_hash[community]
+    end
+
     render status: :ok,
     json: actual_notifications,
     each_serializer: NotificationSerializer,

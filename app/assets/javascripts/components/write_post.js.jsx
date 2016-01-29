@@ -46,6 +46,7 @@ var WritePost = React.createClass({
           buttonDisabled: true,
           submitting: false
         })
+
         this.props.handleAddPostToFeed(res.post)
       }.bind(this),
       error: function(err) {
@@ -82,9 +83,20 @@ var WritePost = React.createClass({
       button = <a className={btnClass} onClick={this.submitPost}>Post</a>
     }
 
+    var rel = this.props.relationship;
+    var avatar_url;
+
+    var sessData = Session.userInfo();
+
+    if (rel && rel.user) {
+      avatar_url = rel.user.avatar_url ? rel.user.avatar_url : sessData.avatar_url;
+    } else {
+      avatar_url = sessData.avatar_url;
+    }
+
     return (
       <div className="post-to-community clearfix">
-        <Avatar source={"http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)} className="avatar" style={{float: 'left'}} />
+        <Avatar source={avatar_url} className="avatar" style={{float: 'left'}} />
         <input type="text" disabled={this.state.submitting} id="write-post-title" ref="titleInput" placeholder="Title (optional)" />
         <TextareaAutosize id="write-post-body"
                           disabled={this.state.submitting}

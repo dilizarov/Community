@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "ULTD2T59T4.get.community.Community",
-        "paths": ["/"]
+        "paths": ["*"]
       }
     ]
   }

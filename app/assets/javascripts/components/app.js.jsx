@@ -99,41 +99,6 @@ var App = React.createClass({
     })
   },
 
-  changeProfilePic: function() {
-    $('#profile-pic-picker').click()
-  },
-
-  cropImageUI: function() {
-
-    var input = $("#profile-pic-picker")[0]
-
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        $("#profile-pic").attr('src', e.target.result)
-
-        $("#profile-pic").cropper({
-          aspectRatio: 1 / 1,
-          autoCropArea: 0.85
-        })
-
-        $("#profile-pic").on('zoom.cropper', function (e) {
-
-          var maxRatio = 5;
-          var imageData = $(this).cropper('getImageData');
-          var currentRatio = imageData.width / imageData.naturalWidth;
-
-          if (e.ratio > 0 && currentRatio > maxRatio) {
-            e.preventDefault()
-          }
-        })
-      }
-
-      reader.readAsDataURL(input.files[0])
-    }
-  },
-
   propogateCommunitySettings: function (relationship) {
     this.refs.sidebar.updateCommunitySettings(relationship);
     this.refs.communitiesList.updateCommunitySettings(relationship);
@@ -155,7 +120,7 @@ var App = React.createClass({
       currentCommunity = this.state.communitySelected ? this.state.communityName : '';
 
       if (this.state.notificationPresent === true) {
-        mainContent = <NotificationPost postId={this.state.notification.post_id} />
+        mainContent = <NotificationPost notification={this.state.notification} postId={this.state.notification.post_id} />
       } else {
         mainContent = (<Feed communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
@@ -183,6 +148,9 @@ var App = React.createClass({
                           communityNameNormalized={communityNameNormalized}
                           handleAddCommunityToList={this.addCommunityToList}
                           handleOpenSettings={this.openSettingsModal}
+                          notificationPresent={this.state.notificationPresent}
+                          notification={this.state.notification}
+                          handleSelectCommunity={this.selectCommunity}
                           ref='sidebar' />
                 </div>
                 <div className='small-7 column feed-wrapper'>

@@ -1,26 +1,28 @@
 class Notification < ActiveRecord::Base
-  
+
   belongs_to :post
   belongs_to :reply
   belongs_to :user
-  
+
+  attr_accessor :recipient_relationship
+
   has_many :user_notifications
-  
+
   has_many :users,
   through: :user_notifications
-  
+
   validates :kind, presence: true, inclusion: { in: ["post_liked", "post_created", "reply_liked", "reply_created"], case_sensitive: false }
-  
+
   after_create :mark_users_who_get_sent_notification
   after_commit :send_notification, on: :create
-  
+
   private
-  
+
   def mark_users_who_get_sent_notification
     #post_liked and reply_liked don't require checking if we're sending
     #notification to the user who triggered it because unique indexes
     #will make it impossible
-    
+
     case self.kind
     when "post_liked"
       UserNotification.create(user_id: self.post.user_id, notification_id: self.id)
@@ -44,11 +46,11 @@ class Notification < ActiveRecord::Base
       user_notifications = user_ids.uniq.reject { |user_id| user_id == self.user_id }.map do |user_id|
         UserNotification.new(user_id: user_id, notification_id: self.id)
       end
-      
+
       UserNotification.import(user_notifications)
     end
   end
-  
+
   def send_notification
     Notifications.perform_async(self.id)
   end

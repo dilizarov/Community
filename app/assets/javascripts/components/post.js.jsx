@@ -152,18 +152,6 @@ var Post = React.createClass({
     }
   },
 
-  makeVisible: function() {
-    this.setState({
-      avatarLoaded: true
-    })
-  },
-
-  usePlaceholder: function() {
-    this.setState({
-      avatarLoadFailed: true
-    })
-  },
-
   //TODO: Handle error handling/display
   render: function() {
 
@@ -177,10 +165,6 @@ var Post = React.createClass({
     } else if (this.state.replies.length !== 0) {
       repliesContent = (<ul className="post-replies no-bullet">
         {this.state.replies.map(function(reply) {
-          var avatar_url = "http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)
-          if (Math.ceil(Math.random() * 2) === 1) {
-            reply.user.avatar_url = avatar_url
-          }
           return (<Reply key={reply.external_id}
                          reply={reply}
                          toggleLikeReply={this.likeReply} />)
@@ -201,6 +185,17 @@ var Post = React.createClass({
 
     var writeReplyClass = classNames('write-reply', {'write-reply-disabled': this.state.submittingReply})
 
+    var rel = this.props.relationship;
+    var user_avatar_url;
+
+    var sessData = Session.userInfo();
+
+    if (rel && rel.user) {
+      user_avatar_url = rel.user.avatar_url ? rel.user.avatar_url : sessData.avatar_url;
+    } else {
+      user_avatar_url = sessData.avatar_url;
+    }
+
     return (
       <li className="post clearfix">
         <div className="post-heading clearfix">
@@ -219,9 +214,8 @@ var Post = React.createClass({
           {repliesLoader}
         </div>
         {repliesContent}
-        {/* @TODO: avatar should be logged in user's avatar, not the post's */}
         <div className="reply-to-post-wrapper">
-          <Avatar size="sm" source={this.props.post.user.avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
+          <Avatar size="sm" source={user_avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
           <div className="reply-to-post">
             <TextareaAutosize placeholder="Write a reply..."
                               className={writeReplyClass}

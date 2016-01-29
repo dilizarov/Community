@@ -34,6 +34,7 @@ var Feed = React.createClass({
 
           this.setState({
             posts: res.posts,
+            relationship: res.relationship,
             loaded: true,
             error: false
           });
@@ -162,7 +163,8 @@ var Feed = React.createClass({
     return (
       <div className='feed'>
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
-                   handleAddPostToFeed={this.addPostToFeed}/>
+                   handleAddPostToFeed={this.addPostToFeed}
+                   relationship={this.state.relationship} />
                  There are no posts!
       </div>
     )
@@ -183,15 +185,13 @@ var Feed = React.createClass({
     return (
       <div className='feed'>
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
-                   handleAddPostToFeed={this.addPostToFeed}/>
+                   handleAddPostToFeed={this.addPostToFeed}
+                   relationship={this.state.relationship} />
         <ul className="no-bullet">
           {this.state.posts.map(function(post) {
-            var avatar_url = "http://lorempixel.com/500/500/people?dummy=" + Math.ceil(Math.random() * 10000)
-            if (Math.ceil(Math.random() * 2) === 1) {
-              post.user.avatar_url = avatar_url
-            }
             return (<Post key={post.external_id}
                          post={post}
+                         relationship={this.state.relationship}
                          toggleLikePost={this.likePost}
                          handleUpdateRepliesCount={this.updateRepliesCount} />)
 

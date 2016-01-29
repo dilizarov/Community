@@ -62,6 +62,12 @@ var Notifications = React.createClass({
 
   getNotifications: function() {
 
+    document.title = this.props.currentCommunity === '' ? 'Community' : this.props.currentCommunity;
+
+    this.setState({
+      notificationsCount: 0
+    })
+
     var data = { auth_token: Session.authToken() }
 
     $.ajax({
@@ -71,9 +77,10 @@ var Notifications = React.createClass({
       success: function(res) {
         if (this.isMounted()) {
 
+          console.log(res.notifications)
+
           this.setState({
             notifications: res.notifications,
-            notificationsCount: 0,
             opened: true
           });
 
@@ -130,7 +137,8 @@ var Notifications = React.createClass({
     return (
       <DropdownMenu {...menuOptions}>
         {this.state.notifications.map(function(notification) {
-          return (<Motification notification={notification}
+          return (<Motification key={notification.id}
+                                notification={notification}
                                 handleNotificationPressed={this.notificationPressed} />)
         }.bind(this))}
       </DropdownMenu>

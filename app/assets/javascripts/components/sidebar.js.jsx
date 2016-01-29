@@ -19,12 +19,12 @@ var Sidebar = React.createClass({
   handleMembershipStatus: function() {
     var membershipStatus;
 
-    membershipStatus = <div style={{textAlign: 'center'}}><Spinner size="sm" /></div>
-
-    if (this.state.joining === true) {
+    if (this.props.notificationPresent === true || this.props.communityNameNormalized === '') {
+      //skip
+    } else if (this.state.joining === true) {
       membershipStatus = <a className="join-settings-link disabled"><Spinner /></a>
     } else if (this.state.hasJoined === null) {
-      membershipStatus = <div style={{textAlign: 'center'}}><Spinner size="sm" /></div>
+      membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
     } else if (this.state.hasJoined === true) {
       membershipStatus = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
     } else {
@@ -68,14 +68,32 @@ var Sidebar = React.createClass({
     }
   },
 
+  goToCommunity: function () {
+    if (this.props.notification) {
+      this.props.handleSelectCommunity(this.props.notification.community_normalized);
+    }
+  },
+
   render: function() {
     var membershipStatus = this.handleMembershipStatus();
 
+    var sidewrapperClass = classNames(
+      'side-wrapper',
+      { 'empty' : this.props.communityNameNormalized === '' && this.props.notificationPresent === false }
+    )
+
+    var title;
+
+    if (this.props.notificationPresent === true) {
+      title = <span style={{wordWrap: 'break-word'}}>Notification from <a onClick={this.goToCommunity}>&{this.props.notification.community_normalized}</a></span>
+    } else {
+      title = <span style={{wordWrap: 'break-word'}}>{this.props.communityName}</span>;
+    }
+
     return (
       <div className='sidebar-container'>
-        <div className='side-wrapper'>
-          <span style={{wordWrap: 'break-word'}}>{this.props.communityName}</span>
-          <p></p>
+        <div className={sidewrapperClass}>
+          {title}
           {membershipStatus}
         </div>
         <div className='terms-fineprint'>
