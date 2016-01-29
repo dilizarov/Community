@@ -77,8 +77,6 @@ var Notifications = React.createClass({
       success: function(res) {
         if (this.isMounted()) {
 
-          console.log(res.notifications)
-
           this.setState({
             notifications: res.notifications,
             opened: true

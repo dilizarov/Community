@@ -35,8 +35,16 @@ var App = React.createClass({
         communityParam = decodeURIComponent(window.location.pathname.substring(2));
       }
 
-      if (communityParam !== undefined && communityParam !== true) {
-        this.selectCommunity(communityParam);
+      if (this.isMounted()) {
+        if (communityParam !== undefined && communityParam !== true) {
+          this.selectCommunity(communityParam);
+        } else if (communityParam === undefined) {
+          this.setState({
+            communitySelected: false,
+            notificationPresent: false,
+            forceReceiveProps: true
+          })
+        }
       }
     }.bind(this));
   },
@@ -50,7 +58,6 @@ var App = React.createClass({
         if (window.location.href !== newUrl) {
           window.history.pushState({ path: newUrl },'',newUrl);
         }
-
     }
 
     var str = document.title
@@ -74,6 +81,14 @@ var App = React.createClass({
   },
 
   notificationPressed: function(notification) {
+
+    if (history.pushState) {
+      var newUrl = window.location.protocol + "//" + window.location.host
+      if (window.location.href !== newUrl) {
+        window.history.pushState({ path: newUrl },'',newUrl);
+      }
+    }
+
     this.setState({
       communitySelected: false,
       notificationPresent: true,
@@ -104,6 +119,10 @@ var App = React.createClass({
     this.refs.communitiesList.updateCommunitySettings(relationship);
   },
 
+  toggleSidebarNotificationLoaded: function (loaded) {
+    this.refs.sidebar.toggleNotificationLoaded(loaded);
+  },
+
   render: function() {
 
     var mainContent, communityNameNormalized, currentCommunity;
@@ -120,7 +139,9 @@ var App = React.createClass({
       currentCommunity = this.state.communitySelected ? this.state.communityName : '';
 
       if (this.state.notificationPresent === true) {
-        mainContent = <NotificationPost notification={this.state.notification} postId={this.state.notification.post_id} />
+        mainContent = (<NotificationPost notification={this.state.notification}
+                                        postId={this.state.notification.post_id}
+                                        handleSidebarLoadedState={this.toggleSidebarNotificationLoaded} />)
       } else {
         mainContent = (<Feed communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
@@ -165,7 +186,6 @@ var App = React.createClass({
             </div>
             <SettingsModalHandler ref='settingsModal' updateCommunitySettings={this.propogateCommunitySettings} />
           </div>
-
       )
     }
   }

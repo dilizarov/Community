@@ -26,6 +26,8 @@ var NotificationPost = React.createClass({
       loaded: false
     })
 
+    this.props.handleSidebarLoadedState(false)
+
     $.ajax({
       method: "GET",
       url: "/api/v1/posts/" + props.postId + "/replies.json",
@@ -41,6 +43,8 @@ var NotificationPost = React.createClass({
             error: false
           });
 
+          this.props.handleSidebarLoadedState(true)
+
         }
       }.bind(this),
       error: function(err) {
@@ -50,6 +54,8 @@ var NotificationPost = React.createClass({
             error: true
             //Do some error data stuff as well.
           });
+
+          this.props.handleSidebarLoadedState(true)
         }
       }.bind(this)
     })
@@ -219,7 +225,7 @@ var NotificationPost = React.createClass({
   },
 
   renderLoading: function() {
-    return <div style={{textAlign: 'center'}}><Spinner size="md" /></div>
+    return <div></div>
   },
 
   renderError: function() {
@@ -270,7 +276,7 @@ var NotificationPost = React.createClass({
     }
 
     return (
-      <ul className="no-bullet">        
+      <ul className="no-bullet">
         <li className="post clearfix">
           <div className="post-heading clearfix">
             <Avatar source={this.state.post.user.avatar_url} style={{float: 'left'}}/>

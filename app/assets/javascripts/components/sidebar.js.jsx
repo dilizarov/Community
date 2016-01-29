@@ -2,13 +2,15 @@ var Sidebar = React.createClass({
 
   getInitialState: function() {
     return {
-      hasJoined: null
+      hasJoined: null,
+      notificationLoaded: null
     };
   },
 
   componentWillReceiveProps: function(props) {
     this.setState({
-      hasJoined: null
+      hasJoined: null,
+      notificationLoaded: null
     })
   },
 
@@ -20,7 +22,9 @@ var Sidebar = React.createClass({
     var membershipStatus;
 
     if (this.props.notificationPresent === true || this.props.communityNameNormalized === '') {
-      //skip
+      if (this.state.notificationLoaded === false) {
+        membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
+      }
     } else if (this.state.joining === true) {
       membershipStatus = <a className="join-settings-link disabled"><Spinner /></a>
     } else if (this.state.hasJoined === null) {
@@ -72,6 +76,12 @@ var Sidebar = React.createClass({
     if (this.props.notification) {
       this.props.handleSelectCommunity(this.props.notification.community_normalized);
     }
+  },
+
+  toggleNotificationLoaded: function (loaded) {
+    this.setState({
+      notificationLoaded: loaded
+    })
   },
 
   render: function() {
