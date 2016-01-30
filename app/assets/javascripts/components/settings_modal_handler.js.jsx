@@ -56,7 +56,7 @@ var SettingsModalHandler = React.createClass({
 
       // Due to using canvas.toDataURL(), everything comes out a png, so
       // doesn't matter if user selects a jpg.
-      formData.append("community_avatar", blob, "avatar.png");
+      formData.append("community_avatar", blob, "community_avatar.png");
 
       $.ajax({
         url: "/api/v1/communities/update.json?user_id=" + Session.userId() + "&auth_token=" + Session.authToken() + "&community=" + that.state.relationship.normalized_name + "&username=" + that.state.currentUsername,
