@@ -45,7 +45,7 @@ var Community = React.createClass({
 
   hideCommunitySettings: function(e) {
     this.setState({
-      settingsCogShown: false
+      settingsCogShown: this.state.isMenuOpen
     })
   },
 
@@ -69,7 +69,8 @@ var Community = React.createClass({
 
   closeMenu: function() {
     this.setState({
-      isMenuOpen: false
+      isMenuOpen: false,
+      settingsCogShown: false
     })
   },
 
@@ -107,24 +108,16 @@ var Community = React.createClass({
       { solid: this.state.settingsHighlighted },
       { opaque: this.state.settingsCogShown }
     )
-
-    var menuOptions = {
-      isOpen: this.state.isMenuOpen,
-      close: this.closeMenu,
-      toggle: <i className={cogClass} onClick={this.toggleMenu} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>,
-      align: 'left',
-      size: 'sm',
-      inverse: false
-    }
+    var toggle = <i className={cogClass} onClick={this.toggleMenu} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
 
     return(
       <li className="community-item">
         <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
-          <DropdownMenu {...menuOptions}>
-            <li><a onClick={this.settingsClicked}>Settings</a></li>
-            <li><a onClick={this.leaveClicked}>Leave</a></li>
-          </DropdownMenu>
-          <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
+        <DropdownMenu isOpen={this.state.isMenuOpen} close={this.closeMenu} toggle={toggle}>
+          <li><a onClick={this.settingsClicked}>Settings</a></li>
+          <li><a onClick={this.leaveClicked}>Leave</a></li>
+        </DropdownMenu>
+        <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
         </div>
 
         <DropModal ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>

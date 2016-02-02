@@ -133,13 +133,16 @@ var Notifications = React.createClass({
     }
 
     return (
-      <DropdownMenu {...menuOptions}>
-        {this.state.notifications.map(function(notification) {
-          return (<Motification key={notification.id}
-                                notification={notification}
-                                handleNotificationPressed={this.notificationPressed} />)
-        }.bind(this))}
-      </DropdownMenu>
+      <div>
+        
+      </div>
+      // <DropdownMenu {...menuOptions}>
+      //   {this.state.notifications.map(function(notification) {
+      //     return (<Motification key={notification.id}
+      //                           notification={notification}
+      //                           handleNotificationPressed={this.notificationPressed} />)
+      //   }.bind(this))}
+      // </DropdownMenu>
     )
 
     // var content;
