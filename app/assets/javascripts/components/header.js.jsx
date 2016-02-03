@@ -13,7 +13,7 @@ var Header = React.createClass({
       <div className='header-wrapper'>
         <span className='community-logo'><a onClick={this.reloadMainPage} style={{cursor: 'pointer'}}>&</a>{this.props.communityNameNormalized}</span>
         <Search handleSelectCommunity={this.props.handleSelectCommunity} />
-        <span className="top-notifications-wrapper">
+        <span className="header-right-side">
           <Notifications currentCommunity={this.props.currentCommunity}
                          handleNotificationPressed={this.props.handleNotificationPressed}/>
           <SessionBox handleSessionChange={this.reloadWindow} />

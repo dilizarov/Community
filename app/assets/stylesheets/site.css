@@ -102,27 +102,47 @@
   vertical-align: top;
 }
 
-.top-notifications-wrapper {
-  float: right;
-}
-
-.top-notifications-wrapper {
+.header-right-side {
   display: block;
   float: right;
   position: relative;
   height: 30px;
 }
-.top-notifications-wrapper .dd-menu {
+
+.header-right-side .notifications-wrapper {
   position: absolute;
   left: -40px;
   top: 4px;
 }
-.top-notifications-wrapper .dd-menu.dd-menu-left .dd-menu-items {
-  right: 0;
-  left: auto;
+
+.header-right-side .notifications-holder {
+  position: absolute;
+  z-index: 10;
+  background-color: #FEFEFE;
+  border: 1px solid #EEE;
+  border-bottom: 1px solid #DDD;
+  list-style: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  margin-top: 10px;
+  width: 400px;
+  right: -5px;
 }
 
-.session-box {
+.notifications-holder .notification-item {
+
+}
+
+.notification-item .notification-text {
+
+}
+
+.notification-item .notification-timestamp {
+  font-size: 12px;
+  color: #CCC;
+  display: block;
+}
+
+.header-right-side .session-box {
   position: absolute;
   z-index: 10;
   background-color: white;

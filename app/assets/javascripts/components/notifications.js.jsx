@@ -4,7 +4,8 @@ var Notifications = React.createClass({
     return {
       notificationsCount: 0,
       notifications: [],
-      opened: false
+      isOpen: false,
+      isLoading: false
     };
   },
 
@@ -54,7 +55,7 @@ var Notifications = React.createClass({
       }.bind(this),
       error: function(err) {
         if (this.isMounted()) {
-          alert('blergh that failed.')
+          console.log("nu mah sides")
         }
       }.bind(this)
     })
@@ -65,7 +66,9 @@ var Notifications = React.createClass({
     document.title = this.props.currentCommunity === '' ? 'Community' : this.props.currentCommunity;
 
     this.setState({
-      notificationsCount: 0
+      notificationsCount: 0,
+      isOpen: true,
+      isLoading: true
     })
 
     var data = { auth_token: Session.authToken() }
@@ -79,7 +82,8 @@ var Notifications = React.createClass({
 
           this.setState({
             notifications: res.notifications,
-            opened: true
+            isLoading: false,
+            isOpen: true
           });
 
         }
@@ -95,14 +99,14 @@ var Notifications = React.createClass({
   notificationPressed: function(notification) {
     this.props.handleNotificationPressed(notification)
     this.setState({
-      opened: false
+      isOpen: false
     })
   },
 
   toggleMenu: function() {
-    if (this.state.opened === true) {
+    if (this.state.isOpen) {
       this.setState({
-        opened: false
+        isOpen: false
       })
     } else {
       this.getNotifications()
@@ -111,31 +115,38 @@ var Notifications = React.createClass({
 
   closeMenu: function() {
     this.setState({
-      opened: false
+      isOpen: false
     })
   },
 
   render: function() {
 
-    var toggle = (
+    return (
+      <span className="notifications-wrapper">
         <i className="fa fa-bell-o" onClick={this.toggleMenu}>
           <NotificationBadge count={this.state.notificationsCount} duration={100} className='notification-counter' />
         </i>
-    )
 
-    var menuOptions = {
-      isOpen: this.state.opened,
-      close: this.closeMenu,
-      toggle: toggle,
-      align: 'left',
-      size: 'md',
-      inverse: false
-    }
+        {this.state.isOpen &&
+          <div className="notifications-holder">
+            {(this.state.isLoading &&
+              <Spinner size="md" />
+             ) || (
+               this.state.notifications.map(function(notification) {
+                 return (
+                   <Motification key={notification.id}
+                                 notification={notification}
+                                 handleNotificationPressed={this.notificationPressed} />
+                 )
+               }.bind(this))
+             )
+            }
+          </div>
+        }
+      </span>
 
-    return (
-      <div>
-        
-      </div>
+
+
       // <DropdownMenu {...menuOptions}>
       //   {this.state.notifications.map(function(notification) {
       //     return (<Motification key={notification.id}
@@ -158,19 +169,7 @@ var Notifications = React.createClass({
     //   </ul>
     //   </div>)
     // }
-    //
-    // return (
-    //   <span className="notifications">
-    //
-    //     <i className="fa fa-bell fa-2x" onClick={this.getNotifications}>
-    //       <NotificationBadge count={this.state.notificationsCount} duration={100} className='notification-counter' />
-    //     </i>
-    //     {content}
-    //     {/*<span className="notifications-count" onClick={this.getNotifications}>
-    //       {'COUNT: ' + this.state.notificationsCount}
-    //     </span>*/}
-    //   </span>
-    //)
+
   }
 
 })
