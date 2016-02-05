@@ -115,6 +115,10 @@
   top: 4px;
 }
 
+.notifications-wrapper .fa-bell-o {
+  cursor: pointer;
+}
+
 .header-right-side .notifications-holder {
   position: absolute;
   z-index: 10;
@@ -155,6 +159,10 @@
   font-size: 12px;
   color: #CCC;
   display: block;
+}
+
+.session-handler {
+  cursor: pointer;
 }
 
 .header-right-side .session-box {
