@@ -135,6 +135,7 @@
   padding: 3px 0 3px 7px;
   border-bottom: 1px solid #EEE;
   cursor: default;
+  background-color: #FAFAFA;
 }
 
 .notifications-holder .notification-item {
