@@ -98,7 +98,7 @@ var Avatar = React.createClass({
     if (changeable === true) {
       avatarClass += " avatar-pointer"
       other.onClick = this.openImageChooser;
-      editor_if_changeable = <input type="file" ref="photopicker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{visibility: 'hidden'}} />
+      editor_if_changeable = <input type="file" ref="photopicker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{display: 'none'}} />
       modal_if_changeable = (<DropModal ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{padding: '30'}}>
         <div className="row">
           <div className="small-8 column">
