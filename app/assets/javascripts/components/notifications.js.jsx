@@ -129,6 +129,7 @@ var Notifications = React.createClass({
 
         {this.state.isOpen &&
           <div className="notifications-holder">
+            <div className="notifications-header">Notifications</div>
             {(this.state.isLoading &&
               <Spinner size="md" />
              ) || (

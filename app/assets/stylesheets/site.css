@@ -126,14 +126,28 @@
   margin-top: 10px;
   width: 400px;
   right: -5px;
+  cursor: pointer;
+}
+
+.notifications-holder .notifications-header {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 3px 0 3px 7px;
+  border-bottom: 1px solid #EEE;
+  cursor: default;
 }
 
 .notifications-holder .notification-item {
+  padding: 5px;
+  border-bottom: 1px solid #EEE;
+}
 
+.notifications-holder .notification-item:hover {
+  background-color: #FAFAFA;
 }
 
 .notification-item .notification-text {
-
+  font-size: 13px;
 }
 
 .notification-item .notification-timestamp {
