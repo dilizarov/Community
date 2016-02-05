@@ -13,10 +13,48 @@ var Notifications = React.createClass({
     this.startPolling();
   },
 
+  componentDidUpdate: function(prevProps, prevState) {
+
+    if (this.state.isOpen === prevState.isOpen) {
+      return;
+    }
+
+    if (this.state.isOpen === true && prevState.isOpen === false) {
+      this.lastWindowClickEvent = this.handleClickOutside;
+      document.addEventListener('click', this.lastWindowClickEvent);
+    } else if (this.state.isOpen === false && prevState.isOpen === true) {
+      document.removeEventListener('click', this.lastWindowClickEvent);
+
+      this.lastWindowClickEvent = null;
+    }
+  },
+
+  handleClickOutside: function(e) {
+
+    var target = e.target;
+
+    while (target.parentNode) {
+      if (target === this.refs.notifsHolder) {
+        return;
+      }
+
+      target = target.parentNode;
+    }
+
+    this.setState({
+      isOpen: false
+    })
+  },
+
   componentWillUnmount: function() {
     if (this._timer) {
       clearInterval(this._timer);
       this._timer = null;
+    }
+
+    if (this.lastWindowClickEvent) {
+      document.removeEventListener('click', this.lastWindowClickEvent);
+      this.lastWindowClickEvent = null;
     }
   },
 
@@ -128,8 +166,9 @@ var Notifications = React.createClass({
         </i>
 
         {this.state.isOpen &&
-          <div className="notifications-holder">
+          <div className="notifications-holder" ref="notifsHolder">
             <div className="notifications-header">Notifications</div>
+
             {(this.state.isLoading &&
               <Spinner size="md" />
              ) || (
@@ -145,32 +184,7 @@ var Notifications = React.createClass({
           </div>
         }
       </span>
-
-
-
-      // <DropdownMenu {...menuOptions}>
-      //   {this.state.notifications.map(function(notification) {
-      //     return (<Motification key={notification.id}
-      //                           notification={notification}
-      //                           handleNotificationPressed={this.notificationPressed} />)
-      //   }.bind(this))}
-      // </DropdownMenu>
     )
-
-    // var content;
-    //
-    // if (this.state.opened === true) {
-    //   content = (<div className="arrow_box">
-    //   <ul className="no-bullet notifications-list">
-    //     {this.state.notifications.map(function(notification) {
-    //       return (<Motification notification={notification}
-    //                             handleNotificationPressed={this.notificationPressed} />)
-    //
-    //     }.bind(this))}
-    //   </ul>
-    //   </div>)
-    // }
-
   }
 
 })

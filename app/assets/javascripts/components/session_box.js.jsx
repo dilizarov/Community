@@ -155,6 +155,13 @@ var SessionBox = React.createClass({
     })
   },
 
+  componentWillUnmount: function() {
+    if (this.lastWindowClickEvent) {
+      document.removeEventListener('click', this.lastWindowClickEvent);
+      this.lastWindowClickEvent = null;
+    }
+  },
+
   render: function() {
 
     var userInfo = Session.userInfo();
