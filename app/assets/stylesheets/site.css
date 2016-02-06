@@ -142,6 +142,11 @@
   background-color: #FAFAFA;
 }
 
+.notifications-holder .notifications-body {
+  max-height: 60vh;
+  overflow: auto;
+}
+
 .notifications-holder .notifications-body.are-loading {
   margin-bottom: 5px;
   text-align: center;
