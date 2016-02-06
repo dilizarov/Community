@@ -159,12 +159,10 @@ var Notifications = React.createClass({
 
   stopBodyScroll: function(e) {
     document.body.style.overflow = 'hidden';
-    console.log("mouse in")
   },
 
   resumeBodyScroll: function(e) {
     document.body.style.overflow = 'auto'
-    console.log("mouse out")
   },
 
   render: function() {
