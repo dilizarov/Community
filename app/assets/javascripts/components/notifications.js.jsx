@@ -159,10 +159,12 @@ var Notifications = React.createClass({
 
   stopBodyScroll: function(e) {
     document.body.style.overflow = 'hidden';
+    console.log("mouse in")
   },
 
   resumeBodyScroll: function(e) {
     document.body.style.overflow = 'auto'
+    console.log("mouse out")
   },
 
   render: function() {
@@ -180,7 +182,7 @@ var Notifications = React.createClass({
         {this.state.isOpen &&
           <div className="notifications-holder" ref="notifsHolder">
             <div className="notifications-header">Notifications</div>
-            <div className={notificationBodyClasses} onMouseOver={this.stopBodyScroll} onMouseOut={this.resumeBodyScroll}>
+            <div className={notificationBodyClasses} onMouseEnter={this.stopBodyScroll} onMouseLeave={this.resumeBodyScroll}>
               {(this.state.isLoading &&
                 <Spinner size="sm" />
                ) || (
