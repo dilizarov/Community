@@ -159,6 +159,10 @@ var Notifications = React.createClass({
 
   render: function() {
 
+    var loadingProps;
+
+    if (this.state.isLoading) { loadingProps = { style: {marginBottom: '5px', textAlign: 'center'}} }
+
     return (
       <span className="notifications-wrapper">
         <i className="fa fa-bell-o" onClick={this.toggleMenu}>
@@ -168,19 +172,20 @@ var Notifications = React.createClass({
         {this.state.isOpen &&
           <div className="notifications-holder" ref="notifsHolder">
             <div className="notifications-header">Notifications</div>
-
-            {(this.state.isLoading &&
-              <Spinner size="md" />
-             ) || (
-               this.state.notifications.map(function(notification) {
-                 return (
-                   <Motification key={notification.id}
-                                 notification={notification}
-                                 handleNotificationPressed={this.notificationPressed} />
-                 )
-               }.bind(this))
-             )
-            }
+            <div className="notifications-body" {...loadingProps} >
+              {(this.state.isLoading &&
+                <Spinner size="sm" />
+               ) || (
+                 this.state.notifications.map(function(notification) {
+                   return (
+                     <Motification key={notification.id}
+                                   notification={notification}
+                                   handleNotificationPressed={this.notificationPressed} />
+                   )
+                 }.bind(this))
+               )
+              }
+            </div>
           </div>
         }
       </span>

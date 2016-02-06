@@ -142,6 +142,9 @@
   background-color: #FAFAFA;
 }
 
+.notifications-holder .notifications-body {
+}
+
 .notifications-holder .notification-item {
   padding: 5px;
   border-bottom: 1px solid #EEE;
