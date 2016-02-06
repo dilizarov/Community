@@ -27,6 +27,10 @@ var Notifications = React.createClass({
 
       this.lastWindowClickEvent = null;
     }
+
+    if (!this.state.isOpen) {
+      this.resumeBodyScroll();
+    }
   },
 
   handleClickOutside: function(e) {
