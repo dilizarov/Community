@@ -159,9 +159,9 @@ var Notifications = React.createClass({
 
   render: function() {
 
-    var loadingProps;
-
-    if (this.state.isLoading) { loadingProps = { style: {marginBottom: '5px', textAlign: 'center'}} }
+    var notificationBodyClasses = classNames('notifications-body', {
+      'are-loading' : this.state.isLoading
+    })
 
     return (
       <span className="notifications-wrapper">
@@ -172,7 +172,7 @@ var Notifications = React.createClass({
         {this.state.isOpen &&
           <div className="notifications-holder" ref="notifsHolder">
             <div className="notifications-header">Notifications</div>
-            <div className="notifications-body" {...loadingProps} >
+            <div className={notificationBodyClasses}>
               {(this.state.isLoading &&
                 <Spinner size="sm" />
                ) || (

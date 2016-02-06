@@ -142,7 +142,9 @@
   background-color: #FAFAFA;
 }
 
-.notifications-holder .notifications-body {
+.notifications-holder .notifications-body.are-loading {
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .notifications-holder .notification-item {
