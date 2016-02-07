@@ -164,7 +164,7 @@
 .notification-item .notification-text {
   font-size: 13px;
   width: 80%;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
