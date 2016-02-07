@@ -166,6 +166,7 @@
   width: 100%;
   display: inline-block;
   word-wrap: break-word;
+  overflow-wrap: break-word; /* CSS specs adopt overflow-wrap as word-wrap replacement */
 }
 
 .notification-item .notification-timestamp {
@@ -366,6 +367,8 @@
   font-size: 22px;
   letter-spacing: 0.5px;
   font-weight: bold;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   color: #333;
   margin-bottom: 5px;
   clear: both;
@@ -373,6 +376,8 @@
 
 .feed-wrapper .post-body {
   font-family: 'Roboto', sans-serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   margin-bottom: 5px;
 }
 
@@ -437,6 +442,8 @@
   font-size: 13px;
   float: left;
   clear: left;
+  display: inline-block;
+  width: 100%;
 }
 
 .feed-wrapper .reply .avatar-wrapper {
@@ -448,6 +455,8 @@
 
 .feed-wrapper .reply .reply-data {
   overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .feed-wrapper .reply-to-post input {
@@ -470,7 +479,6 @@
 }
 
 .feed-wrapper .reply-body {
-  overflow-wrap: break-word;
   display: inline;
 }
 

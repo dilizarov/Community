@@ -180,19 +180,19 @@ var SessionBox = React.createClass({
     if (!loggedIn) {
 
       loginModal = (
-        <Modal ref="loginModal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
+        <DropModal ref="loginModal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
           <h3 style={{wordWrap: 'break-word'}}>Log In</h3><br/>
           <a className="secondary small button radius" onClick={this.hideModal} style={{marginRight: '20'}}>Cancel</a>
           <a className="alert small button radius" onClick={this.leaveCommunity}>Confirm</a>
-        </Modal>
+        </DropModal>
       )
 
       signupModal = (
-        <Modal ref="signupModal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
+        <DropModal ref="signupModal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
           <h3 style={{wordWrap: 'break-word'}}>Sign Up</h3><br/>
           <a className="secondary small button radius" onClick={this.hideModal} style={{marginRight: '20'}}>Cancel</a>
           <a className="alert small button radius" onClick={this.leaveCommunity}>Confirm</a>
-        </Modal>
+        </DropModal>
       )
     }
 
