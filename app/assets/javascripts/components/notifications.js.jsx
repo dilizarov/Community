@@ -166,7 +166,7 @@ var Notifications = React.createClass({
   },
 
   resumeBodyScroll: function(e) {
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = '';
   },
 
   render: function() {

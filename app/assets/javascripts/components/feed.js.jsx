@@ -90,6 +90,7 @@ var Feed = React.createClass({
   },
 
   loadMorePosts: function() {
+
     if (this.state.posts.length === 0) { return }
 
     this.setState({
