@@ -30,7 +30,7 @@ var Reply = React.createClass({
       <li className="reply">
         <Avatar source={this.props.reply.user.avatar_url} size="sm" style={{float: 'left'}} />
         <div className="reply-data">
-          <span className="reply-username">{this.props.reply.user.username}</span>&nbsp;&nbsp;
+          <span className="reply-username">{this.props.reply.user.username}</span>
           <div className="reply-body">{this.props.reply.body}</div>
           <div className="reply-stats">
             <span className="reply-likes" onClick={this.likeReply}><i className={heartLikesClass}></i>{this.props.reply.likes.toThousandsString()}</span>
