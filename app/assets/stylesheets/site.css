@@ -163,11 +163,9 @@
 
 .notification-item .notification-text {
   font-size: 13px;
-  width: 80%;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: 100%;
   display: inline-block;
+  word-wrap: break-word;
 }
 
 .notification-item .notification-timestamp {

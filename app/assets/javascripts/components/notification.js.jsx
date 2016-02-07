@@ -33,10 +33,10 @@ var Motification = React.createClass({
     return (
       <li className="notification-item clearfix" onClick={this.goToPost}>
         <Avatar source={avatar} style={{float: 'left'}}/>
-        <span>
+        <div style={{overflow: 'hidden'}}>
           <span className="notification-text"><b>{username}</b>{connectionText}{endText}</span>
           <span className="notification-timestamp">{timestamp(this.props.notification.created_at)}</span>
-        </span>
+        </div>
       </li>
     )
   }
