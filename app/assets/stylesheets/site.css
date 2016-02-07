@@ -440,8 +440,6 @@
 .feed-wrapper .reply {
   margin-bottom: 20px;
   font-size: 13px;
-  float: left;
-  clear: left;
   display: inline-block;
   width: 100%;
 }
@@ -468,7 +466,6 @@
 .feed-wrapper .reply-username {
   font-size: 13px;
   color: #60b0c6;
-  float: left;
   margin-top: 0;
   margin-right: 0.3em;
 }
