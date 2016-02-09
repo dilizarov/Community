@@ -636,3 +636,13 @@ i, .button, .post-stats {
   border-color: #CCC;
   background-color: #FFF;
 }
+
+.reset-password-wrapper .success-msg {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 35px;
+}
+
+.reset-password-wrapper .success-link {
+  font-size: 22px;
+}
