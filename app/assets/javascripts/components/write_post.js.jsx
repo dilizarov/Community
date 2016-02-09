@@ -18,7 +18,8 @@ var WritePost = React.createClass({
 
     this.setState({
       buttonDisabled: true,
-      submitting: true
+      submitting: true,
+      postButtonWidth: ReactDOM.findDOMNode(this.refs.post_button).getBoundingClientRect().width
     })
 
     var data = {
@@ -76,11 +77,18 @@ var WritePost = React.createClass({
     var button;
 
     if (this.state.submitting === true) {
-      button = (<a className={btnClass} onClick={this.submitPost}>
+
+      var otherProps = {}
+
+      if (this.state.postButtonWidth) {
+        otherProps.style = { width: this.state.postButtonWidth }
+      }
+
+      button = (<a className={btnClass} onClick={this.submitPost} {...otherProps} >
         <Spinner type="inverted" />
       </a>)
     } else {
-      button = <a className={btnClass} onClick={this.submitPost}>Post</a>
+      button = <a ref="post_button" className={btnClass} onClick={this.submitPost}>Post</a>
     }
 
     var rel = this.props.relationship;

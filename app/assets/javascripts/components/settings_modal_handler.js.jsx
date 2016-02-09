@@ -41,7 +41,8 @@ var SettingsModalHandler = React.createClass({
     if ($.trim(this.state.currentUsername) === '' || this.state.currentAvatarUrl === null) { return }
 
     this.setState({
-      processing: true
+      processing: true,
+      saveButtonWidth: ReactDOM.findDOMNode(this.refs.save_button).getBoundingClientRect().width
     })
 
     var sessionData = Session.userInfo();
@@ -188,11 +189,18 @@ var SettingsModalHandler = React.createClass({
     var saveButton;
 
     if (this.state.processing === true) {
-      saveButton = (<a className={saveBtnClasses}>
+
+      var otherProps = {}
+
+      if (this.state.saveButtonWidth) {
+        otherProps.style = { width: this.state.saveButtonWidth }
+      }
+
+      saveButton = (<a className={saveBtnClasses} {...otherProps} >
         <Spinner type="inverted" />
       </a>)
     } else {
-      saveButton = <a className={saveBtnClasses} onClick={this.save}>Save</a>
+      saveButton = <a ref="save_button" className={saveBtnClasses} onClick={this.save}>Save</a>
     }
 
     return (
