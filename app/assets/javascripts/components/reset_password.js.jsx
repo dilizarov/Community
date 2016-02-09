@@ -43,7 +43,8 @@ var ResetPassword = React.createClass({
       !(passwordVal !== "" && confirmVal !== "" && passwordVal === confirmVal)) { return }
 
     this.setState({
-      loading: true
+      loading: true,
+      buttonWidth: ReactDOM.findDOMNode(this.refs.change_password).getBoundingClientRect().width
     })
 
     $.ajax({
@@ -72,7 +73,8 @@ var ResetPassword = React.createClass({
     if (/.+@.+/.test(emailVal)) {
 
       this.setState({
-        loading: true
+        loading: true,
+        buttonWidth: ReactDOM.findDOMNode(this.refs.send_email).getBoundingClientRect().width
       })
 
       $.ajax({
@@ -88,7 +90,9 @@ var ResetPassword = React.createClass({
             }
           }.bind(this),
           error: function(err) {
-            console.log(err)
+            this.setState({
+              loading: false
+            })
           }.bind(this)
       })
     }
@@ -136,6 +140,14 @@ var ResetPassword = React.createClass({
         { 'disabled' : this.state.changePasswordEnabled !== true || this.state.loading === true }
       )
 
+      var otherProps = {};
+
+      if (this.state.loading === true) {
+        if (this.state.buttonWidth) {
+          otherProps.style = { width: this.state.buttonWidth }
+        }
+      }
+
       mainContent = (
         <div>
           <div className="content-header">
@@ -152,7 +164,7 @@ var ResetPassword = React.createClass({
 
           <input type="password" placeholder="password" onChange={this.toggleChangePassEnabled} ref="password_field" />
           <input type="password" placeholder="confirm" onChange={this.toggleChangePassEnabled} ref="confirm_field" />
-          <a className={submitClasses} onClick={this.submitChange}>{this.state.loading === true ? <Spinner type="inverted" /> : 'Change Password'}</a>
+          <a ref="change_password" className={submitClasses} onClick={this.submitChange} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Change Password'}</a>
         </div>
       )
     } else {
@@ -179,6 +191,15 @@ var ResetPassword = React.createClass({
          </div>
        )
      } else {
+
+       var otherProps = {};
+
+       if (this.state.loading === true) {
+         if (this.state.buttonWidth) {
+           otherProps.style = { width: this.state.buttonWidth }
+         }
+       }
+
        mainContent = (
          <div>
            <div className="content-header" style={{fontSize: '25px'}}>
@@ -186,7 +207,7 @@ var ResetPassword = React.createClass({
            </div>
 
            <input placeholder="email" ref="email_field" onChange={this.toggleSendEmailEnabled} defaultValue={this.props.email === null ? '' : this.props.email} />
-           <a className={submitClasses} onClick={this.sendEmail}>{this.state.loading === true ? <Spinner type="inverted" /> : 'Send Email'}</a>
+           <a ref="send_email" className={submitClasses} onClick={this.sendEmail} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Send Email'}</a>
          </div>
        )
      }
