@@ -582,3 +582,57 @@ i, .button, .post-stats {
 .cropper-point {
   background-color: #60b0c6;
 }
+
+.reset-password-wrapper .main-page-link {
+  font-size: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.reset-password-wrapper .page-title {
+  margin-left: 6px;
+  font-size: 22px;
+  font-weight: 200;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  color: #666
+}
+
+.reset-password-wrapper .content-header {
+  font-size: 28px;
+  font-weight: 200;
+  color: #666;
+  margin-bottom: 35px;
+}
+
+.reset-password-wrapper .user-info {
+  font-size: 13px;
+  line-height: 1.25;
+  margin-bottom: 35px;
+  overflow: hidden;
+}
+
+.reset-password-wrapper .user-info .user-info-details {
+  margin-top: 3px;
+}
+
+.reset-password-wrapper .user-info .user-email {
+  color: #889;
+}
+
+.reset-password-wrapper input {
+  width: 300px;
+  box-shadow: none;
+  border-radius: 4px;
+  border-color: #EEE;
+}
+
+.reset-password-wrapper input:focus {
+  border-color: #CCC;
+  background-color: #FFF;
+}

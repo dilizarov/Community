@@ -23,6 +23,5 @@
 //= require moment
 //= require_tree .
 //= require_tree ./utils
-//= require_tree ./site
 
 $(function(){ $(document).foundation(); });

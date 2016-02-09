@@ -102,10 +102,6 @@ var Sidebar = React.createClass({
 
     return (
       <div className='sidebar-container'>
-        <div className={sidewrapperClass}>
-          {title}
-          {membershipStatus}
-        </div>
         <div className='terms-fineprint'>
           <a href="#">iOS App</a>
           <a href="https://www.iubenda.com/privacy-policy/908716" target="_blank">Privacy</a>
