@@ -5,6 +5,10 @@
 
 /* #056a85 #36879d #69a5b5 */
 
+.mobile-warning-banner {
+  text-align: center;
+}
+
 .main-content {
   background-color: #FAFAFA;
   padding-top: 35px;
@@ -644,5 +648,5 @@ i, .button, .post-stats {
 }
 
 .reset-password-wrapper .success-link {
-  font-size: 22px;
+  font-size: 12px;
 }

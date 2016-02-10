@@ -127,7 +127,7 @@ var ResetPassword = React.createClass({
             Your password has been reset
           </div>
 
-          <a href="/" className="success-link">&</a>
+          <a href="/" className="success-link">Go back to the home page</a>
         </div>
 
       );
@@ -187,7 +187,7 @@ var ResetPassword = React.createClass({
              An email has been sent to <b>{this.state.emailSent}</b>
            </div>
 
-           <a href="/" className="success-link">&</a>
+           <a href="/" className="success-link">Go back to the home page</a>
          </div>
        )
      } else {
