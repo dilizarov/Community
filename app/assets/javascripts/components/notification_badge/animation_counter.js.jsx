@@ -6,6 +6,38 @@ const Effect = {
   SCALE: ['scale(1.8, 1.8)', 'scale(1, 1)']
 }
 
+const requestAnimationFrame = (() => {
+      return  window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              window.oRequestAnimationFrame      ||
+              window.msRequestAnimationFrame     ||
+              function(callback){
+                window.setTimeout(callback, 1000.0 / 60.0);
+              };
+    })();
+
+const cancelAnimationFrame = (() => {
+      return  window.cancelAnimationFrame       ||
+              window.webkitCancelAnimationFrame ||
+              window.mozCancelAnimationFrame    ||
+              window.oCancelAnimationFrame      ||
+              window.msCancelAnimationFrame     ||
+              function(timer){
+                window.clearTimeout(timer);
+              };
+    })();
+
+const now = window.performance && (performance.now ||
+                                  performance.mozNow ||
+                                  performance.msNow ||
+                                  performance.oNow ||
+                                  performance.webkitNow);
+
+let getTime = () => {
+  return ( now && now.call(performance)) || (new Date.now());
+}
+
 class AnimationCounter extends React.Component {
   constructor(props) {
     super(props);
@@ -13,53 +45,41 @@ class AnimationCounter extends React.Component {
     };
   }
 
-  componentWillEnter(callback){
-    let badge = ReactDOM.findDOMNode(this.refs.badge);
-    badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[0];
-    if (this.props.effect[2]) {
-      this.attachStyle(badge, this.props.effect[2]);
-    }
-    setTimeout(callback, this.props.duration);
-  }
-
-  componentDidEnter(){
-    let badge = ReactDOM.findDOMNode(this.refs.badge);
-    badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[1];
-    if (this.props.effect[3]) {
-      this.attachStyle(badge, this.props.effect[3]);
-    }
-  }
-
   componentDidMount(){
     if (this.props.count > 0) {
-      let badge = ReactDOM.findDOMNode(this.refs.badge);
-      badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[0];
-      if (this.props.effect[2]) {
-        this.attachStyle(badge, this.props.effect[2]);
-      }
-      setTimeout(() => {
-        badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[1];
-        if (this.props.effect[3]) {
-          this.attachStyle(badge, this.props.effect[3]);
-        }
-      }, this.props.duration);
+      this.animate();
     }
   }
 
   componentDidUpdate(prevProps){
     if (this.props.count > prevProps.count) {
-      let badge = ReactDOM.findDOMNode(this.refs.badge);
-      badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[0];
-      if (this.props.effect[2]) {
-        this.attachStyle(badge, this.props.effect[2]);
-      }
-      setTimeout(() => {
-        badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[1];
-        if (this.props.effect[3]) {
-          this.attachStyle(badge, this.props.effect[3]);
-        }
-      }, this.props.duration);
+      this.animate();
     }
+  }
+
+  animate(){
+    let badge = ReactDOM.findDOMNode(this.refs.badge);
+    badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[0];
+    if (this.props.effect[2]) {
+      this.attachStyle(badge, this.props.effect[2]);
+    }
+
+    let startTime = getTime();
+    let timer;
+    let waitOrFinish = () => {
+        let lastTime = getTime();
+        let frame = Math.floor((lastTime - startTime) / (1000.0 / 60.0) % this.props.frameLength);
+        if (frame === this.props.frameLength - 1){
+          cancelAnimationFrame(timer);
+          badge.style['-moz-transform'] = badge.style['-webkit-transform'] = badge.style['-o-transform'] = badge.style['-ms-transform'] = badge.style.transform = this.props.effect[1];
+          if (this.props.effect[3]) {
+            this.attachStyle(badge, this.props.effect[3]);
+          }
+        } else {
+          timer = requestAnimationFrame(waitOrFinish);
+        }
+    };
+    waitOrFinish();
   }
 
   attachStyle(node, style){
@@ -79,7 +99,7 @@ AnimationCounter.propTypes = {
   label: React.PropTypes.string,
   style: React.PropTypes.object,
   effect: React.PropTypes.array,
-  duration: React.PropTypes.number,
+  frameLength: React.PropTypes.number,
   className: React.PropTypes.string
 };
 
@@ -88,5 +108,5 @@ AnimationCounter.defaultProps = {
   label: null,
   style: {},
   effect: Effect.SCALE,
-  duration: 500
+  frameLength: 30.0
 };

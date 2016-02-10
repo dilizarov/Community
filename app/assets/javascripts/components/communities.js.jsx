@@ -5,12 +5,12 @@ var Communities = React.createClass({
   },
 
   componentDidMount: function() {
-    //@TODO: listen to on scroll here
 
     $('.communities-wrapper').stick_in_parent({
       offset_top: 15
     });
 
+    // Get communities to populate the list
     $.ajax({
       method: "GET",
       url: "/api/v1/communities.json",
@@ -29,7 +29,6 @@ var Communities = React.createClass({
           this.setState({
             loaded: true,
             error: true
-            //Do some error data stuff as well.
           });
         }
       }.bind(this)

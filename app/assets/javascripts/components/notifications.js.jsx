@@ -178,7 +178,7 @@ var Notifications = React.createClass({
     return (
       <span className="notifications-wrapper">
         <i className="fa fa-bell-o" onClick={this.toggleMenu}>
-          <NotificationBadge count={this.state.notificationsCount} duration={100} className='notification-counter' />
+          <NotificationBadge count={this.state.notificationsCount} className='notification-counter' effect={[null, null, {top: '-30px'}, {top: '-25px'}]} />
         </i>
 
         {this.state.isOpen &&
