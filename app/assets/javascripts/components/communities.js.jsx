@@ -46,12 +46,16 @@ var Communities = React.createClass({
     })
   },
 
-  addCommunity: function(community) {
+  addCommunity: function(community, dueToError) {
     var communities = React.addons.update(this.state.communities, { $push: [community] })
 
     communities.sort( function(a, b) {
       return a.normalized_name.localeCompare(b.normalized_name)
     });
+
+    if (dueToError === true) {
+      this.lastErrorCommunity = community
+    }
 
     this.setState({ communities: communities });
   },
@@ -62,6 +66,13 @@ var Communities = React.createClass({
     var communities = React.addons.update(this.state.communities, { $splice: [[index, 1]] });
 
     this.setState({ communities: communities });
+  },
+
+  revokeErrorStatus: function(community) {
+    if (this.lastErrorCommunity &&
+        this.lastErrorCommunity.normalized_name === community.normalized_name) {
+        this.lastErrorCommunity = null;
+    }
   },
 
   updateCommunitySettings: function (relationship) {
@@ -82,22 +93,35 @@ var Communities = React.createClass({
 
     var mainContent;
     var loader;
+    var title = "Communities";
 
     if (this.state.loaded === false) {
       loader = <Spinner />
     } else if (this.state.error === true) {
+      //TODO Solidify text used.
+      title = "Communities had trouble loading";
       mainContent = <a className="retry-btn" onClick={this.requestCommunities}>Retry</a>
     } else if (this.state.communities.length === 0) {
-      mainContent = <div className="communities-msg">You have not joined any communities</div>
+      title = "Communities you join will appear here";
     } else {
       mainContent = (<ul className="no-bullet">
         {this.state.communities.map(function(community) {
+
+          var readding = false;
+
+          if (this.lastErrorCommunity &&
+              this.lastErrorCommunity.normalized_name === community.normalized_name) {
+              readding = true
+          }
+
           return (<Community key={community.normalized_name}
                             community={community}
+                            readding={readding}
                             handleOpenSettings={this.props.handleOpenSettings}
                             handleSelectCommunity={this.props.handleSelectCommunity}
                             handleAddCommunity={this.addCommunity}
-                            handleRemoveCommunity={this.removeCommunity} />)
+                            handleRemoveCommunity={this.removeCommunity}
+                            handleRemoveErrorStatus={this.revokeErrorStatus} />)
 
         }.bind(this))}
       </ul>)
@@ -106,7 +130,7 @@ var Communities = React.createClass({
     return (
       <div className="communities">
         <h2 className="title">
-          Communities {loader}
+          {title} {loader}
         </h2>
         {mainContent}
       </div>

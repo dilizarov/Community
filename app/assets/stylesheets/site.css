@@ -285,6 +285,10 @@
   left: 2px;
 }
 
+.communities-wrapper .community-name.remove-failed {
+  color: darkred;
+}
+
 .communities-wrapper .communities-msg {
   margin: 10px 5px;
   font-size: 12px;

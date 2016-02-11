@@ -19,16 +19,11 @@ var Community = React.createClass({
       url: '/api/v1/communities/destroy.json',
       data: data,
       dataType: 'text json',
+      success: function() {
+        this.props.handleRemoveErrorStatus(this.props.community)
+      }.bind(this),
       error: function(err) {
-        // Maybe I should have handleAddCommunity(this.props.community, errorMessage)
-        // so that I can animate error.
-        this.props.handleAddCommunity(this.props.community);
-
-        try {
-          var errorJson = $.parseJSON(err.responseText);
-        } catch (e) {
-          alert('damn');
-        }
+        this.props.handleAddCommunity(this.props.community, true);
       }.bind(this)
     })
   },
@@ -79,7 +74,8 @@ var Community = React.createClass({
 
     this.setState({
       settingsCogShown: false,
-      settingsHighlighted: false
+      settingsHighlighted: false,
+      isMenuOpen: false
     })
 
     this.props.handleOpenSettings(this.props.community)
@@ -90,7 +86,8 @@ var Community = React.createClass({
 
     this.setState({
       settingsCogShown: false,
-      settingsHighlighted: false
+      settingsHighlighted: false,
+      isMenuOpen: false
     })
 
     this.refs.modal.show();
@@ -110,6 +107,17 @@ var Community = React.createClass({
     )
     var toggle = <i className={cogClass} onClick={this.toggleMenu} onMouseOver={this.highlightSettings} onMouseLeave={this.unHighlightSettings}></i>
 
+    var communityName = <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
+
+    if (this.props.readding) {
+      //@TODO Change text for error
+      communityName = (
+        <Tooltip title="Had trouble leaving community" position='left' space={20}>
+          <span className='community-name remove-failed' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
+        </Tooltip>
+      )
+    }
+
     return(
       <li className="community-item">
         <div className="community-line" onMouseOver={this.showCommunitySettings} onMouseLeave={this.hideCommunitySettings}>
@@ -117,7 +125,7 @@ var Community = React.createClass({
           <li><a onClick={this.settingsClicked}>Settings</a></li>
           <li><a onClick={this.leaveClicked}>Leave</a></li>
         </DropdownMenu>
-        <span className='community-name' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
+        {communityName}
         </div>
 
         <DropModal ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
