@@ -10,7 +10,18 @@ var Communities = React.createClass({
       offset_top: 15
     });
 
-    // Get communities to populate the list
+    this.requestCommunities()
+  },
+
+  requestCommunities: function(e) {
+
+    if (e) {
+      this.setState({
+        loaded: false,
+        error: false
+      })
+    }
+
     $.ajax({
       method: "GET",
       url: "/api/v1/communities.json",
@@ -67,7 +78,6 @@ var Communities = React.createClass({
     })
   },
 
-  //@TODO: Error handling/displaying.
   render: function() {
 
     var mainContent;
@@ -76,10 +86,9 @@ var Communities = React.createClass({
     if (this.state.loaded === false) {
       loader = <Spinner />
     } else if (this.state.error === true) {
-      //TODO: Error handling/displaying is in here.
-      mainContent = "Whoops, we errored :c"
+      mainContent = <a className="retry-btn" onClick={this.requestCommunities}>Retry</a>
     } else if (this.state.communities.length === 0) {
-      mainContent = "You have not joined any communities"
+      mainContent = <div className="communities-msg">You have not joined any communities</div>
     } else {
       mainContent = (<ul className="no-bullet">
         {this.state.communities.map(function(community) {

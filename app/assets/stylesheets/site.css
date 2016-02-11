@@ -285,12 +285,30 @@
   left: 2px;
 }
 
-.communities-wrapper a.button.tiny {
-  margin: 0 0 0 10px;
+.communities-wrapper .communities-msg {
+  margin: 10px 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+.communities-wrapper .retry-btn {
+  display: inline-block;
+  border: 1px solid #ECECEC;
+  border-bottom: 1px solid #E6E6E6;
+  border-radius: 3px;
+  font-size: 13px;
   padding: 5px 10px;
-  background-color: white;
-  color: rgba(0,0,0,0.6);
-  border: 1px solid #F0F0F0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 5px;
+  width: 40%;
+  color: darkred;
+  text-align: center;
+}
+
+.communities-wrapper .retry-btn:hover {
+  border: 1px solid #E6E6E6;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 /* Side bar column */
