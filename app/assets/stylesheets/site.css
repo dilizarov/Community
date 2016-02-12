@@ -364,6 +364,12 @@
 
 
 /* Feed styling */
+.feed-wrapper .no-posts-msg {
+  color: #666;
+  font-size: 24px;
+  text-align: center;
+}
+
 .feed-wrapper .post {
     margin-bottom: 3px;
     padding: 20px 20px 10px;
@@ -404,6 +410,7 @@
   font-family: 'Roboto', sans-serif;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  white-space: pre-line;
   margin-bottom: 5px;
 }
 
@@ -442,7 +449,6 @@
 .feed-wrapper .Spinner {
   position: relative;
   top: -2px;
-  margin-left: 5px;
 }
 
 .feed-wrapper .reply-to-post-wrapper {
@@ -504,6 +510,7 @@
 
 .feed-wrapper .reply-body {
   display: inline;
+  white-space: pre-line;
 }
 
 .feed-wrapper .reply-timestamp {
@@ -518,6 +525,15 @@
   font-size: 6px;
   position: relative;
   top: -2px;
+}
+
+.feed-wrapper .panel.error-box {
+  background-color: #fce6e2;
+  color: #666;
+  border: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d2d2d2;
+  border-radius: 3px;
+  padding: 20px;
 }
 
 /* Write Post Styling */

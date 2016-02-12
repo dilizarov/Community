@@ -17,6 +17,8 @@ var Feed = React.createClass({
   },
 
   componentWillReceiveProps: function(props) {
+    this.waitForRetry = null;
+
     this.setState({
       loaded: false,
       loadingMorePosts: false,
@@ -41,11 +43,13 @@ var Feed = React.createClass({
         }
       }.bind(this),
       error: function(err) {
+
+        this.props.handleCommunityStatus(null, null, true);
+
         if (this.isMounted()) {
           this.setState({
             loaded: true,
             error: true
-            //Do some error data stuff as well.
           });
         }
       }.bind(this)
@@ -91,7 +95,10 @@ var Feed = React.createClass({
 
   loadMorePosts: function() {
 
-    if (this.state.posts.length === 0) { return }
+    // Don't process if no posts or
+    // If we tried before and 5 seconds have not elapsed
+    if (this.state.posts.length === 0 ||
+        this.waitForRetry && (Date.now() - this.waitForRetry) < 5000) { return }
 
     this.setState({
       loadingMorePosts: true
@@ -120,6 +127,8 @@ var Feed = React.createClass({
 
           var allPostsLoaded = res.posts.length < 15;
 
+          this.waitForRetry = null;
+
           this.setState({
             posts: this.state.posts.concat(res.posts),
             loaded: true,
@@ -131,18 +140,26 @@ var Feed = React.createClass({
       }.bind(this),
       error: function(err) {
         if (this.isMounted()) {
+
+          this.waitForRetry = Date.now();
+
+          // error is false because we'll just ignore failures for infinite scroll.
           this.setState({
             loaded: true,
-            error: true,
+            error: false,
             loadingMorePosts: false
-            //Do some error data stuff as well.
           });
         }
       }.bind(this)
     })
   },
 
+  retryLoadingCommunity: function() {
+    this.props.handleSelectCommunity(this.props.communityNameNormalized, true);
+  },
+
   renderNoCommunity: function() {
+    //@TODO Styling and Text
     return (
       <div className='feed'>
         <h2 className='title'>
@@ -153,20 +170,36 @@ var Feed = React.createClass({
   },
 
   renderLoading: function() {
-
+    //Loading happens in sidebar
     return (
       <div className='feed'>
       </div>
     )
   },
 
+  renderError: function() {
+    //@TODO Styling and text
+    return (
+      <div className='feed'>
+        <div className="panel error-box">
+          <h5>Uh oh</h5>
+          <p>We had trouble fetching &{this.props.communityNameNormalized}</p>
+          <a onClick={this.retryLoadingCommunity} style={{cursor: 'pointer'}}>Retry</a>
+        </div>
+      </div>
+    )
+  },
+
   renderEmpty: function() {
+    //@TODO Text
     return (
       <div className='feed'>
         <WritePost communityNameNormalized={this.props.communityNameNormalized}
                    handleAddPostToFeed={this.addPostToFeed}
                    relationship={this.state.relationship} />
-                 There are no posts!
+        <div className="no-posts-msg">
+          This community has no posts
+        </div>
       </div>
     )
   },
@@ -177,7 +210,7 @@ var Feed = React.createClass({
     if (this.state.allPostsLoaded === false && this.state.loadingMorePosts === false) {
       waypoint = (<Waypoint
                     onEnter={this.loadMorePosts}
-                    threshold={2.0}
+                    threshold={this.waitForRetry ? 0.0 : 2.0}
                  />)
     } else if (this.state.loadingMorePosts === true) {
       waypoint = <div style={{textAlign: 'center'}}><Spinner size="md" /></div>
@@ -210,8 +243,7 @@ var Feed = React.createClass({
     } else if (this.state.loaded === false) {
       return this.renderLoading();
     } else if (this.state.error === true) {
-      // I need an actual renderError(), but this suffices to take its place for now.
-      return this.renderEmpty();
+      return this.renderError();
     } else if (this.state.posts.length === 0) {
       return this.renderEmpty();
     } else {

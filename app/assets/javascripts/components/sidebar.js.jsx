@@ -8,14 +8,16 @@ var Sidebar = React.createClass({
   },
 
   componentWillReceiveProps: function(props) {
+
     this.setState({
       hasJoined: null,
-      notificationLoaded: null
+      notificationLoaded: null,
+      errorGettingRelations: false
     })
   },
 
-  setCommunityRelations: function(hasJoined, relationship) {
-    this.setState({hasJoined: hasJoined, relationship: relationship});
+  setCommunityRelations: function(hasJoined, relationship, error) {
+    this.setState({hasJoined: hasJoined, relationship: relationship, errorGettingRelations: !!error});
   },
 
   handleMembershipStatus: function() {
@@ -27,6 +29,8 @@ var Sidebar = React.createClass({
       }
     } else if (this.state.joining === true) {
       membershipStatus = <a className="join-settings-link disabled"><Spinner /></a>
+    } else if (this.state.errorGettingRelations === true) {
+      membershipStatus;
     } else if (this.state.hasJoined === null) {
       membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
     } else if (this.state.hasJoined === true) {
@@ -104,7 +108,7 @@ var Sidebar = React.createClass({
       <div className='sidebar-container'>
         <div className={sidewrapperClass}>
           {title}
-          {membershipStatus}		
+          {membershipStatus}
         </div>
         <div className='terms-fineprint'>
           <a href="#">iOS App</a>

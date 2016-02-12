@@ -22,11 +22,13 @@ var WritePost = React.createClass({
       postButtonWidth: ReactDOM.findDOMNode(this.refs.post_button).getBoundingClientRect().width
     })
 
+    var body = $.trim(this.refs.bodyInput.value);
+
     var data = {
       auth_token: Session.authToken(),
       user_id: Session.userId(),
       post: {
-        body: this.refs.bodyInput.value,
+        body: body,
         community: this.props.communityNameNormalized
       }
     }
@@ -45,14 +47,22 @@ var WritePost = React.createClass({
         this.clearFields()
         this.setState({
           buttonDisabled: true,
-          submitting: false
+          submitting: false,
+          error: false
         })
 
         this.props.handleAddPostToFeed(res.post)
       }.bind(this),
       error: function(err) {
         if (this.isMounted()) {
-          alert('blergh that failed.')
+          this.refs.titleInput.value = title;
+          this.refs.bodyInput.value = body;
+
+          this.setState({
+            buttonDisabled: false,
+            submitting: false,
+            error: true
+          })
         }
       }.bind(this)
     })
@@ -71,7 +81,8 @@ var WritePost = React.createClass({
       'tiny',
       'radius',
       'post-btn',
-      {disabled: this.state.buttonDisabled}
+      {disabled: this.state.buttonDisabled,
+       alert: this.state.error }
     )
 
     var button;
@@ -102,6 +113,19 @@ var WritePost = React.createClass({
       avatar_url = sessData.avatar_url;
     }
 
+    var compositeButton;
+
+    if (this.state.error) {
+      //@TODO error text
+      compositeButton = (
+        <Tooltip title="Something went wrong while submitting this post" position='left'>
+          {button}
+        </Tooltip>
+      )
+    } else {
+      compositeButton = button;
+    }
+
     return (
       <div className="post-to-community clearfix">
         <Avatar source={avatar_url} className="avatar" style={{float: 'left'}} />
@@ -112,10 +136,9 @@ var WritePost = React.createClass({
                           minRows={4}
                           ref="bodyInput"
                           onChange={this.toggleButtonEnabled} />
-        {button}
+        {compositeButton}
       </div>
     )
-
   }
 
 })

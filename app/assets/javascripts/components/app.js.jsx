@@ -49,10 +49,10 @@ var App = React.createClass({
     }.bind(this));
   },
 
-  selectCommunity: function(community) {
+  selectCommunity: function(community, retrying) {
     var normalizedCommunity = normalizeCommunity(community)
 
-    if (history.pushState) {
+    if (history.pushState && !retrying) {
 
         var newUrl = window.location.protocol + "//" + window.location.host + '/&' + encodeURIComponent(normalizedCommunity);
         if (window.location.href !== newUrl) {
@@ -100,8 +100,8 @@ var App = React.createClass({
     this.refs.communitiesList.addCommunity(community)
   },
 
-  setCommunityMembershipStatus: function(hasJoined, relationship) {
-    this.refs.sidebar.setCommunityRelations(hasJoined, relationship);
+  setCommunityMembershipStatus: function(hasJoined, relationship, error) {
+    this.refs.sidebar.setCommunityRelations(hasJoined, relationship, error);
   },
 
   openSettingsModal: function(relationship) {
@@ -145,7 +145,8 @@ var App = React.createClass({
       } else {
         mainContent = (<Feed communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
-                    handleCommunityStatus={this.setCommunityMembershipStatus} />)
+                    handleCommunityStatus={this.setCommunityMembershipStatus}
+                    handleSelectCommunity={this.selectCommunity} />)
       }
 
       return (
