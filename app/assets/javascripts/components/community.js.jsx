@@ -8,6 +8,12 @@ var Community = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    if (this.props.readding && this.refs.tooltip) {
+      this.refs.tooltip.show();
+    }
+  },
+
   leaveCommunity: function() {
     this.refs.modal.hide();
     this.props.handleRemoveCommunity(this.props.community);
@@ -112,7 +118,7 @@ var Community = React.createClass({
     if (this.props.readding) {
       //@TODO Change text for error
       communityName = (
-        <Tooltip title="Had trouble leaving community" position='left' space={20}>
+        <Tooltip ref="tooltip" title="Had trouble leaving community" position='left' space={20}>
           <span className='community-name remove-failed' onClick={this.goToCommunity} title={this.props.community.name}>{this.props.community.name}</span>
         </Tooltip>
       )

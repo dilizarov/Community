@@ -12,7 +12,8 @@ var Sidebar = React.createClass({
     this.setState({
       hasJoined: null,
       notificationLoaded: null,
-      errorGettingRelations: false
+      errorGettingRelations: false,
+      errorOnJoin: false
     })
   },
 
@@ -35,6 +36,13 @@ var Sidebar = React.createClass({
       membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
     } else if (this.state.hasJoined === true) {
       membershipStatus = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
+    } else if (this.state.errorOnJoin){
+      //@TODO Style text etc.
+      membershipStatus = (
+        <Tooltip ref="tooltip" title="Had trouble joining community" position='right'>
+          <a className='join-settings-link failed-join' onClick={this.joinCommunity}>Join</a>
+        </Tooltip>
+      )
     } else {
       membershipStatus = <a className='join-settings-link' onClick={this.joinCommunity}>Join</a>
     }
@@ -53,11 +61,14 @@ var Sidebar = React.createClass({
       url: "api/v1/communities.json",
       data: { auth_token: Session.authToken(), user_id: Session.userId(), community: this.props.communityName },
       success: function(res) {
-        this.setState({hasJoined: true, relationship: res.community, joining: false});
+        this.setState({hasJoined: true, relationship: res.community, joining: false, errorOnJoin: false});
         this.props.handleAddCommunityToList(res.community);
       }.bind(this),
       error: function(err) {
-        this.setState({hasJoined: false, joining: false})
+        this.setState({hasJoined: false, joining: false, errorOnJoin: true},
+        function() {
+          this.refs.tooltip.show()
+        })
       }.bind(this)
     })
   },

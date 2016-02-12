@@ -143,6 +143,12 @@ var Tooltip = React.createClass({
     };
   },
 
+  show: function() {
+    if (this.isMounted()) {
+      this.handleMouseMove();
+    }
+  },
+
   render: function() {
     return this.props.children;
   }

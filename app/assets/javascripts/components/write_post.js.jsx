@@ -62,6 +62,8 @@ var WritePost = React.createClass({
             buttonDisabled: false,
             submitting: false,
             error: true
+          }, function() {
+            this.refs.tooltip.show();
           })
         }
       }.bind(this)
@@ -116,9 +118,9 @@ var WritePost = React.createClass({
     var compositeButton;
 
     if (this.state.error) {
-      //@TODO error text
+    //  @TODO error text
       compositeButton = (
-        <Tooltip title="Something went wrong while submitting this post" position='left'>
+        <Tooltip ref="tooltip" title="Something went wrong while submitting this post" position='left'>
           {button}
         </Tooltip>
       )

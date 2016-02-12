@@ -339,6 +339,10 @@
   text-align: center;
 }
 
+.side-wrapper .join-settings-link.failed-join {
+  color: darkred;
+}
+
 .side-wrapper .join-settings-link:hover {
   border: 1px solid #E8E8E8;
   border-bottom: 1px solid #E2E2E2;
@@ -417,6 +421,10 @@
 .feed-wrapper .post-stats {
   margin: 10px 0;
   font-size: 13px;
+}
+
+.feed-wrapper .post-stats .Spinner {
+    margin-left: 5px;
 }
 
 .feed-wrapper .post-likes {
