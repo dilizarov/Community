@@ -425,6 +425,7 @@
 
 .feed-wrapper .post-stats .Spinner {
     margin-left: 5px;
+    top: 0px;
 }
 
 .feed-wrapper .post-likes {
@@ -593,6 +594,17 @@
 
 .feed-wrapper .write-reply-disabled {
   background-color: #DDDDDD;
+}
+
+.feed-wrapper .write-reply.submit-error {
+  background-color: #FCE6E2;
+}
+
+/*
+  FCE6E2 - (FAFAFA - DDDDDD) = DFC9C5 (Base 16)
+*/
+.feed-wrapper .write-reply-disabled.submit-error {
+  background-color: #DFC9C5;
 }
 
 i, .button, .post-stats {

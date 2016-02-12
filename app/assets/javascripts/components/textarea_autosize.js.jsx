@@ -107,6 +107,7 @@ class TextareaAutosize extends React.Component {
    */
   set value(val) {
     this._rootDOMNode.value = val;
+    this._resizeComponent();
   }
 
   /**

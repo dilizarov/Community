@@ -28,8 +28,8 @@ var Tooltip = React.createClass({
     this.container.appendChild(this.tooltipEl);
     this.resetTooltip();
 
-    this.componentEl.addEventListener('mousemove', this.handleMouseMove);
-    this.componentEl.addEventListener('mouseout', this.handleMouseOut);
+    this.componentEl.addEventListener('mouseenter', this.handleMouseEnter);
+    this.componentEl.addEventListener('mouseleave', this.handleMouseLeave);
   },
 
   componentDidUpdate: function() {
@@ -38,8 +38,8 @@ var Tooltip = React.createClass({
   },
 
   componentWillUnmount: function() {
-    this.componentEl.removeEventListener('mousemove', this.handleMouseMove);
-    this.componentEl.removeEventListener('mouseout', this.handleMouseOut);
+    this.componentEl.removeEventListener('mouseenter', this.handleMouseEnter);
+    this.componentEl.removeEventListener('mouseleave', this.handleMouseLeave);
     this.container.removeChild(this.tooltipEl);
   },
 
@@ -50,7 +50,7 @@ var Tooltip = React.createClass({
     this.tooltipEl.style.opacity = 0;
   },
 
-  handleMouseMove: function(e) {
+  handleMouseEnter: function(e) {
     if (this.props.title === '') {
       return;
     }
@@ -63,7 +63,7 @@ var Tooltip = React.createClass({
     this.tooltipEl.style.opacity = 1;
   },
 
-  handleMouseOut: function() {
+  handleMouseLeave: function() {
     this.resetTooltip();
   },
 
@@ -145,7 +145,7 @@ var Tooltip = React.createClass({
 
   show: function() {
     if (this.isMounted()) {
-      this.handleMouseMove();
+      this.handleMouseEnter();
     }
   },
 

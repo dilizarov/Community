@@ -44,7 +44,6 @@ var NotificationPost = React.createClass({
           });
 
           this.props.handleSidebarLoadedState(true)
-
         }
       }.bind(this),
       error: function(err) {
@@ -66,7 +65,9 @@ var NotificationPost = React.createClass({
 
       var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
-      data.reply = { body: $.trim(e.target.value) }
+      var replyBody = $.trim(e.target.value);
+
+      data.reply = { body: replyBody }
 
       if (this.state.repliesLoaded === false) {
         data.include_replies = true
@@ -84,8 +85,6 @@ var NotificationPost = React.createClass({
         success: function(res) {
           if (this.isMounted()) {
 
-            this.refs.writeReply.value = ""
-
             var replies = data.include_replies === true
                           ? res.replies
                           : React.addons.update(this.state.replies, { $push: [res.reply]})
@@ -98,14 +97,24 @@ var NotificationPost = React.createClass({
               submittingReply: false,
               repliesLoading: false,
               replies: replies,
-              post: post
+              post: post,
+              submitReplyError: false
+            }, function() {
+              this.refs.writeReply.value = ""
             });
-
           }
         }.bind(this),
         error: function(err) {
           if (this.isMounted()) {
-            alert('blergh that failed.')
+
+            this.setState({
+              submittingReply: false,
+              repliesLoading: false,
+              submitReplyError: true
+            }, function() {
+              this.refs.writeReply.value = replyBody;
+              this.refs.tooltip.show();
+            })
           }
         }.bind(this)
       })
@@ -237,7 +246,7 @@ var NotificationPost = React.createClass({
     var repliesContent;
 
     if (this.state.repliesLoaded === false) {
-      repliesContent = ''
+      repliesContent;
     } else if (this.state.error === true) {
       //TODO: Located here
       repliesContent = 'Error loading replies'
@@ -262,7 +271,38 @@ var NotificationPost = React.createClass({
         repliesCount = this.state.post.replies_count.toThousandsString(),
         postTitle = this.state.post.title ? this.state.post.title + ' ' : '';
 
-    var writeReplyClass = classNames('write-reply', {'write-reply-disabled': this.state.submittingReply})
+    var writeReplyClass = classNames(
+      'write-reply',
+      {'write-reply-disabled': this.state.submittingReply,
+       'submit-error': this.state.submitReplyError}
+     );
+
+     var writeReplyTextArea = (
+       <TextareaAutosize placeholder="Write a reply..."
+         className={writeReplyClass}
+         disabled={this.state.submittingReply}
+         rows={1}
+         minRows={1}
+         ref="writeReply"
+         onKeyDown={this.haltEnter}
+         onKeyUp={this.maybeCreateReply} />
+     );
+
+     if (this.state.submitReplyError) {
+       //TODO Error Text
+       writeReplyTextArea = (
+         <Tooltip ref="tooltip" title="Issues submitting reply" position='top'>
+           <TextareaAutosize placeholder="Write a reply..."
+             className={writeReplyClass}
+             disabled={this.state.submittingReply}
+             rows={1}
+             minRows={1}
+             ref="writeReply"
+             onKeyDown={this.haltEnter}
+             onKeyUp={this.maybeCreateReply} />
+         </Tooltip>
+       )
+     }
 
     var rel = this.props.notification.recipient_relationship;
     var user_avatar_url;
@@ -297,14 +337,7 @@ var NotificationPost = React.createClass({
           <div className="reply-to-post-wrapper">
             <Avatar size="sm" source={user_avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
             <div className="reply-to-post">
-              <TextareaAutosize placeholder="Write a reply..."
-                className={writeReplyClass}
-                disabled={this.state.submittingReply}
-                rows={1}
-                minRows={1}
-                ref="writeReply"
-                onKeyDown={this.haltEnter}
-                onKeyUp={this.maybeCreateReply} />
+              {writeReplyTextArea}
             </div>
           </div>
         </li>
