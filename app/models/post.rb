@@ -26,7 +26,7 @@ class Post < ActiveRecord::Base
 
   def normalize_data
     self.title = self.title.strip unless self.title.nil?
-    self.body = self.body.strip.gsub(/\n{2,}/,"\n\n")
+    self.body = self.body.strip.gsub(/(\n[ \t]*){2,}/,"\n\n")
     self.community = self.community.strip.downcase.gsub(" ", "")
   end
 

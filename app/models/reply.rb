@@ -18,6 +18,6 @@ class Reply < ActiveRecord::Base
   private
 
   def normalize_data
-    self.body = self.body.strip.gsub(/\n{2,}/,"\n\n")
+    self.body = self.body.strip.gsub(/(\n[ \t]*){2,}/,"\n\n")
   end
 end
