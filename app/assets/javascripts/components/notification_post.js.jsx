@@ -176,17 +176,14 @@ var NotificationPost = React.createClass({
           this.setState({
             replies: res.replies,
             repliesLoaded: true,
-            repliesLoading: false,
-            error: false
+            repliesLoading: false
           });
         }
       }.bind(this),
       error: function(err) {
         if (this.isMounted()) {
           this.setState({
-            loaded: true,
-            error: true
-            //Do some error data stuff as well.
+            repliesLoading: false
           });
         }
       }.bind(this)
