@@ -13,7 +13,9 @@ var Post = React.createClass({
 
       var data = { auth_token: Session.authToken(), user_id: Session.userId() }
 
-      data.reply = { body: $.trim(e.target.value) }
+      var replyBody = $.trim(e.target.value);
+
+      data.reply = { body: replyBody }
 
       if (this.state.repliesLoaded === false) {
         data.include_replies = true
@@ -31,8 +33,6 @@ var Post = React.createClass({
         success: function(res) {
           if (this.isMounted()) {
 
-            this.refs.writeReply.value = ""
-
             var replies = data.include_replies === true
                           ? res.replies
                           : React.addons.update(this.state.replies, { $push: [res.reply]})
@@ -41,7 +41,10 @@ var Post = React.createClass({
               repliesLoaded: true,
               submittingReply: false,
               repliesLoading: false,
-              replies: replies
+              replies: replies,
+              submitReplyError: false
+            }, function() {
+              this.refs.writeReply.value = ""
             });
 
             this.props.handleUpdateRepliesCount(this.props.post, replies.length);
@@ -49,7 +52,15 @@ var Post = React.createClass({
         }.bind(this),
         error: function(err) {
           if (this.isMounted()) {
-            alert('blergh that failed.')
+
+            this.setState({
+              submittingReply: false,
+              repliesLoading: false,
+              submitReplyError: true
+            }, function() {
+              this.refs.writeReply.value = replyBody;
+              this.refs.tooltip.show();
+            })
           }
         }.bind(this)
       })
@@ -79,7 +90,6 @@ var Post = React.createClass({
   },
 
   showReplies: function(e) {
-    //@TODO: indicate we are loading replies
 
     this.setState({
       repliesLoading: true
@@ -93,9 +103,8 @@ var Post = React.createClass({
         if (this.isMounted()) {
           this.setState({
             replies: res.replies,
-            repliesLoaded: true,
-            repliesLoading: false,
-            error: false
+            repliesLoaded: res.replies > 0,
+            repliesLoading: false
           });
 
           this.props.handleUpdateRepliesCount(this.props.post, res.replies.length);
@@ -104,9 +113,7 @@ var Post = React.createClass({
       error: function(err) {
         if (this.isMounted()) {
           this.setState({
-            loaded: true,
-            error: true
-            //Do some error data stuff as well.
+            repliesLoading: false
           });
         }
       }.bind(this)
@@ -183,7 +190,38 @@ var Post = React.createClass({
         repliesCount = this.props.post.replies_count.toThousandsString(),
         postTitle = this.props.post.title ? this.props.post.title + ' ' : '';
 
-    var writeReplyClass = classNames('write-reply', {'write-reply-disabled': this.state.submittingReply})
+    var writeReplyClass = classNames(
+      'write-reply',
+      {'write-reply-disabled': this.state.submittingReply,
+       'submit-error': this.state.submitReplyError}
+     );
+
+     var writeReplyTextArea = (
+       <TextareaAutosize placeholder="Write a reply..."
+         className={writeReplyClass}
+         disabled={this.state.submittingReply}
+         rows={1}
+         minRows={1}
+         ref="writeReply"
+         onKeyDown={this.haltEnter}
+         onKeyUp={this.maybeCreateReply} />
+     );
+
+     if (this.state.submitReplyError) {
+       //TODO Error Text
+       writeReplyTextArea = (
+         <Tooltip ref="tooltip" title="Issues submitting reply" position='top'>
+           <TextareaAutosize placeholder="Write a reply..."
+             className={writeReplyClass}
+             disabled={this.state.submittingReply}
+             rows={1}
+             minRows={1}
+             ref="writeReply"
+             onKeyDown={this.haltEnter}
+             onKeyUp={this.maybeCreateReply} />
+         </Tooltip>
+       )
+     }
 
     var rel = this.props.relationship;
     var user_avatar_url;
@@ -217,14 +255,7 @@ var Post = React.createClass({
         <div className="reply-to-post-wrapper">
           <Avatar size="sm" source={user_avatar_url} style={{float: 'left', marginRight: 0, marginTop: 7}}/>
           <div className="reply-to-post">
-            <TextareaAutosize placeholder="Write a reply..."
-                              className={writeReplyClass}
-                              disabled={this.state.submittingReply}
-                              rows={1}
-                              minRows={1}
-                              ref="writeReply"
-                              onKeyDown={this.haltEnter}
-                              onKeyUp={this.maybeCreateReply} />
+            {writeReplyTextArea}
           </div>
         </div>
       </li>

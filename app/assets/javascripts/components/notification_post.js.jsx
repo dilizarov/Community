@@ -38,7 +38,7 @@ var NotificationPost = React.createClass({
           this.setState({
             replies: res.replies,
             post: res.post,
-            repliesLoaded: true,
+            repliesLoaded: res.replies.length > 0,
             loaded: true,
             loadPostError: false
           });
@@ -175,7 +175,7 @@ var NotificationPost = React.createClass({
         if (this.isMounted()) {
           this.setState({
             replies: res.replies,
-            repliesLoaded: true,
+            repliesLoaded: res.replies.length > 0,
             repliesLoading: false
           });
         }
