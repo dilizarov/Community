@@ -115,7 +115,7 @@ var WritePost = React.createClass({
       avatar_url = sessData.avatar_url;
     }
 
-    var compositeButton;
+    var compositeButton = button;
 
     if (this.state.error) {
     //  @TODO error text
@@ -124,8 +124,6 @@ var WritePost = React.createClass({
           {button}
         </Tooltip>
       )
-    } else {
-      compositeButton = button;
     }
 
     return (

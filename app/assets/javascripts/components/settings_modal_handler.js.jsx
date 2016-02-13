@@ -74,7 +74,26 @@ var SettingsModalHandler = React.createClass({
           that.closeModal();
         },
         error: function(e) {
-          console.log(e)
+
+          var errorMsg = "";
+
+          if (e.status === 422 && e.responseJSON) {
+            var errors = e.responseJSON.errors;
+
+            for (var i = 0; i < errors.length; i++) {
+              if (i !== 0) { errorMsg += "\n\n" }
+
+              errorMsg += errors[i]
+            }
+          }
+
+          that.setState({
+            processing: false,
+            errorSaving: true,
+            errorMsg: errorMsg
+          }, function() {
+            that.refs.tooltip.show();
+          })
         }
       })
     }
@@ -84,6 +103,7 @@ var SettingsModalHandler = React.createClass({
       var data = {
         auth_token: Session.authToken(),
         user_id: Session.userId(),
+        community: this.state.relationship.normalized_name,
         default: true
       }
 
@@ -98,10 +118,29 @@ var SettingsModalHandler = React.createClass({
           })
 
           this.closeModal();
-        },
+        }.bind(this),
         error: function (e) {
-          console.log(e)
-        }
+
+          var errorMsg = "";
+
+          if (e.status === 422 && e.responseJSON) {
+            var errors = e.responseJSON.errors;
+
+            for (var i = 0; i < errors.length; i++) {
+              if (i !== 0) { errorMsg += "\n\n" }
+
+              errorMsg += errors[i]
+            }
+          }
+
+          this.setState({
+            processing: false,
+            errorSaving: true,
+            errorMsg: errorMsg
+          }, function() {
+            this.refs.tooltip.show();
+          })
+        }.bind(this)
       })
     } else {
       if (currentAvatarUrl.substring(0, 4) === "http") {
@@ -183,7 +222,8 @@ var SettingsModalHandler = React.createClass({
   render: function() {
 
     var saveBtnClasses = classNames('small', 'button', 'radius', {
-      'disabled' : ($.trim(this.state.currentUsername) === '' || this.state.currentAvatarUrl === null || this.state.processing === true)
+      'disabled' : ($.trim(this.state.currentUsername) === '' || this.state.currentAvatarUrl === null || this.state.processing === true),
+      'alert' : this.state.errorSaving
     })
 
     var saveButton;
@@ -203,6 +243,17 @@ var SettingsModalHandler = React.createClass({
       saveButton = <a ref="save_button" className={saveBtnClasses} onClick={this.save}>Save</a>
     }
 
+    var compositeSaveButton = saveButton;
+
+    if (this.state.errorSaving) {
+      //  @TODO error text
+        compositeSaveButton = (
+          <Tooltip ref="tooltip" title={this.state.errorMsg ? this.state.errorMsg : "Something went wrong while saving settings"} position='right'>
+            {saveButton}
+          </Tooltip>
+        )
+    }
+
     return (
       <div>
         <DropModal onHide={this.resetState} closeOnClick={false} ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
@@ -212,10 +263,10 @@ var SettingsModalHandler = React.createClass({
               size="lg" ref="avatar" changeable handleChange={this.changeAvatar} /><br/>
             <input type="text" placeholder="Username" value={this.state.currentUsername} onChange={this.updateUsername} /><br/>
 
-          <a className="alert small button radius" onClick={this.revertToDefault} style={{marginRight: '20', float: 'left'}}>Revert To Default</a>
+          <a className="secondary small button radius" onClick={this.revertToDefault} style={{marginRight: '20', float: 'left'}}>Revert To Default</a>
           <span style={{float: 'right'}}>
             <a className="secondary small button radius" onClick={this.closeModal} style={{marginRight: '20'}}>Hide</a>
-            {saveButton}
+            {compositeSaveButton}
           </span>
         </DropModal>
       </div>
