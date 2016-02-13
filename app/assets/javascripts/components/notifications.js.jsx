@@ -177,6 +177,14 @@ var Notifications = React.createClass({
 
     var errorProps = {};
 
+    /*
+      The reason why we use display none instead of simply not having
+      it in the DOM is because its callback, this.getNotifications,
+      is called before the document callback, this.handleClickOutside,
+      and by simply not having it, we run into the issue where it loses
+      its parentNode in handleClickOutside. By always keeping it in the DOM,
+      it acts fine in handleClickOutside.
+    */
     if (!this.state.loadingError || this.state.isLoading) {
       //@TODO text for the error
       errorProps.style = { display: 'none' }
