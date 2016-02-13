@@ -34,7 +34,6 @@ var Notifications = React.createClass({
   },
 
   handleClickOutside: function(e) {
-
     var target = e.target;
 
     while (target.parentNode) {
@@ -96,15 +95,11 @@ var Notifications = React.createClass({
         }
       }.bind(this),
       error: function(err) {
-        if (this.isMounted()) {
-          console.log("nu mah sides")
-        }
       }.bind(this)
     })
   },
 
   getNotifications: function() {
-
     document.title = this.props.currentCommunity === '' ? 'Community' : this.props.currentCommunity;
 
     this.setState({
@@ -125,14 +120,19 @@ var Notifications = React.createClass({
           this.setState({
             notifications: res.notifications,
             isLoading: false,
-            isOpen: true
+            loadingError: false
           });
 
         }
       }.bind(this),
       error: function(err) {
         if (this.isMounted()) {
-          alert('FAILURE SUCKS')
+
+          this.setState({
+            isLoading: false,
+            loadingError: true
+          });
+
         }
       }.bind(this)
     })
@@ -175,6 +175,13 @@ var Notifications = React.createClass({
       'are-loading' : this.state.isLoading
     })
 
+    var errorProps = {};
+
+    if (!this.state.loadingError || this.state.isLoading) {
+      //@TODO text for the error
+      errorProps.style = { display: 'none' }
+    }
+
     return (
       <span className="notifications-wrapper">
         <i className="fa fa-bell-o" onClick={this.toggleMenu}>
@@ -185,9 +192,11 @@ var Notifications = React.createClass({
           <div className="notifications-holder" ref="notifsHolder">
             <div className="notifications-header">Notifications</div>
             <div className={notificationBodyClasses} onMouseEnter={this.stopBodyScroll} onMouseLeave={this.resumeBodyScroll}>
+              <div className="notifications-error" onClick={this.getNotifications} {...errorProps}>Trouble loading notifications</div>
               {(this.state.isLoading &&
                 <Spinner size="sm" />
                ) || (
+                 !this.state.loadingError &&
                  this.state.notifications.map(function(notification) {
                    return (
                      <Motification key={notification.id}

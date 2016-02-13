@@ -156,6 +156,13 @@
   text-align: center;
 }
 
+.notifications-holder .notifications-error {
+  text-align: center;
+  font-size: 14px;
+  color: darkred;
+  padding: 10px;
+}
+
 .notifications-holder .notification-item {
   padding: 15px;
   border-bottom: 1px solid #EEE;
