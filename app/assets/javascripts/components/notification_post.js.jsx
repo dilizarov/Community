@@ -40,7 +40,7 @@ var NotificationPost = React.createClass({
             post: res.post,
             repliesLoaded: true,
             loaded: true,
-            error: false
+            loadPostError: false
           });
 
           this.props.handleSidebarLoadedState(true)
@@ -50,8 +50,7 @@ var NotificationPost = React.createClass({
         if (this.isMounted()) {
           this.setState({
             loaded: true,
-            error: true
-            //Do some error data stuff as well.
+            loadPostError: true
           });
 
           this.props.handleSidebarLoadedState(true)
@@ -233,12 +232,23 @@ var NotificationPost = React.createClass({
     }
   },
 
+  retryLoadingNotification: function() {
+    this.componentWillReceiveProps(this.props)
+  },
+
   renderLoading: function() {
     return <div></div>
   },
 
   renderError: function() {
-    return <div>Fetching issues, brah. D:</div>
+    //@TODO Styling and text
+    return (
+      <div className="panel error-box">
+        <h5>Uh oh</h5>
+        <p>We had trouble getting the post</p>
+        <a onClick={this.retryLoadingNotification} style={{cursor: 'pointer'}}>Retry</a>
+      </div>
+    )
   },
 
   renderPost: function() {
@@ -348,9 +358,8 @@ var NotificationPost = React.createClass({
   render: function() {
     if (this.state.loaded === false) {
       return this.renderLoading();
-    } else if (this.state.error === true) {
-      //TODO: Need to render an error screen. Probably a retry to fetching
-      return this.renderPostInitial();
+    } else if (this.state.loadPostError === true) {
+      return this.renderError();
     } else {
       return this.renderPost();
     }
