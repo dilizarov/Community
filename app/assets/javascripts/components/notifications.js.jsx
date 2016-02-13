@@ -186,7 +186,7 @@ var Notifications = React.createClass({
       it acts fine in handleClickOutside.
     */
     if (!this.state.loadingError || this.state.isLoading) {
-      //@TODO text for the error
+      //@TODO text for the error and empty, which is below.
       errorProps.style = { display: 'none' }
     }
 
@@ -205,13 +205,19 @@ var Notifications = React.createClass({
                 <Spinner size="sm" />
                ) || (
                  !this.state.loadingError &&
-                 this.state.notifications.map(function(notification) {
-                   return (
-                     <Motification key={notification.id}
-                                   notification={notification}
-                                   handleNotificationPressed={this.notificationPressed} />
-                   )
-                 }.bind(this))
+                 ((this.state.notifications.length > 0 &&
+                   this.state.notifications.map(function(notification) {
+                     return (
+                       <Motification key={notification.id}
+                                     notification={notification}
+                                     handleNotificationPressed={this.notificationPressed} />
+                     )
+                   }.bind(this))
+                 ) || (
+                   <div className="notifications-empty">
+                     No notifications
+                   </div>
+                 ))
                )
               }
             </div>

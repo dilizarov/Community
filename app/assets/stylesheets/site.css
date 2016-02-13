@@ -163,6 +163,14 @@
   padding: 10px;
 }
 
+.notifications-holder .notifications-empty {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  padding: 10px;
+  cursor: auto;
+}
+
 .notifications-holder .notification-item {
   padding: 15px;
   border-bottom: 1px solid #EEE;
