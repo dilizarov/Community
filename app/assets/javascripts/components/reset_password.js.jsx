@@ -60,7 +60,14 @@ var ResetPassword = React.createClass({
         }
       }.bind(this),
       error: function(err) {
-
+        if (this.isMounted()) {
+          this.setState({
+            errorChangingPassword: true,
+            loading: false
+          }, function() {
+            this.refs.tooltip.show();
+          })
+        }
       }.bind(this)
     })
   },
@@ -90,8 +97,19 @@ var ResetPassword = React.createClass({
             }
           }.bind(this),
           error: function(err) {
+
+            var errorMsg = false;
+
+            if (err.status === 404 && err.responseJSON) {
+              errorMsg = err.responseJSON.error;
+            }
+
             this.setState({
+              errorSendingEmail: true,
+              errorMsg: errorMsg,
               loading: false
+            }, function() {
+              this.refs.tooltip.show();
             })
           }.bind(this)
       })
@@ -105,6 +123,8 @@ var ResetPassword = React.createClass({
   },
 
   render: function() {
+
+    //@TODO error msging
 
     var mainContent;
 
@@ -137,7 +157,8 @@ var ResetPassword = React.createClass({
         'button',
         'tiny',
         'radius',
-        { 'disabled' : this.state.changePasswordEnabled !== true || this.state.loading === true }
+        { 'disabled' : this.state.changePasswordEnabled !== true || this.state.loading === true,
+          'alert' : this.state.errorChangingPassword }
       )
 
       var otherProps = {};
@@ -146,6 +167,16 @@ var ResetPassword = React.createClass({
         if (this.state.buttonWidth) {
           otherProps.style = { width: this.state.buttonWidth }
         }
+      }
+
+      var compositeButton = <a ref="change_password" className={submitClasses} onClick={this.submitChange} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Change Password'}</a>
+
+      if (this.state.errorChangingPassword) {
+        compositeButton = (
+          <Tooltip ref="tooltip" title={"Something went wrong with this request"} position='right'>
+            <a ref="change_password" className={submitClasses} onClick={this.submitChange} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Change Password'}</a>
+          </Tooltip>
+        )
       }
 
       mainContent = (
@@ -164,7 +195,7 @@ var ResetPassword = React.createClass({
 
           <input type="password" placeholder="password" onChange={this.toggleChangePassEnabled} ref="password_field" />
           <input type="password" placeholder="confirm" onChange={this.toggleChangePassEnabled} ref="confirm_field" />
-          <a ref="change_password" className={submitClasses} onClick={this.submitChange} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Change Password'}</a>
+          {compositeButton}
         </div>
       )
     } else {
@@ -173,7 +204,8 @@ var ResetPassword = React.createClass({
        'button',
        'tiny',
        'radius',
-       { 'disabled' : this.state.sendEmailEnabled !== true || this.state.loading === true }
+       { 'disabled' : this.state.sendEmailEnabled !== true || this.state.loading === true,
+         'alert' : this.state.errorSendingEmail }
      )
 
      if (this.state.emailSent !== false) {
@@ -200,6 +232,16 @@ var ResetPassword = React.createClass({
          }
        }
 
+       var compositeButton = <a ref="send_email" className={submitClasses} onClick={this.sendEmail} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Send Email'}</a>
+
+       if (this.state.errorSendingEmail) {
+         compositeButton = (
+           <Tooltip ref="tooltip" title={this.state.errorMsg ? this.state.errorMsg : "Something went wrong with this request"} position='right'>
+             <a ref="send_email" className={submitClasses} onClick={this.sendEmail} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Send Email'}</a>
+           </Tooltip>
+         )
+       }
+
        mainContent = (
          <div>
            <div className="content-header" style={{fontSize: '25px'}}>
@@ -207,7 +249,7 @@ var ResetPassword = React.createClass({
            </div>
 
            <input placeholder="email" ref="email_field" onChange={this.toggleSendEmailEnabled} defaultValue={this.props.email === null ? '' : this.props.email} />
-           <a ref="send_email" className={submitClasses} onClick={this.sendEmail} {...otherProps} >{this.state.loading === true ? <Spinner type="inverted" /> : 'Send Email'}</a>
+           {compositeButton}
          </div>
        )
      }
@@ -235,7 +277,5 @@ var ResetPassword = React.createClass({
         </div>
       </div>
     )
-
   }
-
 })
