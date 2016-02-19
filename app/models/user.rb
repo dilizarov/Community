@@ -135,7 +135,7 @@ class User < ActiveRecord::Base
   private
 
   def ensure_non_meta_username_for_account
-    return if self.meta
+    return if self.meta || self.username.nil?
 
     string_being_checked = self.username.downcase.strip
 

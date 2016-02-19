@@ -22,8 +22,10 @@ var Spinner = React.createClass({
 			this.props.className
 		);
 
+		var { className, ...other } = this.props
+
 		return (
-			<div className={componentClass}>
+			<div className={componentClass} {...other} >
 				<span className="Spinner_dot Spinner_dot--first" />
 				<span className="Spinner_dot Spinner_dot--second" />
 				<span className="Spinner_dot Spinner_dot--third" />

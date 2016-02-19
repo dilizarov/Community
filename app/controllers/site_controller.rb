@@ -16,7 +16,7 @@ class SiteController < ApplicationController
       if @user &&
         Devise.secure_compare(@user.reset_password_token, params[:reset_token]) &&
         @user.reset_password_sent_at > 24.hours.ago
-        
+
         @success = true
       end
     end

@@ -494,7 +494,7 @@
 }
 
 .feed-wrapper .reply {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   font-size: 13px;
   display: inline-block;
   width: 100%;
@@ -508,6 +508,7 @@
 }
 
 .feed-wrapper .reply .reply-data {
+  margin-top: 3px;
   overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -660,7 +661,8 @@ i, .button, .post-stats {
   background-color: #60b0c6;
 }
 
-.reset-password-wrapper .main-page-link {
+.reset-password-wrapper .main-page-link,
+.welcome-wrapper .main-page-link {
   font-size: 22px;
   white-space: nowrap;
   overflow: hidden;
@@ -669,7 +671,8 @@ i, .button, .post-stats {
   cursor: pointer;
 }
 
-.reset-password-wrapper .page-title {
+.reset-password-wrapper .page-title,
+.welcome-wrapper .page-title {
   margin-left: 6px;
   font-size: 22px;
   font-weight: 200;
@@ -680,7 +683,8 @@ i, .button, .post-stats {
   color: #666
 }
 
-.reset-password-wrapper .content-header {
+.reset-password-wrapper .content-header,
+.welcome-wrapper .content-header {
   font-size: 28px;
   font-weight: 200;
   color: #666;
@@ -702,14 +706,16 @@ i, .button, .post-stats {
   color: #889;
 }
 
-.reset-password-wrapper input {
+.reset-password-wrapper input,
+.welcome-wrapper input {
   width: 300px;
   box-shadow: none;
   border-radius: 4px;
   border-color: #EEE;
 }
 
-.reset-password-wrapper input:focus {
+.reset-password-wrapper input:focus,
+.welcome-wrapper input:focus {
   border-color: #CCC;
   background-color: #FFF;
 }
@@ -722,4 +728,35 @@ i, .button, .post-stats {
 
 .reset-password-wrapper .success-link {
   font-size: 12px;
+}
+
+.welcome-wrapper .username-generated {
+  font-size: 28px;
+  font-weight: 200;
+  margin-bottom: 15px;
+}
+
+.welcome-wrapper .username-generated.username-error {
+  color: darkred;
+}
+
+.welcome-wrapper .account-disclaimer {
+  display: inline-block;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-bottom: 50px;
+  cursor: pointer;
+  color: #666;
+}
+
+.welcome-wrapper .account-disclaimer:hover {
+  color: #333;
+}
+
+.welcome-wrapper .account-disclaimer-error {
+  display: inline-block;
+  font-size: 14px;
+  margin-bottom: 50px;
+  cursor: pointer;
+  color: darkred;
 }

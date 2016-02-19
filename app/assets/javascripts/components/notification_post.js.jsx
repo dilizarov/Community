@@ -13,6 +13,8 @@ var NotificationPost = React.createClass({
   },
 
   componentDidMount: function() {
+    document.title = "Community"
+
     this.componentWillReceiveProps(this.props)
   },
 

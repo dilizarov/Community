@@ -103,7 +103,7 @@ var Post = React.createClass({
         if (this.isMounted()) {
           this.setState({
             replies: res.replies,
-            repliesLoaded: res.replies > 0,
+            repliesLoaded: res.replies.length > 0,
             repliesLoading: false
           });
 
@@ -129,8 +129,7 @@ var Post = React.createClass({
   toggleReplies: function() {
     if(this.state.repliesLoaded === false) {
       this.showReplies();
-    }
-    else {
+    } else {
       this.hideReplies();
     }
   },
