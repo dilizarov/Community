@@ -261,7 +261,7 @@ var SettingsModalHandler = React.createClass({
 
             <Avatar source={this.state.currentAvatarUrl}
               size="lg" ref="avatar" changeable handleChange={this.changeAvatar} /><br/>
-            <input type="text" className="settings-username" placeholder="Username" value={this.state.currentUsername} onChange={this.updateUsername} autoFocus={true} /><br/>
+            <input type="text" className="settings-username" placeholder="Username" value={this.state.currentUsername} onChange={this.updateUsername} /><br/>
 
           <a className="secondary small button radius" onClick={this.revertToDefault} style={{marginRight: '20', float: 'left'}}>Revert To Default</a>
           <span style={{float: 'right'}}>
