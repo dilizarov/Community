@@ -131,7 +131,7 @@
   border-bottom: 1px solid #DDD;
   list-style: none;
   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  margin-top: 10px;
+  margin-top: 17px;
   width: 400px;
   right: -5px;
   cursor: pointer;
@@ -201,10 +201,13 @@
 .header-right-side .session-box {
   position: absolute;
   z-index: 10;
-  background-color: white;
+  background-color: #FEFEFE;
   right: 15px;
   margin-top: 15px;
   border: 1px solid #EEE;
+  border-bottom: 1px solid #DDD;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  cursor: auto;
 }
 
 .session-box .avatar-wrapper {
