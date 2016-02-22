@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   validate :ensure_non_meta_username_for_account
   #We use DB constraint for uniqueness and catch ActiveRecord::RecordNotUnique when necessary
   validates :username, presence: true
+  validates :username, length: { maximum: 40 }
 
   has_many :authentication_tokens
   has_many :communities, -> { order 'joined_communities.normalized_name' },

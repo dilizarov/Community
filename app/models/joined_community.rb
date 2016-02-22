@@ -9,6 +9,7 @@ class JoinedCommunity < ActiveRecord::Base
 
   before_validation :normalize_data
   validates :name, presence: true
+  validates :username, length: { maximum: 40 }
 
   # Import to ensure self.name.nil? check because we do this before validation to prep a validation.
   def normalize_data
