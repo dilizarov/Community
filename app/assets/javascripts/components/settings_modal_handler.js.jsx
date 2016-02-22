@@ -255,13 +255,13 @@ var SettingsModalHandler = React.createClass({
     }
 
     return (
-      <div>
+      <div className="settings-modal">
         <DropModal onHide={this.resetState} closeOnClick={false} ref="modal" modalStyle={{borderRadius: '3'}} contentStyle={{textAlign: 'center', padding: '30'}}>
           <h3 style={{wordWrap: 'break-word'}}>&{this.state.relationship.normalized_name} settings</h3>
 
             <Avatar source={this.state.currentAvatarUrl}
               size="lg" ref="avatar" changeable handleChange={this.changeAvatar} /><br/>
-            <input type="text" placeholder="Username" value={this.state.currentUsername} onChange={this.updateUsername} /><br/>
+            <input type="text" className="settings-username" placeholder="Username" value={this.state.currentUsername} onChange={this.updateUsername} autoFocus={true} /><br/>
 
           <a className="secondary small button radius" onClick={this.revertToDefault} style={{marginRight: '20', float: 'left'}}>Revert To Default</a>
           <span style={{float: 'right'}}>

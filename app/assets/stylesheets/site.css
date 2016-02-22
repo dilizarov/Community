@@ -760,3 +760,16 @@ i, .button, .post-stats {
   cursor: pointer;
   color: darkred;
 }
+
+
+/* Settings modal */
+.settings-modal .avatar-wrapper img {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.settings-modal .settings-username {
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #CCC;
+  background-color: #FAFAFA;
+}
