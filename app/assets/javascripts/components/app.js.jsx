@@ -49,6 +49,11 @@ var App = React.createClass({
     }.bind(this));
   },
 
+  forceAppUpdate: function() {
+    console.log('lol')
+    this.forceUpdate();
+  },
+
   selectCommunity: function(community, retrying) {
 
     var normalizedCommunity = normalizeCommunity(community)
@@ -73,7 +78,7 @@ var App = React.createClass({
           document.title = community
       } else {
           document.title = str.substring(0, str.indexOf(")") + 2) + community
-      }      
+      }
     }
 
     this.setState({
@@ -170,6 +175,7 @@ var App = React.createClass({
                     handleSelectCommunity={this.selectCommunity}
                     currentCommunity={currentCommunity}
                     handleNotificationPressed={this.notificationPressed}
+                    forceAppUpdate={this.forceAppUpdate}
                     ref='header' />
           </div>
 

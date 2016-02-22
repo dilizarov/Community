@@ -46,9 +46,93 @@ var Avatar = React.createClass({
     }
   },
 
-  confirmChange: function() {
-    this.props.handleChange(this.refs.cropper.getCroppedCanvas().toDataURL())
-    this.refs.modal.hide();
+  commandClicked: function() {
+    if (this.props.handleChange) {
+      this.props.handleChange(this.refs.cropper.getCroppedCanvas().toDataURL())
+      this.refs.modal.hide();
+    } else {
+
+      this.setState({
+        changingAvatar: true,
+        saveButtonWidth: ReactDOM.findDOMNode(this.refs.save_button).getBoundingClientRect().width
+      })
+
+      var dataURI = this.refs.cropper.getCroppedCanvas().toDataURL();
+
+      var blob = this.dataURItoBlob(dataURI);
+
+      var formData = new FormData();
+
+      formData.append("avatar", blob, "avatar_img.png");
+
+      $.ajax({
+        url: "/api/v1/users/" + Session.userId() + "/profile_pic.json?auth_token=" + Session.authToken(),
+        data: formData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function(data) {
+
+          console.log(data.avatar.url)
+
+          Session.changeAvatar(data.avatar.url);
+
+          this.setState({
+            changingAvatar: false,
+            errorSaving: false
+          })
+
+          if (this.props.forceAppUpdate) {
+            this.props.forceAppUpdate();
+          }
+
+          this.refs.modal.hide();
+        }.bind(this),
+        error: function(e) {
+          var errorMsg = "";
+
+          if (e.status === 422 && e.responseJSON) {
+            var errors = e.responseJSON.errors;
+
+            for (var i = 0; i < errors.length; i++) {
+              if (i !== 0) { errorMsg += "\n\n" }
+
+              errorMsg += errors[i]
+            }
+          }
+
+          this.setState({
+            changingAvatar: false,
+            errorSaving: true,
+            errorMsg: errorMsg
+          }, function() {
+            this.refs.tooltip.show();
+          })
+        }.bind(this)
+      })
+
+    }
+  },
+
+  //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+  dataURItoBlob: function(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
   },
 
   getImageDataURI: function(callback) {
@@ -96,6 +180,41 @@ var Avatar = React.createClass({
     }
 
     if (changeable === true) {
+
+      var saveBtnClasses = classNames('small', 'button', 'radius', {
+        'disabled' : this.state.changingAvatar === true,
+        'alert' : this.state.errorSaving,
+        'secondary' : !this.state.errorSaving
+      })
+
+      var compositeButton;
+
+      if (this.state.changingAvatar === true) {
+        var otherProps = {}
+
+        if (this.state.saveButtonWidth) {
+          otherProps.style = { width: this.state.saveButtonWidth }
+        }
+
+        var spinnerProps = {}
+
+        if (this.state.errorSaving) {
+          spinnerProps.type = "inverted"
+        }
+
+        compositeButton = <a className={saveBtnClasses} {...otherProps} ><Spinner {...spinnerProps}/></a>
+      } else {
+        compositeButton = <a className={saveBtnClasses} onClick={this.commandClicked} ref="save_button">{this.props.handleChange ? 'Confirm' : 'Save'}</a>
+      }
+
+      if (this.state.errorSaving) {
+        compositeButton = (
+          <Tooltip ref="tooltip" title={this.state.errorMsg ? this.state.errorMsg : "Something went wrong changing your avatar"} position='right'>
+            {compositeButton}
+          </Tooltip>
+        )
+      }
+
       avatarClass += " avatar-pointer"
       other.onClick = this.openImageChooser;
       editor_if_changeable = <input type="file" ref="photopicker" accept="image/jpeg, image/png, image/jpg" onChange={this.cropImageUI} style={{display: 'none'}} />
@@ -111,10 +230,10 @@ var Avatar = React.createClass({
               ref='cropper'
                />
           </div>
-          <div className="small-4 column">
-            <div className="img-preview" style={{width: 100, height: 100, borderRadius: '50%', overflow: 'hidden'}}/>
+          <div className="small-4 column" style={{textAlign: 'center'}}>
+            <div className="img-preview" style={{width: 100, height: 100, borderRadius: '50%', overflow: 'hidden', display: 'inline-block', marginBottom: '20px'}}/>
             <br/>
-            <a className="secondary small button radius" onClick={this.confirmChange}>Confirm</a>
+            {compositeButton}
           </div>
         </div>
       </DropModal>)

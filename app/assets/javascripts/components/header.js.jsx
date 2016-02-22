@@ -16,7 +16,7 @@ var Header = React.createClass({
         <span className="header-right-side">
           <Notifications currentCommunity={this.props.currentCommunity}
                          handleNotificationPressed={this.props.handleNotificationPressed}/>
-          <SessionBox handleSessionChange={this.reloadWindow} />
+          <SessionBox handleSessionChange={this.reloadWindow} forceAppUpdate={this.props.forceAppUpdate} />
         </span>
       </div>
     )

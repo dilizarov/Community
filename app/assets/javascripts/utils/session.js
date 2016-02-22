@@ -51,6 +51,14 @@ Session = {
     }
   },
 
+  changeAvatar: function(url) {
+    if (this.loggedIn()) {
+      localStorage.setItem(this.keys.accountAvatarUrl, url);
+    } else {
+      localStorage.setItem(this.keys.metaAvatarUrl, url);
+    }
+  },
+
   isMeta: function() {
     return !this.loggedIn()
   },

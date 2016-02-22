@@ -3,6 +3,7 @@ class Api::V1::UsersController < ApiController
   skip_before_filter :ensure_current_user!, only: [:forgot_password, :reset_password]
 
   def upload_profile_pic
+
     current_user.avatar = params[:avatar]
 
     if params[:avatar] && current_user.save

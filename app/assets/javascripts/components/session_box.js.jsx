@@ -165,8 +165,8 @@ var SessionBox = React.createClass({
      }
 
       box = (<div className="session-box" ref="sessionBox">
-        <div className="user-email">{Session.loggedIn() === true ? userInfo.email : ''}</div>
-        <Avatar source={userInfo.avatar_url} size="sm" changeable />
+        <div className="user-email">{Session.loggedIn() === true ? userInfo.email : 'someemail@lol.com'}</div>
+        <Avatar source={userInfo.avatar_url} size="sm" changeable forceAppUpdate={this.props.forceAppUpdate} />
         <span className="username">{userInfo.username}</span>
         <div className="session-box-bottom">
           {sessionContent}
