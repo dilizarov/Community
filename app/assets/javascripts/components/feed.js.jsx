@@ -12,11 +12,18 @@ var Feed = React.createClass({
   componentDidMount: function() {
 
     if (this.props.forceReceiveProps === true) {
+      this.avatarAboutToChange = null;
       this.componentWillReceiveProps(this.props);
     }
   },
 
   componentWillReceiveProps: function(props) {
+
+    if (this.avatarAboutToChange) {
+      this.avatarAboutToChange = null;
+      return;
+    }
+
     this.waitForRetry = null;
 
     this.setState({
@@ -54,6 +61,11 @@ var Feed = React.createClass({
         }
       }.bind(this)
     })
+  },
+
+  //We don't want to go through the willReceiveProps flow
+  prepForAvatarChange: function() {
+    this.avatarAboutToChange = true;
   },
 
   addPostToFeed: function(post) {

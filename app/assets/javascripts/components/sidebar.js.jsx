@@ -9,12 +9,21 @@ var Sidebar = React.createClass({
 
   componentWillReceiveProps: function(props) {
 
+    if (this.avatarAboutToChange) {
+      this.avatarAboutToChange = null;
+      return;
+    }
+
     this.setState({
       hasJoined: null,
       notificationLoaded: null,
       errorGettingRelations: false,
       errorOnJoin: false
     })
+  },
+
+  prepForAvatarChange: function() {
+    this.avatarAboutToChange = true;
   },
 
   setCommunityRelations: function(hasJoined, relationship, error) {

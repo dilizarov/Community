@@ -50,7 +50,10 @@ var App = React.createClass({
   },
 
   forceAppUpdate: function() {
-    console.log('lol')
+    // forecUpdate comes with side effects in feed and sidebar.
+    // This is a way to ensure that side effect doesn't happen.
+    this.refs.feed.prepForAvatarChange();
+    this.refs.sidebar.prepForAvatarChange();
     this.forceUpdate();
   },
 
@@ -162,7 +165,8 @@ var App = React.createClass({
         mainContent = (<Feed communityNameNormalized={communityNameNormalized}
                     forceReceiveProps={this.state.forceReceiveProps}
                     handleCommunityStatus={this.setCommunityMembershipStatus}
-                    handleSelectCommunity={this.selectCommunity} />)
+                    handleSelectCommunity={this.selectCommunity}
+                    ref="feed" />)
       }
 
       return (
