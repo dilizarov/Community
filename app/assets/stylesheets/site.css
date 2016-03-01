@@ -207,23 +207,32 @@
   border: 1px solid #EEE;
   border-bottom: 1px solid #DDD;
   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  min-width: 160px;
   cursor: auto;
 }
 
 .session-box .avatar-wrapper {
   margin-left: 8px;
+  margin-top: 10px;
+  float: left;
 }
 
 .session-box .username {
+  display: inline-block;
+  width: 60%;
+  overflow-wrap: break-word;
+  overflow: hidden;
   font-size: 12px;
+  margin-top: 12px;
+  margin-bottom: 4px;
 }
 
 .session-box .user-email {
   font-size: 12px;
   background-color: #FAFAFA;
   padding: 8px 15px;
-  margin-bottom: 8px;
   font-weight: bold;
+  text-align: center;
 }
 
 .session-box .logout-btn {
@@ -770,7 +779,10 @@ i, .button, .post-stats {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.settings-modal .settings-username {
+.settings-modal .settings-username,
+.login-modal input,
+.signup-modal input,
+.send-email-modal input {
   box-shadow: none;
   border: none;
   border-bottom: 1px solid #CCC;

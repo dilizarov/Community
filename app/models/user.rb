@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
       # and... is it hacky? Yes!... but... it has some elegance to it... no?
       # >_> *wipes sweat off forehead*
       user.email = "user.#{user.username.split.join}@fake.hacky.solution.com"
-      user.save
+      user.save(:validate => false) # made to ensure 40 character limit validation is skipped
     rescue ActiveRecord::RecordNotUnique
       retry
     end
