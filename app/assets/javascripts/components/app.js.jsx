@@ -117,6 +117,10 @@ var App = React.createClass({
     this.refs.sidebar.setCommunityRelations(hasJoined, relationship, error);
   },
 
+  triggerSearchBarClick: function() {
+    this.refs.header.triggerSearchBarClick();
+  },
+
   openSettingsModal: function(relationship) {
     this.refs.settingsModal.openWithCommunityRelationship(relationship);
   },
@@ -166,6 +170,7 @@ var App = React.createClass({
                     forceReceiveProps={this.state.forceReceiveProps}
                     handleCommunityStatus={this.setCommunityMembershipStatus}
                     handleSelectCommunity={this.selectCommunity}
+                    triggerSearchBarClick={this.triggerSearchBarClick}
                     ref="feed" />)
       }
 

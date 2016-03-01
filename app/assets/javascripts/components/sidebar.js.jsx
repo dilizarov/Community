@@ -114,7 +114,12 @@ var Sidebar = React.createClass({
     var sidewrapperClass = classNames(
       'side-wrapper',
       { 'empty' : this.props.communityNameNormalized === '' && this.props.notificationPresent === false }
-    )
+    );
+
+    var termsFineprintClass = classNames(
+      'terms-fineprint',
+      { 'empty' : this.props.communityNameNormalized === '' && this.props.notificationPresent === false }
+    );
 
     var title;
 
@@ -130,7 +135,7 @@ var Sidebar = React.createClass({
           {title}
           {membershipStatus}
         </div>
-        <div className='terms-fineprint'>
+        <div className={termsFineprintClass}>
           <a href="#">iOS App</a>
           <a href="https://www.iubenda.com/privacy-policy/908716" target="_blank">Privacy</a>
           <a href="/terms-of-service" target="_blank">Terms</a>
