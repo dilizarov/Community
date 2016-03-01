@@ -8,11 +8,15 @@ var Header = React.createClass({
     window.location.href = "/"
   },
 
+  triggerSearchBarClick: function() {
+    this.refs.search.focusSearchBox();
+  },
+
   render: function() {
     return (
       <div className='header-wrapper'>
         <span className='community-logo'><a onClick={this.reloadMainPage} style={{cursor: 'pointer'}}>&</a>{this.props.communityNameNormalized}</span>
-        <Search handleSelectCommunity={this.props.handleSelectCommunity} />
+        <Search ref='search' handleSelectCommunity={this.props.handleSelectCommunity} />
         <span className="header-right-side">
           <Notifications currentCommunity={this.props.currentCommunity}
                          handleNotificationPressed={this.props.handleNotificationPressed}/>

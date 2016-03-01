@@ -352,6 +352,7 @@
 
 .side-wrapper.empty {
   border-bottom: none;
+  display: none;
 }
 
 .side-wrapper .join-settings-link {
@@ -378,6 +379,10 @@
 .terms-fineprint {
   margin-top: 15px;
   font-size: 12px;
+}
+
+.terms-fineprint.empty {
+  margin-top: 6px;
 }
 
 .terms-fineprint a {
@@ -571,6 +576,16 @@
   border-bottom: 1px solid #d2d2d2;
   border-radius: 3px;
   padding: 20px;
+}
+
+.feed-wrapper .no-community-selected {
+  font-size: 15px;
+  color: #333;
+}
+
+.feed-wrapper .no-community-selected .title {
+  font-size: 24px;
+  letter-spacing: .02em;
 }
 
 /* Write Post Styling */

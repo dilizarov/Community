@@ -173,10 +173,11 @@ var Feed = React.createClass({
   renderNoCommunity: function() {
     //@TODO Styling and Text
     return (
-      <div className='feed'>
+      <div className='feed no-community-selected'>
         <h2 className='title'>
-          No Community Selected
+          No community selected.
         </h2>
+        <a href='#' className='visit-community-link' onClick={this.props.triggerSearchBarClick}>Visit a community</a> to see content here.
       </div>
     )
   },
