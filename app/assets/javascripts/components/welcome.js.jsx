@@ -492,7 +492,7 @@ var Welcome = React.createClass({
             <div className="row">
               <div className="small-6 small-centered column">
                 <a className="main-page-link" onClick={this.reloadMainPage}>&</a>
-                <span className='page-title'>Hi, use these links to <a onClick={this.toggleLogin}>log in</a> or <a onClick={this.toggleSignup}>sign up</a></span>
+                <span className='page-title'>Hi, use these links to <a style={{cursor: 'pointer'}} onClick={this.toggleLogin}>log in</a> or <a style={{cursor: 'pointer'}} onClick={this.toggleSignup}>sign up</a></span>
               </div>
             </div>
           </div>

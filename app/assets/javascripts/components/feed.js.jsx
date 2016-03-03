@@ -177,7 +177,7 @@ var Feed = React.createClass({
         <h2 className='title'>
           No community selected.
         </h2>
-        <a href='#' className='visit-community-link' onClick={this.props.triggerSearchBarClick}>Visit a community</a> to see content here.
+        <a style={{cursor: 'pointer'}} className='visit-community-link' onClick={this.props.triggerSearchBarClick}>Visit a community</a> to see content here.
       </div>
     )
   },
@@ -195,7 +195,6 @@ var Feed = React.createClass({
     return (
       <div className='feed'>
         <div className="panel error-box">
-          <h5>Uh oh</h5>
           <p>We had trouble fetching &{this.props.communityNameNormalized}</p>
           <a onClick={this.retryLoadingCommunity} style={{cursor: 'pointer'}}>Retry</a>
         </div>
