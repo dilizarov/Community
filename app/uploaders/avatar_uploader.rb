@@ -11,10 +11,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
     random_token = SecureRandom.uuid
     ivar = "@#{mounted_as}_secure_token"
     token = model.instance_variable_get(ivar)
-
-    p "token"
-    p token
-
     token ||= model.instance_variable_set(ivar, random_token)
 
     name = original_filename.present? ? without_extension(original_filename) : "image"
