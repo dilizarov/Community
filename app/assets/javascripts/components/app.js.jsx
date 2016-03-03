@@ -47,6 +47,8 @@ var App = React.createClass({
         }
       }
     }.bind(this));
+
+    this.syncAvatarImage();
   },
 
   forceAppUpdate: function() {
@@ -55,6 +57,19 @@ var App = React.createClass({
     this.refs.feed.prepForAvatarChange();
     this.refs.sidebar.prepForAvatarChange();
     this.forceUpdate();
+  },
+
+  syncAvatarImage: function() {
+    $.ajax({
+      method: "GET",
+      url: "/api/v1/users/" + Session.userId() + "/profile_pic.json?auth_token=" + Session.authToken(),
+      success: function(res) {
+        if (res.avatar.url !== Session.userInfo().avatar_url) {
+          Session.changeAvatar(res.avatar.url)
+          this.forceAppUpdate();
+        }
+      }.bind(this)
+    })
   },
 
   selectCommunity: function(community, retrying) {
