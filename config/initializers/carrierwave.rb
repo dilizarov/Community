@@ -6,7 +6,7 @@ CarrierWave.configure do |config|
   }
 
 
-  config.fog_directory = "communitydev"
+  config.fog_directory = "communityprod"
   config.fog_public = true
   config.fog_attributes = { 'Cache-Control' => "max-age=#{365.day.to_i}"}
 end
