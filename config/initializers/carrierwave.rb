@@ -6,7 +6,7 @@ CarrierWave.configure do |config|
   }
 
 
-  config.fog_directory = ENV["AWS_BUCKET_NAME"]
+  config.fog_directory = ENV["AWS_BUCKET_NAME"] || 'communitydev'
   config.fog_public = true
   config.fog_attributes = { 'Cache-Control' => "max-age=#{365.day.to_i}"}
 end

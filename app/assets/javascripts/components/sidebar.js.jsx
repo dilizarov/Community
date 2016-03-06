@@ -33,27 +33,45 @@ var Sidebar = React.createClass({
   handleMembershipStatus: function() {
     var membershipStatus;
 
+    var twitterUrl = "https://www.get.community/&" + this.props.communityNameNormalized;
+
     if (this.props.notificationPresent === true || this.props.communityNameNormalized === '') {
       if (this.state.notificationLoaded === false) {
         membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
       }
     } else if (this.state.joining === true) {
-      membershipStatus = <a className="join-settings-link disabled"><Spinner /></a>
+      membershipStatus = <span><a className="sidebar-link disabled"><Spinner /></a></span>
     } else if (this.state.errorGettingRelations === true) {
       membershipStatus;
     } else if (this.state.hasJoined === null) {
-      membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
+      membershipStatus = <span><div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div></span>
     } else if (this.state.hasJoined === true) {
-      membershipStatus = <a className='join-settings-link' onClick={this.showCommunitySettings}>Settings</a>
+      membershipStatus = (
+        <span>
+          <a className='sidebar-link' onClick={this.showCommunitySettings}>Settings</a>
+          <a className='sidebar-link' onClick={this.shareFB}>Share on FB</a>
+          <a className='sidebar-link' href={twitterUrl} ref="tweet_button" onClick={this.tweet}>Tweet</a>
+        </span>
+      )
     } else if (this.state.errorOnJoin){
       //@TODO Style text etc.
       membershipStatus = (
-        <Tooltip ref="tooltip" title="Had trouble joining community" position='right'>
-          <a className='join-settings-link failed-join' onClick={this.joinCommunity}>Join</a>
-        </Tooltip>
+        <span>
+          <Tooltip ref="tooltip" title="Had trouble joining community" position='right'>
+            <a className='sidebar-link failed-join' onClick={this.joinCommunity}>Join</a>
+          </Tooltip>
+          <a className='sidebar-link' onClick={this.shareFB}>Share on FB</a>
+          <a className='sidebar-link' href={twitterUrl} ref="tweet_button" onClick={this.tweet}>Tweet</a>
+        </span>
       )
     } else {
-      membershipStatus = <a className='join-settings-link' onClick={this.joinCommunity}>Join</a>
+      membershipStatus = (
+        <span>
+          <a className='sidebar-link' onClick={this.joinCommunity}>Join</a>
+          <a className='sidebar-link' onClick={this.shareFB}>Share on FB</a>
+          <a className='sidebar-link' href={twitterUrl} ref="tweet_button" onClick={this.tweet}>Tweet</a>
+        </span>
+      )
     }
 
     return membershipStatus;
@@ -106,6 +124,30 @@ var Sidebar = React.createClass({
     this.setState({
       notificationLoaded: loaded
     })
+  },
+
+  shareFB: function() {
+    FB.ui(
+      {
+        method: 'share',
+        href: 'https://www.get.community/&' + this.props.communityNameNormalized,
+        title: '&'+ this.props.communityNameNormalized + ' on Community',
+        picture: 'https://www.get.community/android-chrome-192x192.png',
+        description: 'Head to &' + this.props.communityNameNormalized + ' and join the conversation!'
+      },
+      function(res){
+      }
+    )
+  },
+
+  tweet: function(e) {
+    e.preventDefault();
+
+    var loc = encodeURIComponent(this.refs.tweet_button.href);
+    var title = encodeURIComponent("Head to &" + this.props.communityNameNormalized + " and join the conversation!");
+    var hashtag = "Community";
+
+    window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&hashtags=' + hashtag + "&", 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
   },
 
   render: function() {

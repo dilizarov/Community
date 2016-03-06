@@ -237,6 +237,7 @@ var Avatar = React.createClass({
       </DropModal>)
     }
 
+
     if (source === null || this.state.loadFailed === true) {
       avatar = <img src={"<%= asset_path('avatar_placeholder.png') %>"}
         ref="avatar_image"

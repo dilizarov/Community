@@ -48,7 +48,9 @@ var App = React.createClass({
       }
     }.bind(this));
 
-    this.syncAvatarImage();
+    if (!this.state.triggerWelcome) {
+      this.syncAvatarImage();
+    }
   },
 
   forceAppUpdate: function() {

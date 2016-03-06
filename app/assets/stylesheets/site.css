@@ -355,7 +355,7 @@
   display: none;
 }
 
-.side-wrapper .join-settings-link {
+.side-wrapper .sidebar-link {
   font-size: 13px;
   display: inline-block;
   border: 1px solid #EEE;
@@ -367,11 +367,11 @@
   text-align: center;
 }
 
-.side-wrapper .join-settings-link.failed-join {
+.side-wrapper .sidebar-link.failed-join {
   color: darkred;
 }
 
-.side-wrapper .join-settings-link:hover {
+.side-wrapper .sidebar-link:hover {
   border: 1px solid #E8E8E8;
   border-bottom: 1px solid #E2E2E2;
 }
