@@ -51,6 +51,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get ':community' => "site#root"
+  # Constraint is necessary because periods in Community names would otherwise not work.
+  # For some reason, Rails considers "." to be a separator like "/".
+  get ':community' => "site#root", :constraints => { :community => /[^\/]+/ }
 
 end
