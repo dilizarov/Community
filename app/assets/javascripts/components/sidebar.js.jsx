@@ -40,7 +40,13 @@ var Sidebar = React.createClass({
         membershipStatus = <div style={{textAlign: 'center', marginTop: 12}}><Spinner size="sm" /></div>
       }
     } else if (this.state.joining === true) {
-      membershipStatus = <span><a className="sidebar-link disabled"><Spinner /></a></span>
+      membershipStatus = (
+        <span>
+          <a className="sidebar-link disabled"><Spinner /></a>
+          <a className='sidebar-link' onClick={this.shareFB}>Share on FB</a>
+          <a className='sidebar-link' href={twitterUrl} ref="tweet_button" onClick={this.tweet}>Tweet</a>
+        </span>
+      )
     } else if (this.state.errorGettingRelations === true) {
       membershipStatus;
     } else if (this.state.hasJoined === null) {
@@ -178,7 +184,7 @@ var Sidebar = React.createClass({
           {membershipStatus}
         </div>
         <div className={termsFineprintClass}>
-          <a href="#">iOS App</a>
+          <a href="https://itunes.apple.com/app/community-home-to-communities/id1090506668?mt=8" target="_blank">iOS App</a>
           <a href="https://www.iubenda.com/privacy-policy/908716" target="_blank">Privacy</a>
           <a href="/terms-of-service" target="_blank">Terms</a>
         </div>
