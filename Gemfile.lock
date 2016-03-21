@@ -34,6 +34,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     acts_as_votable (0.10.0)
+    addressable (2.4.0)
     arel (5.0.1.20140414130214)
     babel-source (5.8.33)
     babel-transpiler (0.7.0)
@@ -226,6 +227,9 @@ GEM
       httparty
       json
     rack (1.5.5)
+    rack-canonical-host (0.1.0)
+      addressable
+      rack (~> 1.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.1.4)
@@ -330,6 +334,7 @@ DEPENDENCIES
   mini_magick (= 4.2.10)
   pg (= 0.17.1)
   pushmeup (~> 0.3.0)
+  rack-canonical-host
   rails (= 4.1.4)
   rails-assets-classnames (= 2.2.0)!
   rails-assets-cropper (= 1.0.0)!

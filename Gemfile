@@ -51,6 +51,9 @@ gem 'uglifier', '>= 1.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+# Force usage of www endpoint to keep localStorage consistent 
+gem 'rack-canonical-host'
+
 # Front-end Javascript libraries not including Foundation & React
 source 'https://rails-assets.org' do
   gem 'rails-assets-cropper', '1.0.0'
