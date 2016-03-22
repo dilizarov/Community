@@ -23,7 +23,8 @@ var Welcome = React.createClass({
   componentDidMount: function() {
     document.title = "Welcome"
 
-    this.createMetaAccount();
+    //this.createMetaAccount();
+    //this.showViableUsername();
   },
 
   createMetaAccount: function() {

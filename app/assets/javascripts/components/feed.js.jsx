@@ -170,6 +170,10 @@ var Feed = React.createClass({
     this.props.handleSelectCommunity(this.props.communityNameNormalized, true);
   },
 
+  goToCommunity: function() {
+    this.props.handleSelectCommunity("community");
+  },
+
   renderNoCommunity: function() {
     //@TODO Styling and Text
     return (
@@ -178,6 +182,9 @@ var Feed = React.createClass({
           No community selected.
         </h2>
         <a style={{cursor: 'pointer'}} className='visit-community-link' onClick={this.props.triggerSearchBarClick}>Visit a community</a> to see content here.
+        <br />
+        <br />
+        New here? Say hi and ask us anything at <a style={{cursor: 'pointer' }} className="visit-community-link" onClick={this.goToCommunity}>&community</a>.
       </div>
     )
   },
