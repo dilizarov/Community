@@ -23,8 +23,7 @@ var Welcome = React.createClass({
   componentDidMount: function() {
     document.title = "Welcome"
 
-    //this.createMetaAccount();
-    //this.showViableUsername();
+    this.createMetaAccount();
   },
 
   createMetaAccount: function() {
@@ -273,6 +272,14 @@ var Welcome = React.createClass({
     })
   },
 
+  headToMainPage: function() {
+
+    if (this.state.metaLoaded) {
+      this.props.segueToApp();
+    }
+
+  },
+
   render: function() {
 
     var mainContent;
@@ -458,6 +465,13 @@ var Welcome = React.createClass({
         otherProps.style = { color: "#DDD", cursor: 'text' }
       }
 
+      var mainPageBtnClasses = classNames(
+        "tiny",
+        "button",
+        "radius",
+        { "disabled" : !this.state.metaLoaded }
+      )
+
       mainContent = (
         <div>
           <div className="content-header" style={{fontSize: '24px'}}>
@@ -477,7 +491,7 @@ var Welcome = React.createClass({
           <a onClick={this.requestUsernameClicked} {...otherProps}>Request another username</a>
 
           <div style={{marginTop: '100px'}}>
-            <a className="tiny button radius" onClick={this.props.segueToApp}>Go to main page</a>
+            <a className={mainPageBtnClasses} onClick={this.headToMainPage}>Go to main page</a>
             <div style={{color: "#333", marginTop: '10px'}}>
               By using Community, you agree to our <a href="/terms-of-service" target="_blank">Terms</a> and understand our <a href="https://www.iubenda.com/privacy-policy/908716" target="_blank">Privacy Policy</a>
             </div>
